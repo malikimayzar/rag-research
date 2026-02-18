@@ -1,0 +1,62 @@
+[
+  {
+    "chunk_id": "tier1_test_intro_c0000",
+    "doc_id": "tier1_test_intro",
+    "text": "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. Instead of relying solely on parametric knowledge stored in model weights, RAG systems retrieve relevant documents from an external corpus and use them as context for generation.\n\nThe core components of a RAG system include a document corpus, an embedding model for semantic search, a vector database for efficient retrieval, and a language model for answer generation. Each component introdu",
+    "start_char": 0,
+    "end_char": 512,
+    "tier": 1,
+    "chunk_index": 0,
+    "total_chunks": 4,
+    "metadata": {
+      "chunk_size": 512,
+      "overlap": 64,
+      "strategy": "fixed_size"
+    }
+  },
+  {
+    "chunk_id": "tier1_test_intro_c0001",
+    "doc_id": "tier1_test_intro",
+    "text": "d a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.\n\nChunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.\n\nHybrid retrieval combines sparse methods like BM25 with dens",
+    "start_char": 448,
+    "end_char": 960,
+    "tier": 1,
+    "chunk_index": 1,
+    "total_chunks": 4,
+    "metadata": {
+      "chunk_size": 512,
+      "overlap": 64,
+      "strategy": "fixed_size"
+    }
+  },
+  {
+    "chunk_id": "tier1_test_intro_c0002",
+    "doc_id": "tier1_test_intro",
+    "text": "e.\n\nHybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.\n\nEvaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures",
+    "start_char": 896,
+    "end_char": 1408,
+    "tier": 1,
+    "chunk_index": 2,
+    "total_chunks": 4,
+    "metadata": {
+      "chunk_size": 512,
+      "overlap": 64,
+      "strategy": "fixed_size"
+    }
+  },
+  {
+    "chunk_id": "tier1_test_intro_c0003",
+    "doc_id": "tier1_test_intro",
+    "text": "res the relevance of retrieved chunks. Answer relevance measures how directly the answer addresses the query.",
+    "start_char": 1344,
+    "end_char": 1856,
+    "tier": 1,
+    "chunk_index": 3,
+    "total_chunks": 4,
+    "metadata": {
+      "chunk_size": 512,
+      "overlap": 64,
+      "strategy": "fixed_size"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. Instead of relying solely on parametric knowledge stored in model weights, RAG systems retrieve relevant documents from an external corpus and use them as context for generation.
+
+The core components of a RAG system include a document corpus, an embedding model for semantic search, a vector database for efficient retrieval, and a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.
+
+Chunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.
+
+Hybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.
+
+Evaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures how directly the answer addresses the query.

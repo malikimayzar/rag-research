@@ -1,0 +1,14 @@
+numpy
+scipy
+pandas
+
+torch
+transformers
+sentence-transformers
+
+faiss-cpu
+rank-bm25
+
+tqdm
+rich
+pyyaml

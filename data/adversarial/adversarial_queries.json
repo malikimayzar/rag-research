@@ -1,0 +1,38 @@
+[
+  {
+    "query": "What is the training cost in dollars for GPT-4?",
+    "type": "out_of_corpus",
+    "expected_behavior": "honest_abstention",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Who won the 2024 Nobel Prize in Physics?",
+    "type": "out_of_corpus",
+    "expected_behavior": "honest_abstention",
+    "difficulty": "easy"
+  },
+  {
+    "query": "How do the attention mechanisms described across different papers compare?",
+    "type": "cross_document",
+    "expected_behavior": "partial_context",
+    "difficulty": "hard"
+  },
+  {
+    "query": "What are the contradictions between RAG and fine-tuning approaches?",
+    "type": "contradiction_seeking",
+    "expected_behavior": "partial_context",
+    "difficulty": "hard"
+  },
+  {
+    "query": "chunking",
+    "type": "underspecified",
+    "expected_behavior": "misleading_similarity",
+    "difficulty": "medium"
+  },
+  {
+    "query": "What does the paper say about performance?",
+    "type": "ambiguous_reference",
+    "expected_behavior": "misleading_similarity",
+    "difficulty": "medium"
+  }
+]

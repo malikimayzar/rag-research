@@ -1,0 +1,293 @@
+{
+  "report": {
+    "total_queries": 4,
+    "avg_faithfulness": 1.0,
+    "avg_context_relevance": 0.5,
+    "avg_answer_relevance": 0.8,
+    "failure_mode_distribution": {
+      "partial_context": 2,
+      "correct": 1,
+      "honest_abstention": 1
+    },
+    "hallucination_rate": 0.0,
+    "honest_abstention_rate": 0.25
+  },
+  "individual_results": [
+    {
+      "query": "What is chunking and why does chunk size matter?",
+      "answer": "Chunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size matters because smaller chunks are more precise but may lose important context, while larger chunks preserve context but may introduce noise.",
+      "ground_truth": null,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_test_intro_c0001",
+          "doc_id": "tier1_test_intro",
+          "text": "d a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.\n\nChunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.\n\nHybrid retrieval combines sparse methods like BM25 with dens",
+          "start_char": 448,
+          "end_char": 960,
+          "tier": 1,
+          "chunk_index": 1,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.01626123744050767,
+          "retrieval_rank": 1,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0003",
+          "doc_id": "tier1_test_intro",
+          "text": "res the relevance of retrieved chunks. Answer relevance measures how directly the answer addresses the query.",
+          "start_char": 1344,
+          "end_char": 1856,
+          "tier": 1,
+          "chunk_index": 3,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.00819672131147541,
+          "retrieval_rank": 2,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0002",
+          "doc_id": "tier1_test_intro",
+          "text": "e.\n\nHybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.\n\nEvaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures",
+          "start_char": 896,
+          "end_char": 1408,
+          "tier": 1,
+          "chunk_index": 2,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.007936507936507936,
+          "retrieval_rank": 3,
+          "retrieval_method": "hybrid_rrf"
+        }
+      ],
+      "retrieval_method": "hybrid_rrf",
+      "faithfulness_score": 1.0,
+      "context_relevance_score": 0.5,
+      "answer_relevance_score": 0.8,
+      "failure_mode": "partial_context",
+      "failure_explanation": "Context partially relevant (0.50), may cause incomplete answer",
+      "has_hallucination": false,
+      "is_honest_abstention": false
+    },
+    {
+      "query": "How does hybrid retrieval combine BM25 and dense search?",
+      "answer": "Hybrid retrieval combines BM25 with dense embedding-based search by utilizing BM25 for exact keyword matching and dense retrieval for capturing semantic similarity.",
+      "ground_truth": null,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_test_intro_c0002",
+          "doc_id": "tier1_test_intro",
+          "text": "e.\n\nHybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.\n\nEvaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures",
+          "start_char": 896,
+          "end_char": 1408,
+          "tier": 1,
+          "chunk_index": 2,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.01639344262295082,
+          "retrieval_rank": 1,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0001",
+          "doc_id": "tier1_test_intro",
+          "text": "d a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.\n\nChunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.\n\nHybrid retrieval combines sparse methods like BM25 with dens",
+          "start_char": 448,
+          "end_char": 960,
+          "tier": 1,
+          "chunk_index": 1,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.016001024065540194,
+          "retrieval_rank": 2,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0000",
+          "doc_id": "tier1_test_intro",
+          "text": "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. Instead of relying solely on parametric knowledge stored in model weights, RAG systems retrieve relevant documents from an external corpus and use them as context for generation.\n\nThe core components of a RAG system include a document corpus, an embedding model for semantic search, a vector database for efficient retrieval, and a language model for answer generation. Each component introdu",
+          "start_char": 0,
+          "end_char": 512,
+          "tier": 1,
+          "chunk_index": 0,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.015877016129032258,
+          "retrieval_rank": 3,
+          "retrieval_method": "hybrid_rrf"
+        }
+      ],
+      "retrieval_method": "hybrid_rrf",
+      "faithfulness_score": 1.0,
+      "context_relevance_score": 1.0,
+      "answer_relevance_score": 0.8,
+      "failure_mode": "correct",
+      "failure_explanation": "Retrieval and generation both high quality",
+      "has_hallucination": false,
+      "is_honest_abstention": false
+    },
+    {
+      "query": "What metrics evaluate RAG system quality?",
+      "answer": "The metrics that evaluate RAG system quality, according to the provided context, include faithfulness (how well the generated answer reflects retrieved context), context precision (the relevance of retrieved chunks), and answer relevance.",
+      "ground_truth": null,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_test_intro_c0000",
+          "doc_id": "tier1_test_intro",
+          "text": "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. Instead of relying solely on parametric knowledge stored in model weights, RAG systems retrieve relevant documents from an external corpus and use them as context for generation.\n\nThe core components of a RAG system include a document corpus, an embedding model for semantic search, a vector database for efficient retrieval, and a language model for answer generation. Each component introdu",
+          "start_char": 0,
+          "end_char": 512,
+          "tier": 1,
+          "chunk_index": 0,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.01626123744050767,
+          "retrieval_rank": 1,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0002",
+          "doc_id": "tier1_test_intro",
+          "text": "e.\n\nHybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.\n\nEvaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures",
+          "start_char": 896,
+          "end_char": 1408,
+          "tier": 1,
+          "chunk_index": 2,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.016133229247983348,
+          "retrieval_rank": 2,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0001",
+          "doc_id": "tier1_test_intro",
+          "text": "d a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.\n\nChunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.\n\nHybrid retrieval combines sparse methods like BM25 with dens",
+          "start_char": 448,
+          "end_char": 960,
+          "tier": 1,
+          "chunk_index": 1,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.015877016129032258,
+          "retrieval_rank": 3,
+          "retrieval_method": "hybrid_rrf"
+        }
+      ],
+      "retrieval_method": "hybrid_rrf",
+      "faithfulness_score": 1.0,
+      "context_relevance_score": 0.5,
+      "answer_relevance_score": 0.8,
+      "failure_mode": "partial_context",
+      "failure_explanation": "Context partially relevant (0.50), may cause incomplete answer",
+      "has_hallucination": false,
+      "is_honest_abstention": false
+    },
+    {
+      "query": "What happens when the answer is not in the documents?",
+      "answer": "The provided context does not contain information about what happens when the answer is not in the documents.",
+      "ground_truth": null,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_test_intro_c0003",
+          "doc_id": "tier1_test_intro",
+          "text": "res the relevance of retrieved chunks. Answer relevance measures how directly the answer addresses the query.",
+          "start_char": 1344,
+          "end_char": 1856,
+          "tier": 1,
+          "chunk_index": 3,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.01626123744050767,
+          "retrieval_rank": 1,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0002",
+          "doc_id": "tier1_test_intro",
+          "text": "e.\n\nHybrid retrieval combines sparse methods like BM25 with dense embedding-based search. BM25 excels at exact keyword matching while dense retrieval captures semantic similarity. The combination typically outperforms either method alone, particularly for technical documents.\n\nEvaluation of RAG systems requires metrics beyond simple accuracy. Faithfulness measures how well the generated answer reflects retrieved context. Context precision measures the relevance of retrieved chunks. Answer relevance measures",
+          "start_char": 896,
+          "end_char": 1408,
+          "tier": 1,
+          "chunk_index": 2,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.016009221311475412,
+          "retrieval_rank": 2,
+          "retrieval_method": "hybrid_rrf"
+        },
+        {
+          "chunk_id": "tier1_test_intro_c0001",
+          "doc_id": "tier1_test_intro",
+          "text": "d a language model for answer generation. Each component introduces potential failure points that must be analyzed systematically.\n\nChunking is the process of splitting long documents into smaller segments suitable for embedding and retrieval. The choice of chunk size and overlap strategy significantly affects retrieval quality. Smaller chunks are more precise but may lose important context. Larger chunks preserve context but may introduce noise.\n\nHybrid retrieval combines sparse methods like BM25 with dens",
+          "start_char": 448,
+          "end_char": 960,
+          "tier": 1,
+          "chunk_index": 1,
+          "total_chunks": 4,
+          "metadata": {
+            "chunk_size": 512,
+            "overlap": 64,
+            "strategy": "fixed_size"
+          },
+          "retrieval_score": 0.015877016129032258,
+          "retrieval_rank": 3,
+          "retrieval_method": "hybrid_rrf"
+        }
+      ],
+      "retrieval_method": "hybrid_rrf",
+      "faithfulness_score": 1.0,
+      "context_relevance_score": 0.0,
+      "answer_relevance_score": 0.8,
+      "failure_mode": "honest_abstention",
+      "failure_explanation": "LLM correctly identified missing context",
+      "has_hallucination": false,
+      "is_honest_abstention": true
+    }
+  ]
+}

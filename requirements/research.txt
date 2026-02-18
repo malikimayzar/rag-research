@@ -1,0 +1,8 @@
+scikit-learn
+ragas
+mlflow
+
+matplotlib
+seaborn
+jupyter
+notebook

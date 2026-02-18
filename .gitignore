@@ -1,0 +1,53 @@
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual Environment ─────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Jupyter ─────────────────────────────────────────────────────
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+notebooks/notebooks/          # nbconvert double-folder bug
+
+# ── Model & Index Files  -------------------------───────────────
+data/processed/index_minilm/faiss.index
+data/processed/index_bm25/bm25.pkl
+*.index
+*.pkl
+*.bin
+*.pt
+*.pth
+
+# ── Logs ────────────────────────────────────────────────────────
+results/logs/*.log
+*.log
+
+# ── OS & Editor ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Environment Variables ───────────────────────────────────────
+.env
+.env.local
+*.secret
+
+# ── Temporary Files ─────────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
