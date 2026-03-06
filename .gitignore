@@ -51,3 +51,5 @@ tmp/
 temp/
 *.tmp
 *.bak
+nohup.out
+data/processed/
