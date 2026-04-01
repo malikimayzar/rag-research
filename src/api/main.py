@@ -122,7 +122,7 @@ async def retrieve(req: RetrieveRequest):
             )
             for r in results
         ],
-        retrieval_method="hybrid_rrf+bge_reranker" if req.use_reranker else "hybrid_rrf",
+        retrieval_method="hybrid_multiquery_hyde_rerank" if req.use_reranker else "hybrid_rrf_multiquery",
         latency_ms=latency_ms,
     )
 
