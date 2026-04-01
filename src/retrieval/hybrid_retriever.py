@@ -1,127 +1,135 @@
+from __future__ import annotations
+
 import json
-import sys
-from sentence_transformers import SentenceTransformer
+import numpy as np
+from pathlib import Path
+from typing import List, Dict, Any
+from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
+from sentence_transformers import CrossEncoder
+from rank_bm25 import BM25Okapi
 
-sys.path.insert(0, "src/retrieval")
-from embedder import load_index, dense_search
-from bm25_retriever import load_bm25, bm25_search
+class MasterHybridRetriever:
+    def __init__(
+        self,
+        vector_store: QdrantVectorStore,
+        bm25_chunks_path: str = "data/processed/chunks_semantic.json",
+        reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
+        rrf_k: int = 60
+    ):
+        self.vector_store = vector_store
+        self.rrf_k = rrf_k
+        self._chunks = []
+        self._bm25 = None
 
+        if Path(bm25_chunks_path).exists():
+            with open(bm25_chunks_path, "r") as f:
+                self._chunks = json.load(f)
+            tokenized_corpus = [c["text"].lower().split() for c in self._chunks]
+            self._bm25 = BM25Okapi(tokenized_corpus)
+            print(f"[MasterRetriever] BM25 loaded: {len(self._chunks)} chunks")
 
-def reciprocal_rank_fusion(
-    dense_results: list[dict],
-    bm25_results: list[dict],
-    k: int = 60,
-    dense_weight: float = 0.5,
-    bm25_weight: float = 0.5
-) -> list[dict]:
-    
-    scores = {} 
-    chunk_map = {} 
+        print(f"[MasterRetriever] Loading Re-ranker: {reranker_model}")
+        self.reranker = CrossEncoder(reranker_model)
 
-    for result in dense_results:
-        cid = result["chunk_id"]
-        rank = result["retrieval_rank"]
-        scores[cid] = scores.get(cid, 0) + dense_weight / (k + rank)
-        chunk_map[cid] = result
+    def search(
+        self, 
+        query: str, 
+        top_k: int = 5, 
+        dense_weight: float = 0.7, 
+        bm25_weight: float = 0.3,
+        use_reranker: bool = True
+    ) -> List[Dict[str, Any]]:
+        candidate_k = min(top_k * 4, 20)
+        dense_hits = self.vector_store.search(query, k=candidate_k)
+        bm25_hits = []
+        if self._bm25:
+            query_tokens = query.lower().split()
+            scores = self._bm25.get_scores(query_tokens)
+            top_indices = np.argsort(scores)[::-1][:candidate_k]
+            for i in top_indices:
+                if scores[i] > 0:
+                    bm25_hits.append({
+                        "chunk_id": self._chunks[i]["chunk_id"],
+                        "text": self._chunks[i]["text"],
+                        "score": float(scores[i]),
+                        "doc_id": self._chunks[i]["doc_id"]
+                    })
 
-    for result in bm25_results:
-        cid = result["chunk_id"]
-        rank = result["retrieval_rank"]
-        scores[cid] = scores.get(cid, 0) + bm25_weight / (k + rank)
-        if cid not in chunk_map:
-            chunk_map[cid] = result
+        fused_scores = {}
+        chunk_map = {}
 
-    # Sort by fused score
-    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+        for rank, hit in enumerate(dense_hits):
+            cid = hit.chunk_id
+            fused_scores[cid] = fused_scores.get(cid, 0) + dense_weight / (self.rrf_k + rank + 1)
+            chunk_map[cid] = hit
 
-    results = []
-    for rank, (cid, fused_score) in enumerate(ranked):
-        chunk = chunk_map[cid].copy()
-        chunk["retrieval_score"] = fused_score
-        chunk["retrieval_rank"] = rank + 1
-        chunk["retrieval_method"] = "hybrid_rrf"
-        results.append(chunk)
+        for rank, hit in enumerate(bm25_hits):
+            cid = hit["chunk_id"]
+            fused_scores[cid] = fused_scores.get(cid, 0) + bm25_weight / (self.rrf_k + rank + 1)
+            if cid not in chunk_map:
+                chunk_map[cid] = hit
 
-    return results
+        fused_ids = sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)[:candidate_k]
+        fused_results = [chunk_map[cid] for cid, _ in fused_ids]
 
+        if not use_reranker or not fused_results:
+            return self._format_output(fused_results[:top_k], "hybrid_rrf")
+        
+        rerank_candidates = fused_results[:5]
 
-def hybrid_search(
-    query: str,
-    emb_index,
-    bm25,
-    bm25_chunks: list[dict],
-    model: SentenceTransformer,
-    top_k: int = 5,
-    dense_weight: float = 0.5,
-    bm25_weight: float = 0.5
-) -> dict:
-    candidate_k = top_k * 3
+        pairs = [
+            [query, getattr(hit, 'text') if hasattr(hit, 'text') else hit['text']]
+            for hit in rerank_candidates
+        ]
 
-    dense_results = dense_search(query, emb_index, model, top_k=candidate_k)
-    bm25_results = bm25_search(query, bm25, bm25_chunks, top_k=candidate_k)
+        rerank_scores = self.reranker.predict(pairs)
 
-    fused = reciprocal_rank_fusion(
-        dense_results,
-        bm25_results,
-        dense_weight=dense_weight,
-        bm25_weight=bm25_weight
-    )[:top_k]
+        for i, hit in enumerate(rerank_candidates):
+            score = float(rerank_scores[i])
+            if hasattr(hit, 'score'):
+                hit.score = score
+            else:
+                hit['score'] = score
 
-    return {
-        "query": query,
-        "dense": dense_results[:top_k],
-        "bm25": bm25_results[:top_k],
-        "hybrid": fused
-    }
-
-
-def compare_methods(results: dict):
-    query = results["query"]
-    print(f"\n{'='*60}")
-    print(f"Query: {query}")
-    print(f"{'='*60}")
-
-    for method in ["dense", "bm25", "hybrid"]:
-        print(f"\n--- {method.upper()} ---")
-        for r in results[method][:3]:
-            print(f"  Rank {r['retrieval_rank']} | Score: {r['retrieval_score']:.4f}")
-            print(f"  {r['text'][:120].strip()}...")
-            print()
-
-
-if __name__ == "__main__":
-    print("[LOAD] Loading indexes...")
-
-    emb_index = load_index("data/processed/index_minilm")
-    bm25, bm25_chunks = load_bm25("data/processed/index_bm25")
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-
-    # Test dengan 3 query berbeda untuk lihat perbedaan perilaku
-    test_queries = [
-        "what is chunking in RAG?",
-        "how does hybrid retrieval work?",
-        "what metrics are used to evaluate RAG systems?"
-    ]
-
-    all_results = []
-    for query in test_queries:
-        results = hybrid_search(
-            query, emb_index, bm25, bm25_chunks, model, top_k=3
+        final_results = sorted(
+            rerank_candidates,
+            key=lambda x: (x.score if hasattr(x, 'score') else x['score']),
+            reverse=True
         )
-        compare_methods(results)
-        all_results.append(results)
 
-    # Simpan untuk analisis nanti
-    import json
-    with open("results/logs/hybrid_search_test.json", 'w') as f:
-        clean = []
-        for r in all_results:
-            clean.append({
-                "query": r["query"],
-                "dense": r["dense"],
-                "bm25": r["bm25"],
-                "hybrid": r["hybrid"]
-            })
-        json.dump(clean, f, indent=2, ensure_ascii=False)
+        print(f"[DEBUG] Dense hits: {len(dense_hits)} | BM25 hits: {len(bm25_hits)}")
+        print(f"[DEBUG] Fused candidates: {len(fused_results)}")
 
-    print("\n[OK] Results saved → results/logs/hybrid_search_test.json")
+        return self._format_output(final_results[:top_k], "hybrid_rerank")
+
+    def _format_output(self, results: list, method: str) -> List[Dict[str, Any]]:
+        formatted = []
+        for i, r in enumerate(results):
+            if hasattr(r, 'chunk_id'): 
+                formatted.append({
+                    "chunk_id": r.chunk_id,
+                    "text": r.text,
+                    "doc_id": r.doc_id,
+                    "retrieval_score": r.score,
+                    "retrieval_rank": i + 1,
+                    "retrieval_method": method
+                })
+            else: 
+                formatted.append({
+                    **r,
+                    "retrieval_score": r["score"],
+                    "retrieval_rank": i + 1,
+                    "retrieval_method": method
+                })
+        return formatted
+
+# --- CLI TEST ---
+if __name__ == "__main__":
+    store = QdrantVectorStore()
+    retriever = MasterHybridRetriever(store)
+    query = "impact of semantic chunking on RAG performance"
+    results = retriever.search(query, top_k=3)
+    print(f"\n[OK] Top Results for: {query}")
+    for r in results:
+        print(f"[{r['retrieval_rank']}] Score: {r['retrieval_score']:.4f} | {r['doc_id']}")
+        print(f"Text: {r['text'][:150]}...\n")
