@@ -8,6 +8,8 @@ from typing import List, Dict, Any, Optional
 from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
 from sentence_transformers import CrossEncoder
 from rank_bm25 import BM25Okapi
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from groq import Groq
 from dotenv import load_dotenv
 
@@ -67,43 +69,62 @@ class MasterHybridRetriever:
 
     # ── Query Expansion ────────────────────────────────────────────────────────
 
+    def _call_groq(self, prompt: str, temperature: float, max_tokens: int) -> str:
+        """Single Groq call — dipakai di thread pool."""
+        resp = self.groq.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        return resp.choices[0].message.content.strip()
+
+    def _expand_and_hyde_parallel(self, query: str):
+        """Run multi-query expansion + HyDE secara parallel via ThreadPoolExecutor."""
+        queries = [query]
+        hyde_text = None
+
+        if not self.groq:
+            return queries, hyde_text
+
+        futures = {}
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            if self.use_multi_query:
+                futures["mq"] = executor.submit(
+                    self._call_groq,
+                    MULTI_QUERY_PROMPT.format(query=query), 0.7, 100
+                )
+            if self.use_hyde:
+                futures["hyde"] = executor.submit(
+                    self._call_groq,
+                    HYDE_PROMPT.format(query=query), 0.5, 150
+                )
+
+        if "mq" in futures:
+            try:
+                raw = futures["mq"].result(timeout=5)
+                alternatives = [q.strip() for q in raw.split("\n") if q.strip()][:2]
+                queries = [query] + alternatives
+                print(f"[MultiQuery] Expanded to {len(queries)} queries: {alternatives}")
+            except Exception as e:
+                print(f"[MultiQuery] Failed: {e}")
+
+        if "hyde" in futures:
+            try:
+                hyde_text = futures["hyde"].result(timeout=5)
+                print(f"[HyDE] Generated: {hyde_text[:80]}...")
+            except Exception as e:
+                print(f"[HyDE] Failed: {e}")
+
+        return queries, hyde_text
+
     def _expand_queries(self, query: str) -> List[str]:
-        """Generate 2 alternative queries via Groq. Returns [original] if fails."""
-        if not self.groq or not self.use_multi_query:
-            return [query]
-        try:
-            resp = self.groq.chat.completions.create(
-                model="llama-3.1-8b-instant",  # pakai 8b biar cepat
-                messages=[{"role": "user", "content": MULTI_QUERY_PROMPT.format(query=query)}],
-                temperature=0.7,
-                max_tokens=100,
-            )
-            raw = resp.choices[0].message.content.strip()
-            alternatives = [q.strip() for q in raw.split("\n") if q.strip()][:2]
-            all_queries = [query] + alternatives
-            print(f"[MultiQuery] Expanded to {len(all_queries)} queries: {alternatives}")
-            return all_queries
-        except Exception as e:
-            print(f"[MultiQuery] Failed, using original: {e}")
-            return [query]
+        """Kept for backward compat — pakai parallel version di search()."""
+        return [query]
 
     def _generate_hyde(self, query: str) -> Optional[str]:
-        """Generate hypothetical answer for HyDE dense retrieval."""
-        if not self.groq or not self.use_hyde:
-            return None
-        try:
-            resp = self.groq.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[{"role": "user", "content": HYDE_PROMPT.format(query=query)}],
-                temperature=0.5,
-                max_tokens=150,
-            )
-            hyde_text = resp.choices[0].message.content.strip()
-            print(f"[HyDE] Generated: {hyde_text[:80]}...")
-            return hyde_text
-        except Exception as e:
-            print(f"[HyDE] Failed: {e}")
-            return None
+        """Kept for backward compat — pakai parallel version di search()."""
+        return None
 
     # ── Core Retrieval ─────────────────────────────────────────────────────────
 
@@ -168,11 +189,8 @@ class MasterHybridRetriever:
 
         candidate_k = min(top_k * 4, 20)
 
-        # Step 1: Query expansion (Multi-Query)
-        queries = self._expand_queries(query)
-
-        # Step 2: HyDE — tambah hypothetical answer sebagai query dense tambahan
-        hyde_text = self._generate_hyde(query)
+        # Step 1+2: Query expansion + HyDE secara PARALLEL (hemat ~2 detik)
+        queries, hyde_text = self._expand_and_hyde_parallel(query)
 
         # Step 3: Retrieve untuk setiap query
         all_dense_hits = []
