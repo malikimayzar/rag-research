@@ -1,0 +1,10 @@
+{
+  "pipeline": "hybrid_rrf",
+  "dense_weight": 0.7,
+  "bm25_weight": 0.3,
+  "top_k": 10,
+  "candidate_k": 50,
+  "status": "working_baseline",
+  "validated_on": "paraphrase_10samples + lexical_20samples",
+  "next": "expand_dataset_structured_distribution"
+}
