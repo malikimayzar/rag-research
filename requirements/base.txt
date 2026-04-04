@@ -11,4 +11,36 @@ rank-bm25
 
 tqdm
 rich
-pyyaml
+pyyaml# ─── RAG Research Upgrade — Requirements ───────────────────────────────────────
+# Install: pip install -r requirements_upgrade.txt
+
+# Core (sama seperti sebelumnya)
+sentence-transformers>=2.7.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+
+# Qdrant (ganti FAISS)
+qdrant-client>=1.9.0
+
+# BM25 (tetap dipakai untuk hybrid)
+rank-bm25>=0.2.2
+
+# RAGAS evaluation framework
+ragas>=0.1.9
+datasets>=2.19.0
+
+# LangChain (dibutuhkan RAGAS)
+langchain>=0.2.0
+langchain-groq>=0.1.3
+langchain-community>=0.2.0
+
+# LLM
+groq>=0.9.0
+
+# PDF parsing (tetap sama)
+pymupdf>=1.24.0
+pypdf>=4.2.0
+
+# Utils
+python-dotenv>=1.0.0
+tqdm>=4.66.0

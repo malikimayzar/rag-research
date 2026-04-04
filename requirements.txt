@@ -1,3 +1,18 @@
--r requirements/base.txt
--r requirements/llm.txt
--r requirements/research.txt
+# AI Core
+langchain==0.2.14
+langchain-groq==0.1.9
+langchain-huggingface==0.0.3
+ragas==0.1.15
+qdrant-client==1.10.1
+sentence-transformers==3.0.1
+rank-bm25==0.2.2
+
+# PDF & Data
+pymupdf==1.24.9
+pandas==2.2.2
+scikit-learn==1.5.1
+
+# DevOps & Performance
+python-dotenv==1.0.1
+maturin==1.7.1
+pydantic==2.8.2

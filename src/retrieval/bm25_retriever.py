@@ -4,12 +4,10 @@ import re
 from pathlib import Path
 from rank_bm25 import BM25Okapi
 
-
 def tokenize(text: str) -> list[str]:
     text = text.lower()
     text = re.sub(r'[^\w\s]', ' ', text)
     tokens = text.split()
-    # Filter stop words sederhana
     stop_words = {
         'a', 'an', 'the', 'is', 'it', 'in', 'on', 'at', 'to',
         'for', 'of', 'and', 'or', 'but', 'with', 'this', 'that',
@@ -33,7 +31,6 @@ def save_bm25(bm25, chunks: list[dict], output_dir: str):
         json.dump(chunks, f, indent=2, ensure_ascii=False)
 
     print(f"[OK] BM25 index saved → {output_dir}")
-
 
 def load_bm25(index_dir: str) -> tuple:
     idx_path = Path(index_dir)
@@ -65,8 +62,6 @@ def bm25_search(
     for rank, idx in enumerate(top_indices):
         if scores[idx] <= 0:
             continue
-
-        # Konversi ke dict — handle semua kemungkinan tipe
         raw = chunks[idx]
         if isinstance(raw, dict):
             chunk = raw.copy()
@@ -76,7 +71,6 @@ def bm25_search(
             import dataclasses
             chunk = dataclasses.asdict(raw)
         else:
-            # Last resort — manual extract field yang diketahui
             chunk = {
                 "chunk_id": getattr(raw, "chunk_id", str(idx)),
                 "doc_id": getattr(raw, "doc_id", ""),
@@ -93,7 +87,6 @@ def bm25_search(
         chunk["retrieval_rank"] = rank + 1
         chunk["retrieval_method"] = "bm25"
         results.append(chunk)
-
     return results
 
 if __name__ == "__main__":

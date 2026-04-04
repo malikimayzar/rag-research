@@ -1,157 +1,179 @@
+from __future__ import annotations
+
 import json
-import sys
+import os
 import time
+from dataclasses import dataclass, asdict
 from pathlib import Path
-from dataclasses import dataclass
+from typing import Optional
 
-import ollama
+from dotenv import load_dotenv
+from groq import Groq
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "retrieval"))
-from embedder import load_index, dense_search
-from bm25_retriever import load_bm25, bm25_search
-from hybrid_retriever import hybrid_search
+load_dotenv()
 
-from sentence_transformers import SentenceTransformer
+DEFAULT_MODEL     = "llama-3.3-70b-versatile"
+DEFAULT_MAX_CHARS = 3000
+DEFAULT_TEMP      = 0.1
+DEFAULT_TOP_K     = 5
 
+SYSTEM_PROMPT = (
+    "You are a strict research assistant for academic NLP/AI papers.\n\n"
+    "RULES (non-negotiable):\n"
+    "1. Answer ONLY using information explicitly stated in the CONTEXT provided.\n"
+    "2. If the answer is not in the context, respond exactly: "
+    "'The provided context does not contain enough information to answer this question.'\n"
+    "3. Do NOT use prior knowledge, even if you are confident the answer is correct.\n"
+    "4. Every factual claim must be traceable to a specific [Source N] in the context.\n"
+    "5. Cite sources inline using [Source N] notation.\n"
+    "6. Be concise — 1-3 sentences unless the question requires more detail."
+)
 
 @dataclass
 class RAGResponse:
-    query: str
-    answer: str
-    retrieved_chunks: list[dict]
-    retrieval_method: str
-    context_used: str
-    latency_retrieval: float
+    query:              str
+    answer:             str
+    retrieved_chunks:   list
+    retrieval_method:   str
+    context_used:       str
+    latency_retrieval:  float
     latency_generation: float
-    model: str
+    model:              str
 
-
-def build_context(chunks: list[dict], max_chars: int = 2000) -> str:
+def build_context(chunks: list, max_chars: int = DEFAULT_MAX_CHARS) -> str:
     context_parts = []
     total_chars = 0
 
     for i, chunk in enumerate(chunks):
-        text = chunk["text"].strip()
-        header = f"[Source {i+1} | {chunk['chunk_id']}]"
-        block = f"{header}\n{text}"
+        if isinstance(chunk, str):
+            text = chunk.strip()
+            chunk_id = f"idx_{i}"
+            doc_id = "manual"
+        elif hasattr(chunk, "text"):
+            text     = chunk.text.strip()
+            chunk_id = getattr(chunk, "chunk_id", f"c_{i}")
+            doc_id   = getattr(chunk, "doc_id", "unknown")
+        elif isinstance(chunk, dict):
+            text     = chunk.get("text", "").strip()
+            chunk_id = chunk.get("chunk_id", f"c_{i}")
+            doc_id   = chunk.get("doc_id", "unknown")
+        else:
+            continue
+
+        header = f"[Source {i+1} | {doc_id} | {chunk_id}]"
+        block  = f"{header}\n{text}"
 
         if total_chars + len(block) > max_chars:
             break
 
         context_parts.append(block)
         total_chars += len(block)
-
     return "\n\n".join(context_parts)
 
-
-def build_prompt(query: str, context: str) -> str:
-    return f"""You are a precise research assistant. Answer the question using ONLY the provided context.
-If the context does not contain enough information, explicitly state what is missing.
-Do not hallucinate or add information beyond what is in the context.
-
-CONTEXT:
-{context}
-
-QUESTION:
-{query}
-
-ANSWER:"""
-
-
-def generate(
-    query: str,
-    chunks: list[dict],
-    model_name: str = "mistral",
-    max_chars: int = 2000
-) -> RAGResponse:
-    t0 = time.time()
-    context = build_context(chunks, max_chars)
-    prompt = build_prompt(query, context)
-    t1 = time.time()
-
-    response = ollama.chat(
-        model=model_name,
-        messages=[{"role": "user", "content": prompt}],
-        options={"temperature": 0.1}  
-    )
-
-    t2 = time.time()
-    answer = response["message"]["content"].strip()
-
-    return RAGResponse(
-        query=query,
-        answer=answer,
-        retrieved_chunks=chunks,
-        retrieval_method=chunks[0].get("retrieval_method", "unknown") if chunks else "none",
-        context_used=context,
-        latency_retrieval=round(t1 - t0, 3),
-        latency_generation=round(t2 - t1, 3),
-        model=model_name
-    )
-
-
-def save_response(response: RAGResponse, output_path: str):
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    data = {
-        "query": response.query,
-        "answer": response.answer,
-        "retrieval_method": response.retrieval_method,
-        "latency_retrieval": response.latency_retrieval,
-        "latency_generation": response.latency_generation,
-        "model": response.model,
-        "retrieved_chunks": response.retrieved_chunks,
-        "context_used": response.context_used
-    }
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-
-if __name__ == "__main__":
-    print("[LOAD] Loading retrieval components...")
-    emb_index = load_index("data/processed/index_minilm")
-    bm25, bm25_chunks = load_bm25("data/processed/index_bm25")
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-
-    test_queries = [
-        "What is chunking and why does chunk size matter?",
-        "How does hybrid retrieval combine BM25 and dense search?",
-        "What metrics evaluate RAG system quality?",
-        "What happens when the answer is not in the documents?"  # adversarial
+def build_messages(query: str, context: str) -> list:
+    user_content = "CONTEXT:\n" + context + "\n\nQUESTION:\n" + query + "\n\nANSWER (using ONLY the context above):"
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",   "content": user_content},
     ]
 
-    all_responses = []
+def build_prompt(query: str, context: str) -> str:
+    return SYSTEM_PROMPT + "\n\nCONTEXT:\n" + context + "\n\nQUESTION:\n" + query + "\n\nANSWER:"
 
-    for query in test_queries:
-        print(f"\n{'='*60}")
-        print(f"Query: {query}")
+class GroqGenerator:
+    def __init__(self, api_key: Optional[str] = None, model: str = DEFAULT_MODEL):
+        key = api_key or os.getenv("GROQ_API_KEY")
+        if not key:
+            raise ValueError("GROQ_API_KEY tidak ditemukan.")
+        self.client = Groq(api_key=key)
+        self.model  = model
+        print(f"[GroqGenerator] Ready. Model: {model}")
 
-        # Gunakan hybrid sebagai default
-        results = hybrid_search(
-            query, emb_index, bm25, bm25_chunks, model, top_k=3
+    def generate(
+        self,
+        query: str,
+        chunks: list,
+        max_chars: int = DEFAULT_MAX_CHARS,
+        temperature: float = DEFAULT_TEMP,
+    ) -> RAGResponse:
+        t0 = time.time()
+        context  = build_context(chunks, max_chars)
+        t1 = time.time()
+
+        messages = build_messages(query, context)
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            temperature=temperature,
+            max_tokens=512,
         )
-        chunks = results["hybrid"]
 
-        if not chunks:
-            print("[WARN] Tidak ada chunk yang di-retrieve")
-            continue
+        t2 = time.time()
+        answer = response.choices[0].message.content.strip()
 
-        response = generate(query, chunks)
+        method = "hybrid_rerank"
+        if chunks:
+            first = chunks[0]
+            if hasattr(first, "metadata"):
+                method = first.metadata.get("retrieval_method", "hybrid_rerank")
+            elif isinstance(first, dict):
+                method = first.get("retrieval_method", "hybrid_rerank")
 
-        print(f"Method : {response.retrieval_method}")
-        print(f"Latency: retrieval={response.latency_retrieval}s | gen={response.latency_generation}s")
-        print(f"\nAnswer:\n{response.answer}")
+        formatted_chunks = []
+        for c in chunks:
+            if hasattr(c, "chunk_id"):
+                formatted_chunks.append({
+                    "chunk_id": c.chunk_id,
+                    "doc_id":   c.doc_id,
+                    "text":     c.text,
+                    "score":    getattr(c, "score", 0.0)
+                })
+            elif isinstance(c, dict):
+                formatted_chunks.append(c)
+            else:
+                formatted_chunks.append({"text": str(c)})
 
-        all_responses.append({
-            "query": response.query,
-            "answer": response.answer,
-            "retrieval_method": response.retrieval_method,
-            "latency_retrieval": response.latency_retrieval,
-            "latency_generation": response.latency_generation,
-            "retrieved_chunks": response.retrieved_chunks
-        })
+        return RAGResponse(
+            query=query,
+            answer=answer,
+            retrieved_chunks=formatted_chunks,
+            retrieval_method=method,
+            context_used=context,
+            latency_retrieval=round(t1 - t0, 3),
+            latency_generation=round(t2 - t1, 3),
+            model=self.model,
+        )
 
-    # Simpan semua
-    with open("results/logs/generation_test.json", 'w', encoding='utf-8') as f:
-        json.dump(all_responses, f, indent=2, ensure_ascii=False)
 
-    print(f"\n[OK] Saved → results/logs/generation_test.json")
+def generate(query: str, chunks: list, **kwargs) -> RAGResponse:
+    gen = GroqGenerator(model=kwargs.get("model_name", DEFAULT_MODEL))
+    return gen.generate(query, chunks, max_chars=kwargs.get("max_chars", DEFAULT_MAX_CHARS))
+
+
+def save_response(response: RAGResponse, output_path: str) -> None:
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    data = asdict(response)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print(f"[Saved] -> {output_path}")
+
+if __name__ == "__main__":
+    from src.retrieval.qdrant_store import QdrantVectorStore, HybridRetriever
+
+    store = QdrantVectorStore()
+    retriever = HybridRetriever(vector_store=store)
+    gen = GroqGenerator()
+
+    queries = [
+        "What is Retrieval-Augmented Generation?",
+        "How does hybrid search improve RAG performance?",
+        "What are the limitations of large language models?",
+    ]
+
+    for q in queries:
+        chunks = retriever.search(q, k=5)
+        resp = gen.generate(q, chunks)
+        print(f"\nQ: {q}")
+        print(f"A: {resp.answer}")
+        print(f"Latency: {resp.latency_generation}s")
+        print("-" * 60)

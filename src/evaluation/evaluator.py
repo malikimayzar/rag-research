@@ -1,5 +1,4 @@
 import json
-import sys
 from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import Optional
@@ -11,12 +10,11 @@ FAILURE_MODES = {
     "retrieval_miss": "Chunk yang relevan tidak masuk top-k sama sekali",
     "partial_context": "Chunk relevan masuk tapi informasi tidak lengkap",
     "misleading_similarity": "Chunk high-score tapi tidak relevan untuk menjawab",
-    "hallucination_with_context": "Konteks tersedia tapi LLM tetap hallucinate",
+    "hallucinat`ion_with_context": "Konteks tersedia tapi LLM tetap hallucinate",
     "correct": "Retrieval dan generation benar",
     "honest_abstention": "LLM jujur bilang tidak tahu karena konteks tidak cukup",
     "context_ordering_bias": "Jawaban berubah bergantung posisi chunk dalam prompt"
 }
-
 
 @dataclass
 class EvaluationResult:
@@ -80,7 +78,6 @@ REASON: [one sentence explanation]"""
     # Clamp ke 0-1
     score = max(0.0, min(1.0, score))
     return score, reason
-
 
 def score_context_relevance(
     query: str,

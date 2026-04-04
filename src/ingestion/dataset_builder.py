@@ -5,7 +5,6 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from dataclasses import dataclass
 
-
 @dataclass
 class PaperMeta:
     arxiv_id: str
@@ -75,7 +74,6 @@ def fetch_arxiv_metadata(arxiv_id: str) -> dict:
         print(f"  [ERROR] Failed to fetch {arxiv_id}: {e}")
         return None
 
-
 def download_pdf(pdf_url: str, output_path: str) -> bool:
     try:
         headers = {'User-Agent': 'RAGResearch/1.0 (academic research)'}
@@ -94,7 +92,6 @@ def download_pdf(pdf_url: str, output_path: str) -> bool:
     except Exception as e:
         print(f"  [ERROR] Download failed: {e}")
         return False
-
 
 def build_dataset(
     download_pdfs: bool = True,
@@ -143,9 +140,7 @@ def build_dataset(
 
     print(f"\n[OK] Metadata saved → {meta_path}")
     print(f"[OK] Total papers: {len(all_meta)}")
-
     return all_meta
-
 
 def create_adversarial_queries(meta_list: list[dict]) -> list[dict]:
     adversarial = []
@@ -204,7 +199,6 @@ def create_adversarial_queries(meta_list: list[dict]) -> list[dict]:
 
     print(f"[OK] {len(adversarial)} adversarial queries → {output_path}")
     return adversarial
-
 
 if __name__ == "__main__":
     import sys

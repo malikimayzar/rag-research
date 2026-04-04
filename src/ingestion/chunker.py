@@ -2,9 +2,7 @@ import json
 import re
 from pathlib import Path
 from dataclasses import dataclass, asdict
-from typing import Optional
 from document_loader import Document, load_documents
-
 
 @dataclass
 class Chunk:
@@ -20,7 +18,6 @@ class Chunk:
 
     def to_dict(self) -> dict:
         return asdict(self)
-
 
 def chunk_by_size(
     doc: Document,
@@ -40,7 +37,7 @@ def chunk_by_size(
         end = start + chunk_size
         chunk_text = text[start:end].strip()
 
-        if len(chunk_text) < 50:  # skip chunk terlalu pendek
+        if len(chunk_text) < 50:  
             break
 
         chunks.append(Chunk(
@@ -51,7 +48,7 @@ def chunk_by_size(
             end_char=end,
             tier=doc.tier,
             chunk_index=idx,
-            total_chunks=-1,  # diisi setelah loop
+            total_chunks=-1,  
             metadata={
                 "chunk_size": chunk_size,
                 "overlap": overlap,
@@ -62,19 +59,11 @@ def chunk_by_size(
         start += chunk_size - overlap
         idx += 1
 
-    # Update total_chunks
     for chunk in chunks:
         chunk.total_chunks = len(chunks)
-
     return chunks
 
-
 def chunk_by_paragraph(doc: Document, min_len: int = 100, max_len: int = 1000) -> list[Chunk]:
-    """
-    Paragraph-aware chunking.
-    Lebih natural, tapi ukuran tidak konsisten.
-    Berguna untuk eksperimen perbandingan strategi.
-    """
     paragraphs = re.split(r'\n\s*\n', doc.text)
     chunks = []
     buffer = ""
@@ -84,12 +73,11 @@ def chunk_by_paragraph(doc: Document, min_len: int = 100, max_len: int = 1000) -
         para = para.strip()
         if not para:
             continue
-
+        
         buffer = (buffer + "\n\n" + para).strip() if buffer else para
 
         if len(buffer) >= min_len:
             if len(buffer) > max_len:
-                # Buffer terlalu panjang, simpan dulu
                 chunks.append(Chunk(
                     chunk_id=f"{doc.doc_id}_p{idx:04d}",
                     doc_id=doc.doc_id,
@@ -134,9 +122,7 @@ def chunk_by_paragraph(doc: Document, min_len: int = 100, max_len: int = 1000) -
 
     for chunk in chunks:
         chunk.total_chunks = len(chunks)
-
     return chunks
-
 
 def chunk_documents(
     docs: list[Document],
@@ -159,7 +145,6 @@ def chunk_documents(
 
     return all_chunks
 
-
 def save_chunks(chunks: list[Chunk], output_path: str):
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     data = [c.to_dict() for c in chunks]
@@ -168,7 +153,6 @@ def save_chunks(chunks: list[Chunk], output_path: str):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
     print(f"[OK] Saved {len(chunks)} chunks → {output_path}")
-
 
 def print_stats(chunks: list[Chunk]):
     lengths = [len(c.text) for c in chunks]
@@ -181,7 +165,6 @@ def print_stats(chunks: list[Chunk]):
     for tier in [1, 2, 3]:
         tier_chunks = [c for c in chunks if c.tier == tier]
         print(f"  Tier {tier}: {len(tier_chunks)} chunks")
-
 
 if __name__ == "__main__":
     import sys

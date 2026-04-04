@@ -2,28 +2,20 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import List, Optional, Dict
-
-import numpy as np
-import sys
+from typing import List, Optional
 from pathlib import Path
-from sentence_transformers import SentenceTransformer
+
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
-    Distance,
-    VectorParams,
-    PointStruct,
-    Filter,
-    FieldCondition,
-    MatchValue,
+    Distance, VectorParams, PointStruct,
+    Filter, FieldCondition, MatchValue,
 )
 
-# --- Config ---
-EMBED_MODEL      = "sentence-transformers/all-MiniLM-L6-v2"
-VECTOR_DIM       = 384
-COLLECTION_NAME  = "rag_research"
-QDRANT_PATH      = "./data/qdrant_storage"
-BATCH_SIZE       = 128
+COLLECTION_NAME = "rag_research"
+QDRANT_PATH     = "./data/qdrant_storage"
+VECTOR_DIM      = 384
+BATCH_SIZE      = 128
+
 
 @dataclass
 class RetrievalResult:
@@ -33,6 +25,7 @@ class RetrievalResult:
     score:    float
     metadata: dict
 
+
 class QdrantVectorStore:
     def __init__(
         self,
@@ -40,12 +33,12 @@ class QdrantVectorStore:
         qdrant_path: str = QDRANT_PATH,
         qdrant_url: Optional[str] = None,
         qdrant_api_key: Optional[str] = None,
-        embed_model: str = EMBED_MODEL,
         vector_dim: int = VECTOR_DIM,
     ):
         self.collection_name = collection_name
         self.vector_dim = vector_dim
 
+        # ── Qdrant client ──────────────────────────────────────────
         if qdrant_url:
             print(f"[QdrantStore] Connecting to Qdrant Cloud: {qdrant_url}")
             self.client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
@@ -54,8 +47,11 @@ class QdrantVectorStore:
             Path(qdrant_path).mkdir(parents=True, exist_ok=True)
             self.client = QdrantClient(path=qdrant_path)
 
-        print(f"[QdrantStore] Loading embedding model: {embed_model}")
-        self.embedder = SentenceTransformer(embed_model)
+        # ── Embedder dari registry — tidak reload ──────────────────
+        from src.retrieval.model_registry import ModelRegistry
+        self.embedder = ModelRegistry.get().embedder
+        print(f"[QdrantStore] Embedder reused from ModelRegistry")
+
         self._ensure_collection()
 
     def _ensure_collection(self) -> None:
@@ -84,25 +80,23 @@ class QdrantVectorStore:
         points = []
         for chunk, emb in zip(chunks, all_embeddings):
             point_id = abs(hash(chunk["chunk_id"])) % (2**63)
-            points.append(
-                PointStruct(
-                    id=point_id,
-                    vector=emb.tolist(),
-                    payload={
-                        "chunk_id": chunk["chunk_id"],
-                        "doc_id":   chunk["doc_id"],
-                        "text":     chunk["text"],
-                        **chunk.get("metadata", {}),
-                    }
-                )
-            )
+            points.append(PointStruct(
+                id=point_id,
+                vector=emb.tolist(),
+                payload={
+                    "chunk_id": chunk["chunk_id"],
+                    "doc_id":   chunk["doc_id"],
+                    "text":     chunk["text"],
+                    **chunk.get("metadata", {}),
+                }
+            ))
 
         for i in range(0, len(points), BATCH_SIZE):
             self.client.upsert(
                 collection_name=self.collection_name,
                 points=points[i:i+BATCH_SIZE]
             )
-        print(f"[QdrantStore] [OK] Indexing done.")
+        print(f"[QdrantStore] Indexing done.")
 
     def search(
         self,

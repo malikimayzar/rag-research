@@ -8,10 +8,22 @@ from typing import List, Dict, Any, Optional
 from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
 from sentence_transformers import CrossEncoder
 from rank_bm25 import BM25Okapi
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from groq import Groq
 from dotenv import load_dotenv
+
+def _best_window(query: str, text: str, window: int = 600, step: int = 200) -> str:
+    """Ambil window 600-char yang paling banyak overlap keyword dengan query."""
+    if len(text) <= window:
+        return text
+    q_words = set(query.lower().split())
+    best_score, best_start = -1, 0
+    for start in range(0, len(text) - window, step):
+        snippet = text[start:start + window]
+        score = sum(1 for w in q_words if w in snippet.lower())
+        if score > best_score:
+            best_score, best_start = score, start
+    return text[best_start:best_start + window]
 
 load_dotenv()
 
@@ -55,8 +67,9 @@ class MasterHybridRetriever:
             self._bm25 = BM25Okapi(tokenized_corpus)
             print(f"[MasterRetriever] BM25 loaded: {len(self._chunks)} chunks")
 
-        print(f"[MasterRetriever] Loading Re-ranker: {reranker_model}")
-        self.reranker = CrossEncoder(reranker_model)
+        from src.retrieval.model_registry import ModelRegistry
+        self.reranker = ModelRegistry.get().reranker
+        print(f"[MasterRetriever] Reranker reused from ModelRegistry")
 
         # Groq client untuk multi-query + HyDE
         api_key = os.getenv("GROQ_API_KEY")
@@ -127,7 +140,6 @@ class MasterHybridRetriever:
         return None
 
     # ── Core Retrieval ─────────────────────────────────────────────────────────
-
     def _dense_search(self, query: str, k: int) -> List[RetrievalResult]:
         return self.vector_store.search(query, k=k)
 
@@ -217,9 +229,15 @@ class MasterHybridRetriever:
         if not use_reranker or not fused_results:
             return self._format_output(fused_results[:top_k], "hybrid_rrf_multiquery")
 
-        rerank_candidates = fused_results[:5]
+        rerank_candidates = fused_results[:10]
+
+        MAX_RERANK_CHARS = 500
+
+        def _truncate(text: str) -> str:
+            return text[:MAX_RERANK_CHARS] if  len(text) > MAX_RERANK_CHARS else text
+
         pairs = [
-            [query, getattr(hit, 'text') if hasattr(hit, 'text') else hit['text']]
+            [query, _best_window(query, getattr(hit, 'text') if hasattr(hit, 'text') else hit['text'])]
             for hit in rerank_candidates
         ]
         rerank_scores = self.reranker.predict(pairs)

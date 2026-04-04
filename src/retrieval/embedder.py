@@ -4,9 +4,7 @@ import faiss
 from pathlib import Path
 from dataclasses import dataclass
 from sentence_transformers import SentenceTransformer
-from typing import Optional
 import time
-
 
 @dataclass
 class EmbeddingIndex:
@@ -16,11 +14,9 @@ class EmbeddingIndex:
     model_name: str
     dimension: int
 
-
 def load_chunks(chunks_path: str) -> list[dict]:
     with open(chunks_path, 'r', encoding='utf-8') as f:
         return json.load(f)
-
 
 def build_dense_index(
     chunks: list[dict],
@@ -60,15 +56,10 @@ def build_dense_index(
         dimension=dimension
     )
 
-
 def save_index(emb_index: EmbeddingIndex, output_dir: str):
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
-
-    # Simpan FAISS index
     faiss.write_index(emb_index.index, str(out / "faiss.index"))
-
-    # Simpan metadata
     meta = {
         "model_name": emb_index.model_name,
         "dimension": emb_index.dimension,
@@ -78,18 +69,13 @@ def save_index(emb_index: EmbeddingIndex, output_dir: str):
     }
     with open(out / "index_meta.json", 'w') as f:
         json.dump(meta, f, indent=2, ensure_ascii=False)
-
     print(f"[OK] Index saved → {output_dir}")
-
 
 def load_index(index_dir: str) -> EmbeddingIndex:
     idx_path = Path(index_dir)
-
     faiss_index = faiss.read_index(str(idx_path / "faiss.index"))
-
     with open(idx_path / "index_meta.json", 'r') as f:
         meta = json.load(f)
-
     return EmbeddingIndex(
         index=faiss_index,
         chunk_ids=meta["chunk_ids"],
@@ -97,7 +83,6 @@ def load_index(index_dir: str) -> EmbeddingIndex:
         model_name=meta["model_name"],
         dimension=meta["dimension"]
     )
-
 
 def dense_search(
     query: str,
@@ -121,9 +106,7 @@ def dense_search(
         chunk["retrieval_rank"] = len(results) + 1
         chunk["retrieval_method"] = "dense"
         results.append(chunk)
-
     return results
-
 
 if __name__ == "__main__":
     import sys
@@ -131,20 +114,13 @@ if __name__ == "__main__":
 
     chunks = load_chunks("data/processed/chunks_512_64.json")
     print(f"Loaded {len(chunks)} chunks")
-
-    # Build index
     emb_index = build_dense_index(
         chunks,
         model_name="all-MiniLM-L6-v2"
     )
-
-    # Simpan
     save_index(emb_index, "data/processed/index_minilm")
-
-    # Quick search test
     model = SentenceTransformer("all-MiniLM-L6-v2")
     results = dense_search("what is chunking in RAG?", emb_index, model, top_k=3)
-
     print(f"\n=== Search Results ===")
     for r in results:
         print(f"\nRank {r['retrieval_rank']} | Score: {r['retrieval_score']:.4f}")

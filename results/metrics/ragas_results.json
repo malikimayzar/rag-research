@@ -1,0 +1,2292 @@
+[
+  {
+    "exp_id": "semantic_hybrid_rerank_v1",
+    "config": {
+      "chunking": "semantic",
+      "retrieval": "hybrid_rerank"
+    },
+    "samples": [
+      {
+        "question": "What is the zip code for the address 123 Main Street in San Francisco?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9999999999999991,
+        "context_precision": 0.0,
+        "context_recall": 0.26666666666666666,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the three developmental paradigms within the RAG framework?",
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the perplexity (PPL) for the 'base' model?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9038193743156592,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What datasets are used for commonsense reasoning tasks in the experiment?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6936511750935486,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the two main aspects focused on during the collection of preference annotations?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 0.0,
+        "answer_correctness": 0.8658801200047203,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What benchmark is used to measure the truthfulness of a language model in the given passage?",
+        "faithfulness": 0.4,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 0.8,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to the share of samples with an unsure or negligibly better rating over time in the human preference data rating?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8644462894405868,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.45089972565574943,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is included in the middle ear?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.99999999995,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to food in the stomach during digestion?",
+        "faithfulness": 0.3333333333333333,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.4349771589186574,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the performance of 'Few-Shot w/ Step-by-Step' at 40 paths compared to human-written few-shot CoT?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.31045569312704446,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to Llama 2-Chat's behavior when more safety data is used?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9057913639108075,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the title of the paper by Armand Joulin and Tomas Mikolov?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5119986177454408,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the purpose of fine-tuning the embedding model in specialized disciplines such as healthcare and legal practice?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7124295049858391,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "In what year was the Falcon-40B model introduced?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "Who proposed replacing RNNs with self-attention?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.16666666666666666,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "How many parameters are in the largest version of the T0 and T𝑘-INSTRUCT models used in the experiments?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.2631578947368421,
+        "answer_correctness": 0.586041261860905,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "Why does the dot product attention without scaling perform poorly for larger values of dk?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.9999999999999997,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6830522296570698,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "In what year was the paper 'Retrieval-augmented generation for knowledge-intensive nlp tasks' published?",
+        "faithfulness": 0.42857142857142855,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.13629653558653504,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What does BM25 excel at in the context of information retrieval?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the challenges faced by Large Language Models (LLMs) according to the passage?",
+        "faithfulness": 0.5714285714285714,
+        "answer_relevancy": 0.9496066056825496,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5518666922601101,
+        "latency_ms": 114433.93683433533,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.6754385964912281,
+    "avg_answer_relevancy": 0.943574453887759,
+    "avg_context_precision": 0.9499999999425001,
+    "avg_context_recall": 0.860916179337232,
+    "avg_answer_correctness": 0.5702783399005357,
+    "avg_latency_ms": 114433.93683433533,
+    "hallucination_rate": 0.15789473684210525,
+    "total_samples": 20
+  },
+  {
+    "exp_id": "semantic_hybrid_rerank_v1",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank_bge"
+    },
+    "samples": [
+      {
+        "question": "What is the zip code for the address 123 Main Street in San Francisco?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9999999999999991,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5805524682927381,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the three developmental paradigms within the RAG framework?",
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9804663692733615,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8093731136174391,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the perplexity (PPL) for the 'base' model?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.015278512119897312,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What datasets are used for commonsense reasoning tasks in the experiment?",
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9757183266745727,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8491609571414309,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the two main aspects focused on during the collection of preference annotations?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.9944242406121365,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.4130375292652214,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What benchmark is used to measure the truthfulness of a language model in the given passage?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9547151710525341,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.36697288047632004,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to the share of samples with an unsure or negligibly better rating over time in the human preference data rating?",
+        "faithfulness": 0.25,
+        "answer_relevancy": 0.69353624907651,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.3547612407929015,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is included in the middle ear?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8905142832108456,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to food in the stomach during digestion?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the performance of 'Few-Shot w/ Step-by-Step' at 40 paths compared to human-written few-shot CoT?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What happens to Llama 2-Chat's behavior when more safety data is used?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the title of the paper by Armand Joulin and Tomas Mikolov?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What is the purpose of fine-tuning the embedding model in specialized disciplines such as healthcare and legal practice?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "In what year was the Falcon-40B model introduced?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "Who proposed replacing RNNs with self-attention?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "How many parameters are in the largest version of the T0 and T𝑘-INSTRUCT models used in the experiments?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "Why does the dot product attention without scaling perform poorly for larger values of dk?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "In what year was the paper 'Retrieval-augmented generation for knowledge-intensive nlp tasks' published?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What does BM25 excel at in the context of information retrieval?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      },
+      {
+        "question": "What are the challenges faced by Large Language Models (LLMs) according to the passage?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 25780.911123752594,
+        "metadata": {
+          "exp_id": "semantic_hybrid_rerank_v1"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.66875,
+    "avg_answer_relevancy": 0.8111718299874949,
+    "avg_context_precision": 0.8571428570809524,
+    "avg_context_recall": 0.8571428571428571,
+    "avg_answer_correctness": 0.48416238595799266,
+    "avg_latency_ms": 25780.911123752594,
+    "hallucination_rate": 0.125,
+    "total_samples": 20
+  },
+  {
+    "exp_id": "clean_dataset_v1",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank",
+      "llm": "llama-3.1-8b-instant",
+      "judge_model": "llama-3.1-8b-instant",
+      "dataset": "clean_33_pairs"
+    },
+    "samples": [
+      {
+        "question": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8913160373400596,
+        "context_precision": 0.99999999998,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6826377817591579,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8561654965182394,
+        "context_precision": 0.8333333332916666,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5857132723175502,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How are FEVER class labels mapped for training in the context of RAG models?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.806689503179259,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7382521025993773,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How are high-confidence predictions filtered in the method described?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What type of language models are being considered for pretraining with retrieval?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.4499999999775,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How does RAG compare to Fine-tuning (FT) in terms of its suitability for specific tasks?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8928618154651735,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6767509063663748,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How much CPU memory is required to store the document index after compression using FAISS's compression tools?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4142094657027708,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.0,
+        "answer_correctness": 0.508113430269201,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How many SFT annotations were collected before stopping the annotation process?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9999999999999997,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7932951854955804,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What limitation do instruction-tuning with human annotation and SELFINSTRUCT share, according to the authors?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9244582057474151,
+        "context_precision": 0.94999999997625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7341788592406944,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "Why may RAG-Token perform best at generating Jeopardy questions?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9707888665011036,
+        "context_precision": 0.94999999997625,
+        "context_recall": 0.0,
+        "answer_correctness": 0.6488581757837032,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What percentage of cases did evaluators indicate that RAG was more factual than BART?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.9999999999999992,
+        "context_precision": 0.699999999965,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7120293468976977,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What type of pretraining is used to improve dense retrieval on structured data, according to Liu and G. Yu?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6233897739756566,
+        "context_precision": 0.8666666666377778,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6535175748025153,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How do attention mechanisms typically function in sequence modeling and transduction models, according to the given text?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9574760445934389,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.588350437103106,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How does the margin component affect the Helpfulness reward model accuracy?",
+        "faithfulness": 0.42857142857142855,
+        "answer_relevancy": 0.6019654212799866,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.43969208834503115,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What characteristic of RAG allows it to achieve strong results without requiring expensive pre-training?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8288544393652949,
+        "context_precision": 0.8874999999778125,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5395433474750571,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What are some limitations of human evaluations that can introduce noise into the results?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8278683549112839,
+        "context_precision": 0.99999999998,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8060614571970851,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What is the unexpected effect of including irrelevant documents in the context on accuracy, according to the research findings?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8893174009226389,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5779579724912047,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What is the primary reason for the limited proficiency of the Llama 2-Chat model in non-English languages?",
+        "faithfulness": 0.4,
+        "answer_relevancy": 0.897763783963839,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.0,
+        "answer_correctness": 0.3701096616980233,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How does the HateBERT classifier assign a toxicity score to documents in the pretraining corpus?",
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.7601278162303607,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.47557412473586624,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How is the inter-rater reliability (IRR) measured among annotators for safety assessments, and what is the average IRR score for Llama 2-Chat annotations?",
+        "faithfulness": 0.4,
+        "answer_relevancy": 0.8657580074658844,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5317294010995186,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What is believed to be the first step toward higher-quality data for building better instruction-following models?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.29347809939511404,
+        "context_precision": 0.8874999999778125,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8349404754098428,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What task is a large language model found to be good at, according to Hong and A. Sun's findings?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8804637582819742,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.46140521060317036,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What type of data was used to bootstrap the SFT stage?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3687819303558297,
+        "context_precision": 0.8333333332916666,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6704951689914289,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What is the state-of-the-art zero-shot performance achieved by the proposed approach on the GSM8K dataset?",
+        "faithfulness": 0.3333333333333333,
+        "answer_relevancy": 0.7341868512730806,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6483858569326084,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How can RAG be fine-tuned for sequence-to-sequence tasks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 1.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What are some challenges that language models face when dealing with user queries in Naive RAG?",
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.9896635790379205,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.4715109104628239,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How did red team participants annotate the attributes of the dialogue they created, in terms of capturing the degree of risk?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6893119343444875,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9919405035167097,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What additional step is included for accuracy scores on the GSM8K and DROP benchmarks?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9436818872686524,
+        "context_precision": 0.7555555555303703,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7487208043990414,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How does the hierarchical structure in the Structural Index method aid in the retrieval and processing of pertinent data?",
+        "faithfulness": 0.14285714285714285,
+        "answer_relevancy": 0.8917458397333581,
+        "context_precision": 0.9999999999,
+        "context_recall": 0.2,
+        "answer_correctness": 0.43341724994186415,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What technique is used to enable complex reasoning in large language models?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5159688843431995,
+        "context_precision": 0.4499999999775,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9758042810466312,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What method is used to mitigate model biases in sentence-pair classification according to the work by Thorne and Andreas Vlachos?",
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9330509235252938,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.4233006834788919,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "How many instructions out of 52,445 contain a verb-noun structure, and what happens in the instructions that do not contain this structure?",
+        "faithfulness": 0.5714285714285714,
+        "answer_relevancy": 0.7705602872190903,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6029404311422288,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      },
+      {
+        "question": "What happens to Llama 2-Chat's behavior when more safety data is used, particularly in regards to generating offensive content?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7832238460351375,
+        "context_precision": 0.8041666666465626,
+        "context_recall": 1.0,
+        "answer_correctness": 0.690926447543531,
+        "latency_ms": 134379.38061627475,
+        "metadata": {
+          "exp_id": "clean_dataset_v1"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.7986507936507936,
+    "avg_answer_relevancy": 0.7213069167871377,
+    "avg_context_precision": 0.8444865319455405,
+    "avg_context_recall": 0.94,
+    "avg_answer_correctness": 0.6338717716381839,
+    "avg_latency_ms": 134379.38061627475,
+    "hallucination_rate": 0.16666666666666666,
+    "total_samples": 33
+  },
+  {
+    "exp_id": "clean_dataset_v2_70b_judge",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank",
+      "generator": "llama-3.1-8b-instant",
+      "judge": "llama-3.3-70b-versatile",
+      "dataset": "clean_55_pairs"
+    },
+    "samples": [
+      {
+        "question": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9311607949449588,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5697432135614168,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8508198779502298,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9071418437461216,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How are FEVER class labels mapped for training in the context of RAG models?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7768721380712198,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9882521025993773,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How are high-confidence predictions filtered in the method described?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0237731416473471,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of language models are being considered for pretraining with retrieval?",
+        "faithfulness": 0.0,
+        "answer_relevancy": -0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does RAG compare to Fine-tuning (FT) in terms of its suitability for specific tasks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How much CPU memory is required to store the document index after compression using FAISS's compression tools?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How many SFT annotations were collected before stopping the annotation process?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What limitation do instruction-tuning with human annotation and SELFINSTRUCT share, according to the authors?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "Why may RAG-Token perform best at generating Jeopardy questions?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What percentage of cases did evaluators indicate that RAG was more factual than BART?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of pretraining is used to improve dense retrieval on structured data, according to Liu and G. Yu?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How do attention mechanisms typically function in sequence modeling and transduction models, according to the given text?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does the margin component affect the Helpfulness reward model accuracy?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What characteristic of RAG allows it to achieve strong results without requiring expensive pre-training?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What are some limitations of human evaluations that can introduce noise into the results?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the unexpected effect of including irrelevant documents in the context on accuracy, according to the research findings?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the primary reason for the limited proficiency of the Llama 2-Chat model in non-English languages?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does the HateBERT classifier assign a toxicity score to documents in the pretraining corpus?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How is the inter-rater reliability (IRR) measured among annotators for safety assessments, and what is the average IRR score for Llama 2-Chat annotations?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is believed to be the first step toward higher-quality data for building better instruction-following models?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What task is a large language model found to be good at, according to Hong and A. Sun's findings?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of data was used to bootstrap the SFT stage?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the state-of-the-art zero-shot performance achieved by the proposed approach on the GSM8K dataset?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How can RAG be fine-tuned for sequence-to-sequence tasks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What are some challenges that language models face when dealing with user queries in Naive RAG?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How did red team participants annotate the attributes of the dialogue they created, in terms of capturing the degree of risk?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What additional step is included for accuracy scores on the GSM8K and DROP benchmarks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does the hierarchical structure in the Structural Index method aid in the retrieval and processing of pertinent data?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What technique is used to enable complex reasoning in large language models?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What method is used to mitigate model biases in sentence-pair classification according to the work by Thorne and Andreas Vlachos?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How many instructions out of 52,445 contain a verb-noun structure, and what happens in the instructions that do not contain this structure?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What happens to Llama 2-Chat's behavior when more safety data is used, particularly in regards to generating offensive content?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of learners are the models by Brown, Benjamin Mann, et al.?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does the performance of GPT3SELF-INST compare to models trained on T0 or SUPERNI data?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the challenge that large language models face according to the International Conference on Machine Learning?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "Where can the illustration of the model's consistency be found?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What are some of the datasets mentioned in the chunk for question answering tasks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the benchmark proposed for evaluating the robustness of large language models against external counterfactual knowledge?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What factors affect the final generation results in the context of Retrieval Source RAG?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of dataset is mentioned in the context of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the model or method proposed by Nagrani et al. for dense video captioning?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the format of the publication where the capacity for moral self-correction in large language models is discussed?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "At what point does the improvement in GPT3SELF-INST models almost plateau with increasing data size?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the preprint repository where the paper \"Googles neural machine translation system: Bridging the gap between human and machine translation\" was published?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of examples are formulated for each tool in the evaluation on the math datasets?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of evaluation was used to complement human evaluation in assessing the models?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the benchmark for general-purpose language understanding systems mentioned in the chunk?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What dimensions of LM safety are evaluated in the Safety Benchmarks for Pretrained Models for Llama 2?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the dimension of the output produced by all sub-layers and embedding layers in the model?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How many tasks were used for generalization via declarative instructions in the Super-naturalinstructions approach?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the conference where the case study on the colossal clean crawled corpus was presented?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What is the size of the prompt set used for human evaluations in the study?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "How does the delta of potential gain of fine-tuning change with the number of samples?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      },
+      {
+        "question": "What type of language models are learned in the Zemi approach?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.0,
+        "latency_ms": 5076.541449806907,
+        "metadata": {
+          "exp_id": "clean_dataset_v2_70b_judge"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.8,
+    "avg_answer_relevancy": 0.5117705621932818,
+    "avg_context_precision": 0.7499999999416667,
+    "avg_context_recall": 0.75,
+    "avg_answer_correctness": 0.6222275753885657,
+    "avg_latency_ms": 5076.541449806907,
+    "hallucination_rate": 0.2,
+    "total_samples": 55
+  },
+  {
+    "exp_id": "final_v1_70b_gen_8b_judge",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank",
+      "generator": "llama-3.3-70b-versatile",
+      "judge": "llama-3.1-8b-instant+json_mode",
+      "dataset": "clean_55_pairs"
+    },
+    "samples": [
+      {
+        "question": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8239269675990428,
+        "context_precision": 0.8874999999778125,
+        "context_recall": 1.0,
+        "answer_correctness": 0.615194678416169,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9119923894374007,
+        "context_precision": 0.8333333332916666,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5928383886160773,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How are FEVER class labels mapped for training in the context of RAG models?",
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.7017949593194706,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.623962402660407,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How are high-confidence predictions filtered in the method described?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0,
+        "answer_correctness": 0.5237731416473471,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of language models are being considered for pretraining with retrieval?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.7874027748633692,
+        "context_precision": 0.4499999999775,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9973370896398278,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does RAG compare to Fine-tuning (FT) in terms of its suitability for specific tasks?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9275115897869884,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6624752117940679,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How much CPU memory is required to store the document index after compression using FAISS's compression tools?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9091911089659922,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9547190145125182,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How many SFT annotations were collected before stopping the annotation process?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.9906867138527414,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7800665833683988,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What limitation do instruction-tuning with human annotation and SELFINSTRUCT share, according to the authors?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9244582057474151,
+        "context_precision": 0.8666666666377778,
+        "context_recall": 1.0,
+        "answer_correctness": 0.49287585262936756,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "Why may RAG-Token perform best at generating Jeopardy questions?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9707888665011036,
+        "context_precision": 0.7555555555303703,
+        "context_recall": 0.3333333333333333,
+        "answer_correctness": 0.7519761159143415,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What percentage of cases did evaluators indicate that RAG was more factual than BART?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.9999999999999992,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7106765442046106,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of pretraining is used to improve dense retrieval on structured data, according to Liu and G. Yu?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.8520604616120916,
+        "context_precision": 0.8666666666377778,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6609663882797008,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How do attention mechanisms typically function in sequence modeling and transduction models, according to the given text?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9086634834334001,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8288096825541911,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the margin component affect the Helpfulness reward model accuracy?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.9062299112974754,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.49544974748396475,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What characteristic of RAG allows it to achieve strong results without requiring expensive pre-training?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.42812482580611516,
+        "context_precision": 0.8874999999778125,
+        "context_recall": 1.0,
+        "answer_correctness": 0.9946971805972371,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are some limitations of human evaluations that can introduce noise into the results?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8278683549112839,
+        "context_precision": 0.99999999998,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8024416420323831,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the unexpected effect of including irrelevant documents in the context on accuracy, according to the research findings?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8893174009226389,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7983105495276828,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the primary reason for the limited proficiency of the Llama 2-Chat model in non-English languages?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.897763783963839,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7549728204088202,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the HateBERT classifier assign a toxicity score to documents in the pretraining corpus?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9424751912958848,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6277453324965881,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How is the inter-rater reliability (IRR) measured among annotators for safety assessments, and what is the average IRR score for Llama 2-Chat annotations?",
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.8073423424522187,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.537395312409938,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is believed to be the first step toward higher-quality data for building better instruction-following models?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.29347809939511404,
+        "context_precision": 0.6999999999766667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5439437287813879,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What task is a large language model found to be good at, according to Hong and A. Sun's findings?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.867118880155351,
+        "context_precision": 0.99999999995,
+        "context_recall": 0.125,
+        "answer_correctness": 0.4874354477673315,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of data was used to bootstrap the SFT stage?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.3152977262484638,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7474106779712124,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the state-of-the-art zero-shot performance achieved by the proposed approach on the GSM8K dataset?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.38789969579875766,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How can RAG be fine-tuned for sequence-to-sequence tasks?",
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5113019755614469,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are some challenges that language models face when dealing with user queries in Naive RAG?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6089410788376255,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 0.616804669369502,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How did red team participants annotate the attributes of the dialogue they created, in terms of capturing the degree of risk?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6893119343444875,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.993741232284904,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What additional step is included for accuracy scores on the GSM8K and DROP benchmarks?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.932549199415534,
+        "context_precision": 0.699999999965,
+        "context_recall": 1.0,
+        "answer_correctness": 0.998660711184326,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the hierarchical structure in the Structural Index method aid in the retrieval and processing of pertinent data?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8917458397333581,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6029547805975987,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What technique is used to enable complex reasoning in large language models?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5159688843431995,
+        "context_precision": 0.4499999999775,
+        "context_recall": 1.0,
+        "answer_correctness": 0.8009902786377762,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What method is used to mitigate model biases in sentence-pair classification according to the work by Thorne and Andreas Vlachos?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9177298613995847,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6105844226249852,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How many instructions out of 52,445 contain a verb-noun structure, and what happens in the instructions that do not contain this structure?",
+        "faithfulness": 0.4444444444444444,
+        "answer_relevancy": 0.7705602872190903,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "answer_correctness": 0.575577544416681,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What happens to Llama 2-Chat's behavior when more safety data is used, particularly in regards to generating offensive content?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8886235447940284,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5734447077051503,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of learners are the models by Brown, Benjamin Mann, et al.?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.5314079173236993,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7216203684614702,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the performance of GPT3SELF-INST compare to models trained on T0 or SUPERNI data?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9613055105693841,
+        "context_precision": 0.8055555555287036,
+        "context_recall": 1.0,
+        "answer_correctness": 0.5972656753508455,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the challenge that large language models face according to the International Conference on Machine Learning?",
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.7505254365807995,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "answer_correctness": 0.736673605922696,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "Where can the illustration of the model's consistency be found?",
+        "faithfulness": 0.3333333333333333,
+        "answer_relevancy": 0.9999999999999997,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0,
+        "answer_correctness": 0.6187389560702587,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are some of the datasets mentioned in the chunk for question answering tasks?",
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9229167124369629,
+        "context_precision": 0.0,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the benchmark proposed for evaluating the robustness of large language models against external counterfactual knowledge?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What factors affect the final generation results in the context of Retrieval Source RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of dataset is mentioned in the context of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the model or method proposed by Nagrani et al. for dense video captioning?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the format of the publication where the capacity for moral self-correction in large language models is discussed?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "At what point does the improvement in GPT3SELF-INST models almost plateau with increasing data size?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the preprint repository where the paper \"Googles neural machine translation system: Bridging the gap between human and machine translation\" was published?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of examples are formulated for each tool in the evaluation on the math datasets?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of evaluation was used to complement human evaluation in assessing the models?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the benchmark for general-purpose language understanding systems mentioned in the chunk?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What dimensions of LM safety are evaluated in the Safety Benchmarks for Pretrained Models for Llama 2?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the dimension of the output produced by all sub-layers and embedding layers in the model?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How many tasks were used for generalization via declarative instructions in the Super-naturalinstructions approach?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the conference where the case study on the colossal clean crawled corpus was presented?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the size of the prompt set used for human evaluations in the study?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the delta of potential gain of fine-tuning change with the number of samples?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of language models are learned in the Zemi approach?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 96542.45182384145,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.7296783625730994,
+    "avg_answer_relevancy": 0.7438179011727671,
+    "avg_context_precision": 0.8277046783150287,
+    "avg_context_recall": 0.9313063063063064,
+    "avg_answer_correctness": 0.6846414096675667,
+    "avg_latency_ms": 96542.45182384145,
+    "hallucination_rate": 0.18421052631578946,
+    "total_samples": 55
+  }
+]

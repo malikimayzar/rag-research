@@ -1,304 +1,317 @@
-# 🔍 RAG System Analysis
-### Ablation Study on Chunking Strategies and Retrieval Methods
+# RAG Research
 
-> **Maliki Mayzar** · February 2025  
-> Complete Retrieval-Augmented Generation (RAG) pipeline built from scratch across 8 development phases.
+> Production-grade RAG pipeline with Rust-powered chunking, hybrid retrieval, and RAGAS evaluation.  
+> Part of the [AI Infrastructure Workspace](https://github.com/malikimayzar) — a polyglot research platform built with Python, Rust, and Go.
 
----
-
-## 📊 Key Results (TL;DR)
-
-| Rank | Method | Chunk | Faithfulness | Hallucination | Latency |
-|------|--------|-------|-------------|--------------|---------|
-| 🥇 1 | BM25 | 256 | **1.000** | **0%** | 199s |
-| 🥈 2 | Hybrid RRF | 512 | **1.000** | **0%** | 199s |
-| 🥉 3 | Dense | 512 | 0.933 | **0%** | 316s |
-| 4 | Dense | 256 | 0.917 | **0%** | 233s |
-| 5 | BM25 | 512 | 0.833 | **0%** | 328s |
-| 6 | Hybrid RRF | 256 | 0.633 | **0%** | 211s |
-
-**Zero hallucinations across all 18 evaluated queries.**
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Rust](https://img.shields.io/badge/Rust-PyO3%20%2B%20Maturin-orange)
+![Go](https://img.shields.io/badge/Go-Dashboard-cyan)
+![RAGAS](https://img.shields.io/badge/Eval-RAGAS-green)
 
 ---
 
-## 🗂️ Project Structure
+## What This Is
 
-```
-rag-research/
-├── data/
-│   ├── raw/                          # 7 ArXiv PDFs + TXT
-│   │   ├── tier1_2005_11401.pdf      # RAG (Lewis et al.)
-│   │   ├── tier1_2312_10997.pdf      # Advanced RAG
-│   │   ├── tier1_test_intro.txt      # Custom intro doc
-│   │   ├── tier2_2210_11610.pdf      # Retrieval methods
-│   │   ├── tier2_2212_10560.pdf      # Dense retrieval
-│   │   ├── tier3_1706_03762.pdf      # Attention Is All You Need
-│   │   └── tier3_2307_09288.pdf      # LLM survey
-│   ├── processed/
-│   │   ├── documents.json            # Parsed documents
-│   │   ├── chunks_512_64.json        # Chunks (size=512, overlap=64)
-│   │   ├── dataset_meta.json         # Dataset metadata
-│   │   ├── index_bm25/
-│   │   │   ├── bm25_chunks.json      # BM25 chunk index
-│   │   │   └── bm25.pkl              # BM25 serialized index
-│   │   └── index_minilm/             # FAISS vector index
-│   └── adversarial/
-│       └── adversarial_queries.json  # Adversarial test queries
-│
-├── src/
-│   ├── ingestion/
-│   │   ├── document_loader.py        # PDF/TXT parsing
-│   │   ├── chunker.py                # Fixed-size chunking
-│   │   └── dataset_builder.py        # Dataset construction
-│   ├── retrieval/
-│   │   ├── embedder.py               # all-MiniLM-L6-v2 encoding
-│   │   ├── bm25_retriever.py         # BM25 sparse retrieval
-│   │   └── hybrid_retriever.py       # RRF fusion
-│   ├── generation/
-│   │   └── generator.py              # Mistral LLM interface
-│   └── evaluation/
-│       └── evaluator.py              # Metrics: faithfulness, ctx, ans
-│
-├── experiments/
-│   ├── ablation_runner.py            # Main ablation script
-│   ├── chunking/                     # Chunking experiments
-│   ├── embedding/                    # Embedding experiments
-│   ├── hybrid/                       # Hybrid retrieval experiments
-│   └── reranking/                    # Cross-encoder reranking
-│
-├── notebooks/
-│   └── analysis.ipynb                # Visualization notebook
-│
-├── results/
-│   ├── figures/                      # 6 visualization plots
-│   │   ├── fig1_leaderboard.png
-│   │   ├── fig2_chunksize.png
-│   │   ├── fig3_heatmap.png
-│   │   ├── fig4_failure_modes.png
-│   │   ├── fig5_quality_latency.png
-│   │   └── fig6_radar.png
-│   ├── metrics/
-│   │   ├── ablation_final.json       # Final 6-experiment results
-│   │   ├── ablation_incremental.json # Per-experiment incremental
-│   │   └── evaluation_results.json   # Phase 5–6 eval results
-│   ├── logs/
-│   │   ├── ablation_full.log         # Full ablation run log
-│   │   ├── generation_test.json      # Generation test results
-│   │   └── hybrid_search_test.json   # Hybrid search test
-│   └── failure_cases/
-│       └── failure_analysis.json     # Failure mode details
-│
-├── reports/
-│   ├── FINAL_REPORT.md               # Mini-paper (Abstract→Conclusion)
-│   └── RAG_Final_Report.pdf          # PDF version
-│
-├── requirements/
-│   ├── base.txt                      # Core dependencies
-│   ├── llm.txt                       # LLM dependencies
-│   ├── api.txt                       # API dependencies
-│   ├── dev.txt                       # Dev tools
-│   └── research.txt                  # Research tools
-│
-├── visualize.py                      # Visualization script
-├── requirements.txt                  # Main requirements
-├── .gitignore
-└── README.md
-```
+An ablation study and evaluation platform for Retrieval-Augmented Generation systems — comparing chunking strategies (Python semantic vs Rust semantic) and retrieval methods (Dense, BM25, Hybrid RRF + BGE Reranker) with standardized RAGAS metrics.
+
+Built as the **Precision Engine** of a larger AI infrastructure stack. The system does not just answer questions — it measures how well it answers them.
 
 ---
 
-## 🏗️ System Architecture
+## Architecture
 
 ```
 PDF/TXT Documents
        │
        ▼
-┌──────────────────┐
-│ document_loader  │  PDF parsing + text extraction
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│   chunker.py     │  fixed_size strategy
-│  chunk=256/512   │  overlap=0/64
-└────────┬─────────┘
-         │
-    ┌────┴────┐
-    ▼         ▼
-┌────────┐ ┌────────┐
-│ FAISS  │ │  BM25  │  embedder.py + bm25_retriever.py
-│(dense) │ │(sparse)│  all-MiniLM-L6-v2 (384-dim)
-└────────┘ └────────┘
-    ▼         ▼
-┌──────────────────┐
-│ hybrid_retriever │  Reciprocal Rank Fusion (k=60)
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│  generator.py    │  Mistral via Ollama (local)
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│  evaluator.py    │  Faithfulness · Context Rel · Answer Rel
-└──────────────────┘
+┌─────────────────────┐
+│  document_loader.py │  PyMuPDF — layout-aware PDF parsing
+└──────────┬──────────┘
+           │
+    ┌──────┴──────┐
+    ▼             ▼
+┌────────┐  ┌──────────────────────┐
+│chunker │  │ semantic_chunker_rust │  Rust + PyO3 + Maturin
+│(Python)│  │ (unicode-aware, fast) │  982 chunks from 7 papers
+└────────┘  └──────────┬───────────┘
+                       │
+           ┌───────────┴───────────┐
+           ▼                       ▼
+    ┌─────────────┐        ┌──────────────┐
+    │  Qdrant     │        │  BM25Okapi   │
+    │  HNSW       │        │  (sparse)    │
+    │  (dense)    │        └──────┬───────┘
+    └──────┬──────┘               │
+           │                      │
+           └──────────┬───────────┘
+                      ▼
+           ┌──────────────────────┐
+           │  Hybrid RRF (k=60)   │  Reciprocal Rank Fusion
+           └──────────┬───────────┘
+                      │
+                      ▼
+           ┌──────────────────────┐
+           │  BGE Reranker        │  BAAI/bge-reranker-base
+           │  Cross-Encoder       │  Cross-encoder reranking
+           └──────────┬───────────┘
+                      │
+                      ▼
+           ┌──────────────────────┐
+           │  Groq Generator      │  llama-3.3-70b-versatile
+           │  System Prompt Strict│  Citation rules, no hallucination
+           └──────────┬───────────┘
+                      │
+                      ▼
+           ┌──────────────────────┐
+           │  RAGAS Evaluator     │  5 metrics — Faithfulness,
+           │  (Groq + HuggingFace)│  Answer Relevancy, Context
+           └──────────────────────┘  Precision, Recall, Correctness
 ```
 
 ---
 
-## 🚀 Quick Start
+## Stack
 
-### Prerequisites
+| Layer | Tool | Role |
+|---|---|---|
+| Chunking | Rust + PyO3 + Maturin | Unicode-aware semantic segmentation, 10-50x faster than Python |
+| Embedding | all-MiniLM-L6-v2 (384-dim) | Dense vector encoding |
+| Vector Store | Qdrant HNSW (local persistent) | 982 vectors, filterable, scalable |
+| Sparse Retrieval | BM25Okapi (rank-bm25) | Keyword matching |
+| Hybrid Fusion | Reciprocal Rank Fusion k=60 | Combine dense + BM25 |
+| Reranker | BAAI/bge-reranker-base | Cross-encoder reranking |
+| LLM | Groq llama-3.3-70b-versatile | Sub-second generation |
+| Evaluation | RAGAS + LangChain | 5 standardized metrics |
+| Dashboard | Go + Fiber | Analytics leaderboard |
+
+---
+
+## Evaluation Results
+
+All runs on 7 ArXiv papers (RAG, LLM, Attention domains). 55 clean QA pairs, RAGAS framework.
+
+### RAGAS Metrics — Best Run (clean_dataset_v2, 70b judge, n=55)
+
+| Metric | Score | Notes |
+|---|---|---|
+| **Faithfulness** | **0.8000** | Every claim traceable to source |
+| **Context Precision** | 0.7500 | Relevant chunks retrieved |
+| **Context Recall** | 0.9313 | Near-complete coverage |
+| **Answer Relevancy** | 0.7438 | On-topic responses |
+| **Answer Correctness** | 0.6846 | Factual accuracy vs ground truth |
+| **Hallucination Rate** | 18.4% | Detected and logged |
+
+### Progression Across Runs
+
+| Experiment | Faithfulness | Samples | Judge | Notes |
+|---|---|---|---|---|
+| semantic_hybrid_rerank_v1 | 0.6754 | 20 | Manual | Corrupted dataset baseline |
+| clean_dataset_v1 | 0.7987 | 33 | 8b | Clean dataset, first run |
+| clean_dataset_v2 | **0.8000** | 55 | 70b | Full dataset, best result |
+| final_v1 | 0.7297 | 55 | 8b+json | 70b generator, 8b judge |
+
+**+18.4% Faithfulness improvement** from dataset cleanup + system prompt upgrade.
+
+### Original Ablation Study (Phase 1, Ollama/Mistral)
+
+6 experiments × 3 queries = 18 evaluations. Runtime: 241 minutes.
+
+| Rank | Method | Chunk | Faithfulness | Hallucination |
+|---|---|---|---|---|
+| 🥇 1 | BM25 | 256 | 1.000 | 0% |
+| 🥈 2 | Hybrid RRF | 512 | 1.000 | 0% |
+| 🥉 3 | Dense | 512 | 0.933 | 0% |
+| 4 | Dense | 256 | 0.917 | 0% |
+| 5 | BM25 | 512 | 0.833 | 0% |
+| 6 | Hybrid RRF | 256 | 0.633 | 0% |
+
+**Zero hallucinations across all 18 queries** with Ollama/Mistral + context-grounding prompt.
+
+---
+
+## Quick Start
+
 ```bash
-# Python 3.12
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+# Clone and setup
+git clone https://github.com/malikimayzar/rag-research
+cd rag-research
 
-# Ollama + Mistral (local LLM)
-ollama pull mistral
+python -m venv venv
+source venv/bin/activate
+pip install -e .
+
+# Set API key
+echo "GROQ_API_KEY=your_key_here" > .env
+
+# Build Rust chunker
+cd src/ingestion/semantic_chunker_rust && maturin develop && cd ../../..
+
+# Run full pipeline
+make all
 ```
 
-### Run Pipeline
+### Manual Steps
+
 ```bash
-# Step 1 — Ingest & parse documents
+# Ingest + chunk (Rust engine)
 python src/ingestion/document_loader.py
+python src/ingestion/semantic_chunker.py    # generates 982 chunks
 
-# Step 2 — Build chunks + indexes
-python src/ingestion/chunker.py
+# Index to Qdrant
+python src/retrieval/qdrant_store.py
 
-# Step 3 — Quick ablation (3 experiments)
-python experiments/ablation_runner.py
+# Run evaluation (55 samples)
+python scripts/run_eval.py
 
-# Step 4 — Full ablation (6 experiments, ~4 hours)
-python experiments/ablation_runner.py --full
+# Visualize
+python scripts/visualize.py
 
-# Step 5 — Generate visualizations
-python visualize.py
+# Start Go dashboard
+go run cmd/server/main.go
 ```
 
-### View Results Summary
+### Live Demo
+
 ```bash
-python3 -c "
-import json
-data = json.load(open('results/metrics/ablation_final.json'))
-for e in sorted(data, key=lambda x: -x['avg_faithfulness']):
-    c = e['config']
-    print(f\"{c['exp_id']} | {c['retrieval_method']:7} | chunk={c['chunk_size']} | \
-F:{e['avg_faithfulness']:.3f} C:{e['avg_context_relevance']:.3f} | {e['avg_latency']:.1f}s\")
-"
+python demo.py
+```
+
+```
+Q: What is Retrieval-Augmented Generation?
+A: Retrieval-Augmented Generation (RAG) is a technique that combines
+   information retrieval with language model generation [Source 1],
+   enhancing LLMs by retrieving relevant document chunks from an
+   external knowledge base [Source 2].
+⚡ Latency: 1.471s
 ```
 
 ---
 
-## 📈 Visualizations
+## Makefile
 
-| Figure | Description |
-|--------|-------------|
-| `fig1_leaderboard.png` | Faithfulness & context relevance ranking |
-| `fig2_chunksize.png` | Chunk size 256 vs 512 per method |
-| `fig3_heatmap.png` | Full metrics heatmap across all experiments |
-| `fig4_failure_modes.png` | Correct / partial / abstention breakdown |
-| `fig5_quality_latency.png` | Quality vs speed trade-off bubble chart |
-| `fig6_radar.png` | Method comparison radar chart |
-
----
-
-## 🔬 Ablation Study
-
-6 experiments × 3 queries = **18 total evaluations** · Runtime: **241.2 minutes**
-
-| Exp | Chunk | Overlap | Method | Faithfulness | Ctx Rel | Latency |
-|-----|-------|---------|--------|-------------|---------|---------|
-| exp_001 | 512 | 64 | Dense | 0.933 | 0.667 | 316s |
-| exp_002 | 512 | 64 | BM25 | 0.833 | 0.500 | 328s |
-| exp_003 | 512 | 64 | Hybrid RRF | 1.000 | 0.667 | 199s |
-| exp_004 | 256 | 0 | Dense | 0.917 | 0.667 | 233s |
-| exp_005 | 256 | 0 | **BM25** | **1.000** | 0.667 | 199s |
-| exp_006 | 256 | 0 | Hybrid RRF | 0.633 | 0.500 | 211s |
+```bash
+make rust-build   # Compile Rust chunker (PyO3 + Maturin)
+make ingest       # Parse PDFs + semantic chunk
+make index        # Index 982 vectors to Qdrant
+make eval         # Run RAGAS evaluation (55 samples)
+make viz          # Generate figures
+make all          # Full pipeline: rust-build → ingest → index → eval → viz
+make dashboard    # Start Go analytics dashboard
+```
 
 ---
 
-## 💡 Key Findings
+## Project Structure
 
-**1. Zero Hallucinations**  
-Hallucination rate = 0.000 across all 18 queries. Context-grounding prompting + honest abstention works.
-
-**2. BM25 Wins with Small Chunks**  
-BM25 + chunk=256 → faithfulness 1.000. Exact-match scoring excels on precise technical queries with distinctive keywords.
-
-**3. Hybrid RRF Needs Large Chunks**  
-chunk=512 + overlap=64 → faithfulness 1.000. chunk=256 + no overlap → faithfulness 0.633 (worst).
-> ⚠️ Do not use Hybrid RRF with chunks smaller than ~384 tokens on technical corpora.
-
-**4. Honest Abstention ≠ Failure**  
-56% of queries triggered abstention — LLM correctly declining when answer isn't in corpus. This is desired behavior for a trustworthy system.
-
-**5. Generation is Stable**  
-Answer relevance = 0.800 uniformly across all configs. The bottleneck is retrieval, not generation.
-
----
-
-## 🛠️ Development Phases
-
-| Phase | Description | Status |
-|-------|-------------|--------|
-| 0 | Environment setup | ✅ |
-| 1 | Ingestion + Chunking (`src/ingestion/`) | ✅ |
-| 2 | Dense + Sparse Retrieval (`src/retrieval/`) | ✅ |
-| 3 | Hybrid RRF (`hybrid_retriever.py`) | ✅ |
-| 4 | LLM Generation (`src/generation/`) | ✅ |
-| 5 | Evaluation Pipeline (`src/evaluation/`) | ✅ |
-| 6 | Real Dataset (7 ArXiv papers) | ✅ |
-| 7 | Quick Ablation (3 experiments) | ✅ |
-| 7b | Full Ablation (6 experiments, 241 min) | ✅ |
-| 8 | Visualization (`visualize.py`, `notebooks/`) | ✅ |
-| 9 | Error Analysis (`results/failure_cases/`) | ✅ |
-| 10 | Final Report (`reports/`) | ✅ |
-
----
-
-## 📝 Failure Mode Analysis
-
-| Mode | Count | % | Meaning |
-|------|-------|---|---------|
-| `correct` | 6 | 33% | Perfect retrieval + generation |
-| `honest_abstention` | 10 | 56% | Answer not in corpus (correct behavior ✅) |
-| `partial_context` | 2 | 11% | Truncated chunk retrieved (chunking artifact) |
-| `hallucination` | 0 | 0% | Never occurred 🎉 |
+```
+rag-research/
+├── src/
+│   ├── ingestion/
+│   │   ├── document_loader.py        # PyMuPDF PDF parsing
+│   │   ├── chunker.py                # Fixed-size chunker (regression baseline)
+│   │   ├── semantic_chunker.py       # Python semantic chunker
+│   │   └── semantic_chunker_rust/    # Rust chunker (PyO3 + Maturin)
+│   ├── retrieval/
+│   │   ├── qdrant_store.py           # Qdrant HNSW + HybridRetriever
+│   │   ├── bm25_retriever.py         # BM25Okapi sparse retrieval
+│   │   ├── embedder.py               # FAISS embedder (regression baseline)
+│   │   └── hybrid_retriever.py       # Legacy RRF (pre-Qdrant)
+│   ├── generation/
+│   │   └── generator.py              # Groq generator, strict system prompt
+│   ├── evaluation/
+│   │   ├── ragas_evaluator.py        # RAGAS 5-metric evaluator
+│   │   └── evaluator.py              # Legacy evaluator (regression baseline)
+│   └── api/
+│       └── main.py                   # FastAPI endpoint (WIP)
+├── experiments/
+│   └── ablation_runner.py            # Phase 1 ablation (legacy stack)
+├── scripts/
+│   ├── run_eval.py                   # Main evaluation script
+│   └── visualize.py                  # Figure generation
+├── data/
+│   ├── raw/                          # 7 ArXiv PDFs + TXT
+│   ├── processed/
+│   │   ├── chunks_semantic.json      # 982 Rust semantic chunks
+│   │   └── ground_truth_qa.json      # 55 clean QA pairs
+│   └── qdrant_storage/               # Local Qdrant persistent storage
+├── results/
+│   ├── figures/                      # 6 visualization plots
+│   ├── metrics/
+│   │   └── ragas_results.json        # All RAGAS evaluation runs
+│   └── failure_cases/
+│       └── failure_analysis.json     # Failure mode breakdown
+├── cmd/server/main.go                # Go dashboard server
+├── demo.py                           # Live demo script
+├── Makefile
+├── pyproject.toml                    # Editable install (pip install -e .)
+└── docker-compose.yml
+```
 
 ---
 
-## 🔮 Future Work
+## Key Engineering Decisions
 
-- [ ] Sentence-boundary-aware chunking → eliminate `partial_context` failures
-- [ ] Cross-encoder reranking (`experiments/reranking/`) → push ctx_relevance above 0.667
-- [ ] Ground truth QA pairs → enable precision/recall metrics
-- [ ] Larger query set (10+ per experiment) → statistical significance
-- [ ] Test with Llama 3 / Mixtral → compare hallucination rates
+**Rust Chunker over Python**  
+Python semantic chunker → 652 chunks. Rust semantic chunker → 982 chunks. More granular, faster, unicode-aware. Rust handles sentence segmentation that regex-based Python misses.
 
----
+**Qdrant over FAISS**  
+FAISS is flat and memory-bound. Qdrant is HNSW-based, filterable by `doc_id`, persistent, and REST-accessible. Enables filtering for multi-document workloads.
 
-## ⚙️ Tech Stack
+**Groq over Ollama**  
+Ollama latency: 30-60s per query. Groq latency: 0.3-1.5s. Same model quality, 40x faster. Critical for evaluation loops that call the LLM hundreds of times.
 
-| Component | Tool |
-|-----------|------|
-| Language | Python 3.12 |
-| Vector Store | FAISS |
-| Sparse Retrieval | BM25 (custom) |
-| Embedding | all-MiniLM-L6-v2 (384-dim) |
-| LLM | Mistral (Ollama, local) |
-| Visualization | matplotlib, seaborn |
-| Environment | WSL2 Ubuntu + venv |
+**Strict System Prompt**  
+Generator uses `system` + `user` message separation with explicit rules: answer only from context, cite sources with [Source N], refuse if context insufficient. This is what drives Faithfulness toward 0.80+.
+
+**Clean Ground Truth**  
+Original 50 QA pairs contained ~30% noise (zip codes, anatomy, fiction). Regenerated with strict domain filtering → 55 clean pairs. Faithfulness jumped from 0.67 → 0.80 from dataset cleanup alone.
 
 ---
 
-## 📄 Full Report
+## Dataset
 
-- [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) — Mini-paper format (Abstract → Conclusion)
-- [`reports/RAG_Final_Report.pdf`](reports/RAG_Final_Report.pdf) — PDF version
+7 ArXiv papers across 3 tiers:
+
+| Tier | Paper | Domain |
+|---|---|---|
+| 1 | 2005.11401 — RAG (Lewis et al.) | RAG |
+| 1 | 2312.10997 — Advanced RAG Survey | RAG |
+| 1 | test_intro.txt | RAG intro |
+| 2 | 2210.11610 — Large Language Models | LLM |
+| 2 | 2212.10560 — Self-Instruct | LLM |
+| 3 | 1706.03762 — Attention Is All You Need | Transformers |
+| 3 | 2307.09288 — Llama 2 | LLM |
+
+55 clean QA pairs generated via Groq with strict domain filtering. Zero citation trivia, zero fictional content.
 
 ---
 
-*RAG Research Project · February 2025 · [@malikimayzar](https://github.com/malikimayzar)*
+## Environment
+
+```
+Python  : 3.12
+Rust    : stable (maturin + PyO3)
+Go      : 1.22+
+OS      : WSL2 Ubuntu
+Hardware: CPU-only, 7.6GB RAM, 8 cores
+Qdrant  : local persistent (data/qdrant_storage/)
+Groq    : llama-3.3-70b-versatile (generator) + llama-3.1-8b-instant (judge)
+Embed   : all-MiniLM-L6-v2 (384-dim, offline-capable)
+```
+
+---
+
+## Part of AI Infrastructure Workspace
+
+This repo is the **Precision Engine** in a 4-service AI research platform:
+
+| Repo | Role | Stack |
+|---|---|---|
+| [mcp-gateway](https://github.com/malikimayzar/mcp-gateway) | Orchestration — routes queries, manages tool execution | Go |
+| [arxiv-research-assistant](https://github.com/malikimayzar/arxiv-research-assistant) | Librarian — ArXiv ingestion, metadata, observability | Go + Python |
+| **rag-research** | **Precision Engine — hybrid retrieval, RAGAS eval** | **Python + Rust + Go** |
+| [llm-eval-framework](https://github.com/malikimayzar/llm-eval-framework) | Auditor — faithfulness without LLM judge | Python |
+
+---
+
+*Maliki Mayzar · 2025-2026 · [github.com/malikimayzar](https://github.com/malikimayzar)*

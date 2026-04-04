@@ -1,4 +1,8 @@
 fastapi
 uvicorn[standard]
 pydantic
+python-multipart
+sentence-transformers
+groq>=0.9.0  
 python-dotenv
+httpx
