@@ -1,0 +1,102 @@
+[
+  {
+    "question": "How does RAG address the hallucination problem that standard LLMs face, and what retrieval method does the original RAG paper use?",
+    "ground_truth": "LLMs produce hallucinations when handling queries beyond their training data. The original RAG paper uses a Dense Passage Retriever (DPR) with FAISS index for retrieval.",
+    "source_chunk": "tier1_2312_10997_rs_0002",
+    "source_doc": "tier1_2312_10997",
+    "source_chunk_2": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc_2": "tier1_2005_11401",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "What is self-attention and how does multi-head attention extend it in the Transformer?",
+    "ground_truth": "Self-attention relates different positions of a single sequence to compute a representation. Multi-head attention runs h parallel attention layers, allowing the model to jointly attend to information from different representation subspaces.",
+    "source_chunk": "tier3_1706_03762_rs_0010",
+    "source_doc": "tier3_1706_03762",
+    "source_chunk_2": "tier3_1706_03762_rs_0018_sub0",
+    "source_doc_2": "tier3_1706_03762",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "How does SELF-INSTRUCT generate training data, and how does LLM self-improvement use similar principles?",
+    "ground_truth": "SELF-INSTRUCT bootstraps instruction data from the model itself. LLM self-improvement similarly uses the model to generate its own training signal through self-consistency.",
+    "source_chunk": "tier2_2212_10560_rs_0001_sub0",
+    "source_doc": "tier2_2212_10560",
+    "source_chunk_2": "tier2_2210_11610_rs_0005",
+    "source_doc_2": "tier2_2210_11610",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "What are the training data requirements for RAG compared to fine-tuning, and what is the SFT annotation count for Llama 2?",
+    "ground_truth": "RAG requires no fine-tuning and uses external retrieval at inference time. Llama 2 collected 27,540 SFT annotations before stopping.",
+    "source_chunk": "tier1_2312_10997_rs_0030_sub1",
+    "source_doc": "tier1_2312_10997",
+    "source_chunk_2": "tier3_2307_09288_rs_0034_sub1",
+    "source_doc_2": "tier3_2307_09288",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "How does RAG-Token generation differ from RAG-Sequence, and which performs better on open-ended generation tasks?",
+    "ground_truth": "RAG-Token generates each token using different retrieved documents, while RAG-Sequence uses one document per generation. RAG-Token performs best on tasks like Jeopardy question generation that combine content from multiple documents.",
+    "source_chunk": "tier1_2005_11401_rs_0032",
+    "source_doc": "tier1_2005_11401",
+    "source_chunk_2": "tier1_2005_11401_rs_0025",
+    "source_doc_2": "tier1_2005_11401",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "What evaluation metrics are used for human evaluation in Llama 2, and what are the limitations of these evaluations?",
+    "ground_truth": "Llama 2 uses Gwets AC1/2 for inter-rater reliability. Human evaluations can be noisy due to prompt set limitations, subjectivity of guidelines, and rater variability.",
+    "source_chunk": "tier3_2307_09288_rs_0086_sub3",
+    "source_doc": "tier3_2307_09288",
+    "source_chunk_2": "tier3_2307_09288_rs_0003",
+    "source_doc_2": "tier3_2307_09288",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "How does the Transformer avoid sequential computation, and what is the computational complexity advantage of self-attention over RNNs?",
+    "ground_truth": "The Transformer uses attention mechanisms instead of recurrence. Self-attention connects all positions with constant sequential operations, while recurrent layers require O(n) operations.",
+    "source_chunk": "tier3_1706_03762_rs_0007_sub0",
+    "source_doc": "tier3_1706_03762",
+    "source_chunk_2": "tier3_1706_03762_rs_0026_sub0",
+    "source_doc_2": "tier3_1706_03762",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "What is the relationship between chunk size and retrieval quality in RAG, and how does FAISS compression affect memory?",
+    "ground_truth": "Smaller chunks are more precise but may lose context, while larger chunks preserve context but introduce noise. FAISS compression reduces memory to 36GB.",
+    "source_chunk": "tier1_test_intro_rs_0001",
+    "source_doc": "tier1_test_intro",
+    "source_chunk_2": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc_2": "tier1_2005_11401",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "How does Llama 2 use RLHF for safety, and how does this compare to the reward model approach in helpfulness training?",
+    "ground_truth": "Llama 2 uses safety-specific reward models with RLHF and iterative red-teaming. The helpfulness reward model uses a margin component to distinguish between response quality levels.",
+    "source_chunk": "tier3_2307_09288_rs_0034_sub1",
+    "source_doc": "tier3_2307_09288",
+    "source_chunk_2": "tier3_2307_09288_rs_0287_sub1",
+    "source_doc_2": "tier3_2307_09288",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  },
+  {
+    "question": "What pretraining approach improves dense retrieval on structured data, and how does this relate to RAG's use of DPR?",
+    "ground_truth": "Pretraining with retrieval using autoregressive language models improves dense retrieval. RAG uses DPR (Dense Passage Retrieval) which similarly benefits from pretraining on retrieval tasks.",
+    "source_chunk": "tier1_2312_10997_rs_0116",
+    "source_doc": "tier1_2312_10997",
+    "source_chunk_2": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc_2": "tier1_2005_11401",
+    "query_type": "multi_hop",
+    "requires_chunks": 2
+  }
+]

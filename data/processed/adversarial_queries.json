@@ -1,0 +1,102 @@
+[
+  {
+    "question": "How does FAISS compression reduce memory for attention mechanisms in transformers?",
+    "ground_truth": "The CPU memory requirement is reduced to 36GB after compression using FAISS's compression tools. This is unrelated to attention mechanisms.",
+    "source_chunk": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc": "tier1_2005_11401",
+    "distractor_keyword": "attention mechanisms",
+    "distractor_doc": "tier3_1706_03762",
+    "query_type": "adversarial",
+    "adversarial_type": "keyword_injection"
+  },
+  {
+    "question": "What is the inter-rater reliability score for the FEVER dataset label mapping process?",
+    "ground_truth": "FEVER class labels are mapped to single output tokens. The IRR score mentioned in the papers relates to Llama 2 human evaluations, not FEVER.",
+    "source_chunk": "tier1_2005_11401_rs_0025",
+    "source_doc": "tier1_2005_11401",
+    "distractor_keyword": "inter-rater reliability",
+    "distractor_doc": "tier3_2307_09288",
+    "query_type": "adversarial",
+    "adversarial_type": "cross_doc_confusion"
+  },
+  {
+    "question": "How does multi-head attention help LLMs self-improve without human labels?",
+    "ground_truth": "LLM self-improvement uses majority voting on self-generated outputs. Multi-head attention is an architectural component unrelated to self-improvement training.",
+    "source_chunk": "tier2_2210_11610_rs_0005",
+    "source_doc": "tier2_2210_11610",
+    "distractor_keyword": "multi-head attention",
+    "distractor_doc": "tier3_1706_03762",
+    "query_type": "adversarial",
+    "adversarial_type": "keyword_injection"
+  },
+  {
+    "question": "What is the SFT annotation count used in RAG-Token generation experiments?",
+    "ground_truth": "RAG-Token is a generation variant that uses different documents per token. The 27,540 SFT annotations are from Llama 2 training, not RAG experiments.",
+    "source_chunk": "tier1_2005_11401_rs_0032",
+    "source_doc": "tier1_2005_11401",
+    "distractor_keyword": "SFT annotations",
+    "distractor_doc": "tier3_2307_09288",
+    "query_type": "adversarial",
+    "adversarial_type": "cross_doc_confusion"
+  },
+  {
+    "question": "How does BM25 retrieval use positional encoding similar to transformers?",
+    "ground_truth": "BM25 is a lexical retrieval method based on term frequency. Positional encoding is a Transformer concept and is unrelated to BM25.",
+    "source_chunk": "tier3_1706_03762_rs_0024_sub0",
+    "source_doc": "tier3_1706_03762",
+    "distractor_keyword": "positional encoding",
+    "distractor_doc": "tier3_1706_03762",
+    "query_type": "adversarial",
+    "adversarial_type": "false_premise"
+  },
+  {
+    "question": "What percentage of Llama 2 pretraining data uses FEVER-style fact verification?",
+    "ground_truth": "Llama 2 pretraining does not use FEVER-style fact verification. FEVER is used in RAG training for knowledge-intensive NLP tasks.",
+    "source_chunk": "tier3_2307_09288_rs_0034_sub1",
+    "source_doc": "tier3_2307_09288",
+    "distractor_keyword": "FEVER",
+    "distractor_doc": "tier1_2005_11401",
+    "query_type": "adversarial",
+    "adversarial_type": "false_premise"
+  },
+  {
+    "question": "How does the margin component in dot-product attention improve retrieval accuracy?",
+    "ground_truth": "The margin component improves the helpfulness reward model in Llama 2 RLHF training. It is unrelated to dot-product attention.",
+    "source_chunk": "tier3_2307_09288_rs_0287_sub1",
+    "source_doc": "tier3_2307_09288",
+    "distractor_keyword": "dot-product attention",
+    "distractor_doc": "tier3_1706_03762",
+    "query_type": "adversarial",
+    "adversarial_type": "keyword_injection"
+  },
+  {
+    "question": "What self-consistency method does the Transformer use to generate Jeopardy questions?",
+    "ground_truth": "RAG-Token uses multiple retrieved documents to generate Jeopardy questions. Self-consistency is from the LLM self-improvement paper, not the Transformer paper.",
+    "source_chunk": "tier1_2005_11401_rs_0032",
+    "source_doc": "tier1_2005_11401",
+    "distractor_keyword": "self-consistency",
+    "distractor_doc": "tier2_2210_11610",
+    "query_type": "adversarial",
+    "adversarial_type": "cross_doc_confusion"
+  },
+  {
+    "question": "How does SELF-INSTRUCT use inter-rater reliability to validate generated instructions?",
+    "ground_truth": "SELF-INSTRUCT uses model-based filtering, not inter-rater reliability. IRR is used in Llama 2 human evaluation.",
+    "source_chunk": "tier2_2212_10560_rs_0001_sub0",
+    "source_doc": "tier2_2212_10560",
+    "distractor_keyword": "inter-rater reliability",
+    "distractor_doc": "tier3_2307_09288",
+    "query_type": "adversarial",
+    "adversarial_type": "false_premise"
+  },
+  {
+    "question": "What is the CPU memory requirement for storing multi-head attention weights in Llama 2?",
+    "ground_truth": "The 36GB CPU memory figure refers to FAISS document index compression in RAG, not attention weight storage in Llama 2.",
+    "source_chunk": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc": "tier1_2005_11401",
+    "distractor_keyword": "multi-head attention, Llama 2",
+    "distractor_doc": "tier3_2307_09288",
+    "query_type": "adversarial",
+    "adversarial_type": "cross_doc_confusion"
+  }
+]

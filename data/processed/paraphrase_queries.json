@@ -1,0 +1,130 @@
+[
+  {
+    "question": "Why do LLMs sometimes produce incorrect answers for recent or unknown topics?",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "source_chunk": "tier1_2312_10997_rs_0002",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?"
+  },
+  {
+    "question": "Describe the label assignment process for FEVER dataset when used with RAG training.",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "source_chunk": "tier1_2005_11401_rs_0025",
+    "source_doc": "tier1_2005_11401",
+    "query_type": "paraphrase",
+    "original_question": "How are FEVER class labels mapped for training in the context of RAG models?"
+  },
+  {
+    "question": "When is RAG preferable over fine-tuning, and what are the tradeoffs?",
+    "ground_truth": "RAG is ideal for precise information retrieval tasks, while FT is suitable for scenarios requiring replication of specific structures, styles, or patterns.",
+    "source_chunk": "tier1_2312_10997_rs_0030_sub1",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "How does RAG compare to Fine-tuning (FT) in terms of its suitability for specific tasks?"
+  },
+  {
+    "question": "What property of RAG-Token makes it well-suited for Jeopardy-style generation?",
+    "ground_truth": "RAG-Token may perform best because it can generate responses that combine content from several documents.",
+    "source_chunk": "tier1_2005_11401_rs_0032",
+    "source_doc": "tier1_2005_11401",
+    "query_type": "paraphrase",
+    "original_question": "Why may RAG-Token perform best at generating Jeopardy questions?"
+  },
+  {
+    "question": "In what ways can human-based evaluation methods be unreliable or inconsistent?",
+    "ground_truth": "Human evaluations can be noisy due to limitations of the prompt set, subjectivity of the review guidelines, subjectivity of individual raters, and the inherent difficulty of comparing generations.",
+    "source_chunk": "tier3_2307_09288_rs_0003",
+    "source_doc": "tier3_2307_09288",
+    "query_type": "paraphrase",
+    "original_question": "What are some limitations of human evaluations that can introduce noise into the results?"
+  },
+  {
+    "question": "What influences the quality of generated answers in a retrieval-augmented system?",
+    "ground_truth": "The type of retrieval source and the granularity of retrieval units both affect the final generation results.",
+    "source_chunk": "tier1_2312_10997_rs_0033_sub1",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "What factors affect the final generation results in the context of Retrieval Source RAG?"
+  },
+  {
+    "question": "What makes the Transformer architecture different from RNN-based models?",
+    "ground_truth": "The Transformer relies entirely on attention mechanisms to draw global dependencies, dispensing with recurrence and convolutions entirely.",
+    "source_chunk": "tier3_1706_03762_rs_0007_sub0",
+    "source_doc": "tier3_1706_03762",
+    "query_type": "paraphrase",
+    "original_question": "What is attention mechanism in transformer models?"
+  },
+  {
+    "question": "How does self-improvement work in large language models without human labels?",
+    "ground_truth": "LLMs can self-improve by generating their own training data through self-consistency and filtering high-confidence predictions using majority voting.",
+    "source_chunk": "tier2_2210_11610_rs_0005",
+    "source_doc": "tier2_2210_11610",
+    "query_type": "paraphrase",
+    "original_question": "How are high-confidence predictions filtered in the method described?"
+  },
+  {
+    "question": "What is the core idea behind SELF-INSTRUCT for aligning language models?",
+    "ground_truth": "SELF-INSTRUCT aligns language models with self-generated instructions by bootstrapping instruction data from the model itself.",
+    "source_chunk": "tier2_2212_10560_rs_0001_sub0",
+    "source_doc": "tier2_2212_10560",
+    "query_type": "paraphrase",
+    "original_question": "How does SELF-INSTRUCT align language models with instructions?"
+  },
+  {
+    "question": "How does Llama 2 handle safety during fine-tuning for chat?",
+    "ground_truth": "Llama 2-Chat uses RLHF with safety-specific reward models and iterative red-teaming to improve safety behavior.",
+    "source_chunk": "tier3_2307_09288_rs_0034_sub1",
+    "source_doc": "tier3_2307_09288",
+    "query_type": "paraphrase",
+    "original_question": "How many SFT annotations were collected before stopping the annotation process?"
+  },
+  {
+    "question": "What retrieval granularity options exist in RAG systems?",
+    "ground_truth": "The type of retrieval source and the granularity of retrieval units both affect the final generation results.",
+    "source_chunk": "tier1_2312_10997_rs_0033_sub1",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "What factors affect the final generation results in the context of Retrieval Source RAG?"
+  },
+  {
+    "question": "Why is scaled dot-product attention preferred over additive attention?",
+    "ground_truth": "Dot-product attention is much faster and more space-efficient in practice since it can be implemented using highly optimized matrix multiplication code.",
+    "source_chunk": "tier3_1706_03762_rs_0016_sub0",
+    "source_doc": "tier3_1706_03762",
+    "query_type": "paraphrase",
+    "original_question": "How does scaled dot-product attention compare to additive attention?"
+  },
+  {
+    "question": "What problem does RAG solve that standard LLMs cannot handle well?",
+    "ground_truth": "RAG addresses hallucinations and outdated knowledge by retrieving relevant documents from an external corpus at inference time.",
+    "source_chunk": "tier1_2312_10997_rs_0002",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data?"
+  },
+  {
+    "question": "How does pretraining with retrieval differ from standard language model pretraining?",
+    "ground_truth": "Autoregressive language models are being considered for pretraining with retrieval to improve performance on knowledge-intensive tasks.",
+    "source_chunk": "tier1_2312_10997_rs_0116",
+    "source_doc": "tier1_2312_10997",
+    "query_type": "paraphrase",
+    "original_question": "What type of language models are being considered for pretraining with retrieval?"
+  },
+  {
+    "question": "What is the role of the margin in reward model training for helpfulness?",
+    "ground_truth": "The margin component in the loss function helps the reward model better distinguish between clearly different responses in helpfulness scoring.",
+    "source_chunk": "tier3_2307_09288_rs_0287_sub1",
+    "source_doc": "tier3_2307_09288",
+    "query_type": "paraphrase",
+    "original_question": "How does the margin component affect the Helpfulness reward model accuracy?"
+  },
+  {
+    "question": "What compression technique reduces the FAISS index memory footprint?",
+    "ground_truth": "The CPU memory requirement is reduced to 36GB after compression using FAISS's compression tools.",
+    "source_chunk": "tier1_2005_11401_rs_0107_sub0",
+    "source_doc": "tier1_2005_11401",
+    "query_type": "paraphrase",
+    "original_question": "How much CPU memory is required to store the document index after compression?"
+  }
+]
