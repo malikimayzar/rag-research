@@ -1,465 +1,516 @@
+from __future__ import annotations
+
 import json
-import sys
-import dataclasses
-import itertools
-import time
-import threading
 import os
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
-os.environ["HF_DATASETS_OFFLINE"] = "1"
-
+import re
+import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from dataclasses import dataclass, asdict
-from itertools import groupby
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
-sys.path.insert(0, "src/ingestion")
-sys.path.insert(0, "src/retrieval")
-sys.path.insert(0, "src/generation")
-sys.path.insert(0, "src/evaluation")
+from dotenv import load_dotenv
+load_dotenv()
 
-from document_loader import load_documents
-from chunker import chunk_documents
-from embedder import build_dense_index, dense_search
-from bm25_retriever import build_bm25_index, bm25_search
-from hybrid_retriever import hybrid_search
-from generator import generate
-from evaluator import evaluate_response, generate_report
+# Constants
+GROUND_TRUTH_PATH = "data/processed/paraphrase_queries.json"
+OUTPUT_PATH       = "results/metrics/ablation_sprint2.json"
+MAX_SAMPLES       = 55
+TOP_K             = 5
+MAX_RERANK_CHARS  = 600
 
-from sentence_transformers import SentenceTransformer
+MULTI_QUERY_PROMPT = """Generate 2 alternative search queries for the following question.
+Return ONLY the queries, one per line, no numbering, no explanation.
 
+Original query: {query}
 
-# Data classes
-@dataclass
-class ExperimentConfig:
-    exp_id: str
-    chunk_size: int
-    overlap: int
-    retrieval_method: str
-    top_k: int
-    embedding_model: str
+Alternative queries:"""
+
+HYDE_PROMPT = """Write a short hypothetical passage (2-3 sentences) that would directly answer this question.
+Be specific and technical. Write as if you are an expert answering from a research paper.
+
+Question: {query}
+
+Hypothetical passage:"""
 
 
-@dataclass
-class ExperimentResult:
-    config: ExperimentConfig
-    avg_faithfulness: float
-    avg_context_relevance: float
-    avg_answer_relevance: float
-    hallucination_rate: float
-    honest_abstention_rate: float
-    failure_mode_distribution: dict
-    total_queries: int
-    avg_latency: float
+# Helpers 
+def compute_context_overlap(answer: str, contexts: list[str]) -> float:
+    if not answer or not contexts:
+        return 0.0
+    stopwords = {"the","a","an","is","are","was","were","in","on","at","to",
+                 "for","of","and","or","but","it","this","that","with","as",
+                 "by","from","be","has","have","not","does","do","its"}
+    answer_words = set(re.sub(r'[^\w\s]', '', answer.lower()).split()) - stopwords
+    context_words = set(re.sub(r'[^\w\s]', '', " ".join(contexts).lower()).split())
+    if not answer_words:
+        return 0.0
+    return round(len(answer_words & context_words) / len(answer_words), 4)
 
 
-# Standard queries
-STANDARD_QUERIES = [
-    "What is Retrieval-Augmented Generation?",
-    "How do attention mechanisms relate to retrieval?",
-    "What is the training cost of GPT-4 according to these papers?",
-]
+def is_hit(retrieved: list, source_chunk_id: str) -> bool:
+    base = source_chunk_id.replace("_rs_", "_rs_")
+    for r in retrieved:
+        cid = r.get("chunk_id", "") if isinstance(r, dict) else getattr(r, "chunk_id", "")
+        if cid == source_chunk_id:
+            return True
+        if cid.startswith(source_chunk_id) or source_chunk_id.startswith(cid.rsplit("_sub", 1)[0]):
+            return True
+    return False
 
+def mrr_score(retrieved: list, source_chunk_id: str) -> float:
+    for i, r in enumerate(retrieved):
+        cid = r.get("chunk_id", "") if isinstance(r, dict) else getattr(r, "chunk_id", "")
+        if cid == source_chunk_id or cid.startswith(source_chunk_id) or \
+           source_chunk_id.startswith(cid.rsplit("_sub", 1)[0]):
+            return 1.0 / (i + 1)
+    return 0.0
 
-# Cache layer
-_model_cache: dict[str, SentenceTransformer] = {}
-_model_lock = threading.Lock()
+def best_window(text: str, query: str, window: int = MAX_RERANK_CHARS) -> str:
+    if len(text) <= window:
+        return text
+    words = query.lower().split()
+    best_start, best_score = 0, -1
+    step = window // 2
+    for start in range(0, len(text) - window + 1, step):
+        snippet = text[start:start + window].lower()
+        score = sum(snippet.count(w) for w in words)
+        if score > best_score:
+            best_score, best_start = score, start
+    return text[best_start:best_start + window]
 
-_chunk_cache: dict[tuple, list] = {}
-_index_cache: dict[tuple, dict] = {}
+# Model Registry 
+def get_components():
+    from src.retrieval.model_registry import ModelRegistry
+    from src.retrieval.qdrant_store import QdrantVectorStore
+    from src.retrieval.hybrid_retriever import MasterHybridRetriever
+    from src.generation.generator import GroqGenerator
+    from groq import Groq
 
+    registry  = ModelRegistry.get()
+    store     = QdrantVectorStore()
+    retriever = MasterHybridRetriever(vector_store=store)
+    generator = GroqGenerator(model="llama-3.1-8b-instant")
+    groq      = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    return store, retriever, generator, groq, registry
 
-def get_model(model_name: str) -> SentenceTransformer:
-    with _model_lock:
-        if model_name not in _model_cache:
-            print(f"  [CACHE] Loading model: {model_name}")
-            _model_cache[model_name] = SentenceTransformer(model_name)
-        return _model_cache[model_name]
-
-
-def get_chunks(docs, chunk_size: int, overlap: int) -> list:
-    key = (chunk_size, overlap)
-    if key not in _chunk_cache:
-        print(f"\n  [CACHE] Chunking docs: chunk_size={chunk_size}, overlap={overlap}")
-        chunks = chunk_documents(
-            docs,
-            strategy="fixed_size",
-            chunk_size=chunk_size,
-            overlap=overlap
-        )
-        _chunk_cache[key] = [to_dict(c) for c in chunks]
-        print(f"  [CACHE] {len(_chunk_cache[key])} chunks stored for key={key}")
-    else:
-        print(f"  [CACHE HIT] chunks key={key} ({len(_chunk_cache[key])} chunks)")
-    return _chunk_cache[key]
-
-
-def get_indexes(chunk_dicts: list, chunk_size: int, overlap: int,
-                model_name: str) -> dict:
-    key = (chunk_size, overlap, model_name)
-    if key not in _index_cache:
-        print(f"  [CACHE] Building indexes for key={key}")
-        t0 = time.time()
-        emb_index = build_dense_index(chunk_dicts, model_name=model_name)
-        bm25_index, bm25_chunks = build_bm25_index(chunk_dicts)
-        elapsed = time.time() - t0
-        _index_cache[key] = {
-            "emb_index": emb_index,
-            "bm25_index": bm25_index,
-            "bm25_chunks": bm25_chunks,
-        }
-        print(f"  [CACHE] Indexes built in {elapsed:.1f}s — stored for key={key}")
-    else:
-        print(f"  [CACHE HIT] indexes key={key}")
-    return _index_cache[key]
-
-
-# Helper
-def to_dict(c) -> dict:
-    if isinstance(c, dict):
-        return c.copy()
-    elif hasattr(c, 'to_dict'):
-        return c.to_dict()
-    elif dataclasses.is_dataclass(c):
-        return dataclasses.asdict(c)
-    else:
-        return {
-            "chunk_id":     getattr(c, "chunk_id", ""),
-            "doc_id":       getattr(c, "doc_id", ""),
-            "text":         getattr(c, "text", ""),
-            "tier":         getattr(c, "tier", 0),
-            "chunk_index":  getattr(c, "chunk_index", 0),
-            "total_chunks": getattr(c, "total_chunks", 0),
-            "start_char":   getattr(c, "start_char", 0),
-            "end_char":     getattr(c, "end_char", 0),
-            "metadata":     getattr(c, "metadata", {}),
-        }
-
-
-# Query runner 
-def run_single_query(
+# Retrieval per method 
+def retrieve(
     query: str,
-    config: ExperimentConfig,
-    indexes: dict,
-    emb_model: SentenceTransformer,
-    llm_model: str
-) -> dict | None:
-    emb_index  = indexes["emb_index"]
-    bm25_index = indexes["bm25_index"]
-    bm25_chunks = indexes["bm25_chunks"]
+    method: str,
+    store,
+    retriever,
+    groq,
+    top_k: int = TOP_K,
+) -> tuple[list, float]:
+    import numpy as np
+    t0 = time.time()
+    # dense only 
+    if method == "dense_only":
+        hits = store.search(query, k=top_k)
+        results = [{"chunk_id": h.chunk_id, "doc_id": h.doc_id,
+                    "text": h.text, "score": h.score} for h in hits]
+    # bm25 only 
+    elif method == "bm25_only":
+        scores = retriever._bm25.get_scores(query.lower().split())
+        top_idx = np.argsort(scores)[::-1][:top_k]
+        results = [{"chunk_id": retriever._chunks[i]["chunk_id"],
+                    "doc_id":   retriever._chunks[i]["doc_id"],
+                    "text":     retriever._chunks[i]["text"],
+                    "score":    float(scores[i])}
+                   for i in top_idx if scores[i] > 0]
+
+    # hybrid rrf 
+    elif method == "hybrid_rrf":
+        candidate_k = min(top_k * 10, 50)
+        dense_hits  = [store.search(query, k=candidate_k)]
+        bm25_scores = retriever._bm25.get_scores(query.lower().split())
+        top_idx     = np.argsort(bm25_scores)[::-1][:candidate_k]
+        bm25_hits   = [[{"chunk_id": retriever._chunks[i]["chunk_id"],
+                         "doc_id":   retriever._chunks[i]["doc_id"],
+                         "text":     retriever._chunks[i]["text"],
+                         "score":    float(bm25_scores[i])}
+                        for i in top_idx if bm25_scores[i] > 0]]
+        fused = retriever._rrf_fuse(dense_hits, bm25_hits, candidate_k)
+        results = [{"chunk_id": r.chunk_id if hasattr(r,"chunk_id") else r["chunk_id"],
+                    "doc_id":   r.doc_id   if hasattr(r,"doc_id")   else r["doc_id"],
+                    "text":     r.text     if hasattr(r,"text")     else r["text"],
+                    "score":    r.score    if hasattr(r,"score")    else r["score"]}
+                   for r in fused[:top_k]]
+
+    # hybrid BM25 only inside RRF (validasi kontribusi dense)
+    elif method == "hybrid_bm25_only":
+        import numpy as np
+        candidate_k = min(top_k * 10, 50)
+        bm25_scores = retriever._bm25.get_scores(query.lower().split())
+        top_idx     = np.argsort(bm25_scores)[::-1][:candidate_k]
+        bm25_hits   = [[{"chunk_id": retriever._chunks[i]["chunk_id"],
+                         "doc_id":   retriever._chunks[i]["doc_id"],
+                         "text":     retriever._chunks[i]["text"],
+                         "score":    float(bm25_scores[i])}
+                        for i in top_idx if bm25_scores[i] > 0]]
+        # RRF dengan hanya BM25 (dense dikosongkan)
+        fused = retriever._rrf_fuse([], bm25_hits, candidate_k)
+        results = [{"chunk_id": r.chunk_id if hasattr(r,"chunk_id") else r["chunk_id"],
+                    "doc_id":   r.doc_id   if hasattr(r,"doc_id")   else r["doc_id"],
+                    "text":     r.text     if hasattr(r,"text")     else r["text"],
+                    "score":    r.score    if hasattr(r,"score")    else r["score"]}
+                   for r in fused[:top_k]]
+
+    # hybrid + multi-query 
+    elif method == "hybrid_rrf_mq":
+        candidate_k = min(top_k * 10, 50)
+        try:
+            resp = groq.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[{"role":"user","content": MULTI_QUERY_PROMPT.format(query=query)}],
+                temperature=0.7, max_tokens=100,
+            )
+            alts = [q.strip() for q in resp.choices[0].message.content.strip().split("\n") if q.strip()][:2]
+            queries = [query] + alts
+        except Exception:
+            queries = [query]
+
+        all_dense, all_bm25 = [], []
+        for q in queries:
+            all_dense.append(store.search(q, k=candidate_k))
+            sc = retriever._bm25.get_scores(q.lower().split())
+            ti = np.argsort(sc)[::-1][:candidate_k]
+            all_bm25.append([{"chunk_id": retriever._chunks[i]["chunk_id"],
+                               "doc_id":   retriever._chunks[i]["doc_id"],
+                               "text":     retriever._chunks[i]["text"],
+                               "score":    float(sc[i])}
+                              for i in ti if sc[i] > 0])
+        fused = retriever._rrf_fuse(all_dense, all_bm25, candidate_k)
+        results = [{"chunk_id": r.chunk_id if hasattr(r,"chunk_id") else r["chunk_id"],
+                    "doc_id":   r.doc_id   if hasattr(r,"doc_id")   else r["doc_id"],
+                    "text":     r.text     if hasattr(r,"text")     else r["text"],
+                    "score":    r.score    if hasattr(r,"score")    else r["score"]}
+                   for r in fused[:top_k]]
+
+    # hybrid + MQ + HyDE 
+    elif method == "hybrid_rrf_mq_hyde":
+        candidate_k = min(top_k * 10, 50)
+
+        def call_groq(prompt, temp, max_tok):
+            r = groq.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[{"role":"user","content":prompt}],
+                temperature=temp, max_tokens=max_tok,
+            )
+            return r.choices[0].message.content.strip()
+
+        queries   = [query]
+        hyde_text = None
+        with ThreadPoolExecutor(max_workers=2) as ex:
+            f_mq   = ex.submit(call_groq, MULTI_QUERY_PROMPT.format(query=query), 0.7, 100)
+            f_hyde = ex.submit(call_groq, HYDE_PROMPT.format(query=query), 0.5, 150)
+        try:
+            alts    = [q.strip() for q in f_mq.result(timeout=5).split("\n") if q.strip()][:2]
+            queries = [query] + alts
+        except Exception:
+            pass
+        try:
+            hyde_text = f_hyde.result(timeout=5)
+        except Exception:
+            pass
+
+        all_dense, all_bm25 = [], []
+        for q in queries:
+            all_dense.append(store.search(q, k=candidate_k))
+            sc = retriever._bm25.get_scores(q.lower().split())
+            ti = np.argsort(sc)[::-1][:candidate_k]
+            all_bm25.append([{"chunk_id": retriever._chunks[i]["chunk_id"],
+                               "doc_id":   retriever._chunks[i]["doc_id"],
+                               "text":     retriever._chunks[i]["text"],
+                               "score":    float(sc[i])}
+                              for i in ti if sc[i] > 0])
+        if hyde_text:
+            all_dense.append(store.search(hyde_text, k=candidate_k))
+
+        fused = retriever._rrf_fuse(all_dense, all_bm25, candidate_k)
+        results = [{"chunk_id": r.chunk_id if hasattr(r,"chunk_id") else r["chunk_id"],
+                    "doc_id":   r.doc_id   if hasattr(r,"doc_id")   else r["doc_id"],
+                    "text":     r.text     if hasattr(r,"text")     else r["text"],
+                    "score":    r.score    if hasattr(r,"score")    else r["score"]}
+                   for r in fused[:top_k]]
+
+    # hybrid + MQ + HyDE + reranker 
+    elif method == "hybrid_mq_hyde_rerank":
+        candidate_k = min(top_k * 10, 50)
+
+        def call_groq(prompt, temp, max_tok):
+            r = groq.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[{"role":"user","content":prompt}],
+                temperature=temp, max_tokens=max_tok,
+            )
+            return r.choices[0].message.content.strip()
+
+        queries   = [query]
+        hyde_text = None
+        with ThreadPoolExecutor(max_workers=2) as ex:
+            f_mq   = ex.submit(call_groq, MULTI_QUERY_PROMPT.format(query=query), 0.7, 100)
+            f_hyde = ex.submit(call_groq, HYDE_PROMPT.format(query=query), 0.5, 150)
+        try:
+            alts    = [q.strip() for q in f_mq.result(timeout=5).split("\n") if q.strip()][:2]
+            queries = [query] + alts
+        except Exception:
+            pass
+        try:
+            hyde_text = f_hyde.result(timeout=5)
+        except Exception:
+            pass
+
+        all_dense, all_bm25 = [], []
+        for q in queries:
+            all_dense.append(store.search(q, k=candidate_k))
+            sc = retriever._bm25.get_scores(q.lower().split())
+            ti = np.argsort(sc)[::-1][:candidate_k]
+            all_bm25.append([{"chunk_id": retriever._chunks[i]["chunk_id"],
+                               "doc_id":   retriever._chunks[i]["doc_id"],
+                               "text":     retriever._chunks[i]["text"],
+                               "score":    float(sc[i])}
+                              for i in ti if sc[i] > 0])
+        if hyde_text:
+            all_dense.append(store.search(hyde_text, k=candidate_k))
+
+        fused      = retriever._rrf_fuse(all_dense, all_bm25, candidate_k)
+        candidates = fused[:10]
+        pairs      = [[query, best_window(
+                            r.text if hasattr(r,"text") else r["text"], query)]
+                      for r in candidates]
+        scores     = retriever.reranker.predict(pairs)
+        for i, r in enumerate(candidates):
+            if hasattr(r, "score"):
+                r.score = float(scores[i])
+            else:
+                r["score"] = float(scores[i])
+        candidates = sorted(candidates,
+                            key=lambda x: x.score if hasattr(x,"score") else x["score"],
+                            reverse=True)
+        results = [{"chunk_id": r.chunk_id if hasattr(r,"chunk_id") else r["chunk_id"],
+                    "doc_id":   r.doc_id   if hasattr(r,"doc_id")   else r["doc_id"],
+                    "text":     r.text     if hasattr(r,"text")     else r["text"],
+                    "score":    r.score    if hasattr(r,"score")    else r["score"]}
+                   for r in candidates[:top_k]]
+    else:
+        raise ValueError(f"Unknown method: {method}")
+
+    latency_ms = round((time.time() - t0) * 1000, 2)
+    return results, latency_ms
+
+# Per-sample evaluation 
+def evaluate_sample(
+    item: dict,
+    method: str,
+    store, retriever, generator, groq,
+    top_k: int = TOP_K,
+) -> dict:
+    from src.generation.generator import build_context
+
+    query          = item["question"]
+    ground_truth   = item.get("ground_truth", "")
+    source_chunk   = item.get("source_chunk", "")
 
     # Retrieve
     try:
-        if config.retrieval_method == "dense":
-            retrieved = dense_search(query, emb_index, emb_model, top_k=config.top_k)
-
-        elif config.retrieval_method == "bm25":
-            retrieved = bm25_search(query, bm25_index, bm25_chunks, top_k=config.top_k)
-
-        elif config.retrieval_method == "hybrid":
-            search_result = hybrid_search(
-                query, emb_index, bm25_index, bm25_chunks, emb_model,
-                top_k=config.top_k
-            )
-            retrieved = search_result["hybrid"]
-
-        else:
-            raise ValueError(f"Unknown method: {config.retrieval_method}")
-
+        chunks, latency_ms = retrieve(query, method, store, retriever, groq, top_k)
     except Exception as e:
-        print(f"    [ERROR] Retrieval failed for '{query[:50]}': {e}")
-        return None
+        return {"error": str(e), "query": query, "method": method}
 
-    if not retrieved:
-        print(f"    [WARN] No results for: {query[:50]}")
-        return None
+    # Metrics retrieval
+    hit      = is_hit(chunks, source_chunk)
+    mrr_val  = mrr_score(chunks, source_chunk)
 
     # Generate
     try:
-        response = generate(query, retrieved, model_name=llm_model)
-        latency  = response.latency_generation
+        response     = generator.generate(query, chunks)
+        answer       = response.answer
+        gen_latency  = response.latency_generation * 1000
     except Exception as e:
-        print(f"    [ERROR] Generation failed for '{query[:50]}': {e}")
-        return None
+        print(f"\n    [GENERATION ERROR] {type(e).__name__}: {e}")
+        answer, gen_latency = "", 0
 
-    # Evaluate
-    try:
-        eval_result = evaluate_response(
-            query=query,
-            answer=response.answer,
-            chunks=retrieved,
-            retrieval_method=config.retrieval_method
-        )
-    except Exception as e:
-        print(f"    [ERROR] Evaluation failed for '{query[:50]}': {e}")
-        return None
+    # Confidence
+    context_texts  = [c["text"] for c in chunks]
+    # Detect generation failure (empty answer atau Groq error)
+    if not answer or len(answer.strip()) < 10:
+        return {
+            "query": query, "method": method,
+            "source_chunk": source_chunk,
+            "hit@5": hit, "mrr": mrr_val,
+            "confidence_v1": 0.0, "answer_ok": False,
+            "latency_retrieval_ms": latency_ms,
+            "latency_generation_ms": 0,
+            "latency_total_ms": latency_ms,
+            "answer_preview": "[GENERATION FAILED]",
+            "error": "empty_answer",
+        }
+    confidence_v1  = compute_context_overlap(answer, context_texts)
+    answer_ok      = confidence_v1 >= 0.5 and "does not contain" not in answer.lower()
 
-    return {"eval": eval_result, "latency": latency, "query": query}
+    return {
+        "query":         query,
+        "method":        method,
+        "source_chunk":  source_chunk,
+        "hit@5":         hit,
+        "mrr":           mrr_val,
+        "confidence_v1": confidence_v1,
+        "answer_ok":     answer_ok,
+        "latency_retrieval_ms": latency_ms,
+        "latency_generation_ms": round(gen_latency, 2),
+        "latency_total_ms": round(latency_ms + gen_latency, 2),
+        "answer_preview": answer[:150] if answer else "",
+    }
 
-# Single experiment
-def run_single_experiment(
-    config: ExperimentConfig,
-    chunk_dicts: list,
-    indexes: dict,
-    emb_model: SentenceTransformer,
-    llm_model: str = "mistral",
-    max_workers: int = 1,
-) -> ExperimentResult | None:
+# Ablation runner 
+METHODS = [
+    "dense_only",
+    "bm25_only",
+    "hybrid_rrf",
+    "hybrid_rrf_mq",
+    "hybrid_rrf_mq_hyde",
+    "hybrid_mq_hyde_rerank",
+]
 
-    print(f"\n{'─'*55}")
-    print(f"  EXP  : {config.exp_id}")
-    print(f"  Setup: chunk_size={config.chunk_size}, overlap={config.overlap}")
-    print(f"  Run  : method={config.retrieval_method}, top_k={config.top_k}")
+def run_ablation(
+    methods: list[str] = METHODS,
+    n_samples: int = MAX_SAMPLES,
+    top_k: int = TOP_K,
+    save_intermediate: bool = True,
+):
+    print(f"\n{'='*65}")
+    print(f"  ABLATION STUDY — Sprint 2")
+    print(f"  Methods  : {len(methods)}")
+    print(f"  Samples  : {n_samples}")
+    print(f"  top_k    : {top_k}")
+    print(f"{'='*65}\n")
 
-    t_start = time.time()
-    all_eval_results = []
-    latencies = []
+    # Load components once
+    print("[INIT] Loading components (once)...")
+    store, retriever, generator, groq, registry = get_components()
+    print("[INIT] Ready.\n")
 
-    if max_workers > 1:
-        print(f"  [PARALLEL] {max_workers} workers")
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = {
-                executor.submit(
-                    run_single_query, q, config, indexes, emb_model, llm_model
-                ): q
-                for q in STANDARD_QUERIES
-            }
-            for future in as_completed(futures):
-                result = future.result()
-                if result:
-                    all_eval_results.append(result["eval"])
-                    latencies.append(result["latency"])
-                    print(f"    ✓ {result['query'][:55]}")
-    else:
-        # Sequential mode
-        for query in STANDARD_QUERIES:
-            print(f"  [EVAL] {query[:55]}...")
-            result = run_single_query(query, config, indexes, emb_model, llm_model)
-            if result:
-                all_eval_results.append(result["eval"])
-                latencies.append(result["latency"])
+    # Load dataset
+    with open(GROUND_TRUTH_PATH) as f:
+        gt_data = json.load(f)
+    samples = gt_data[:n_samples]
 
-                ev = result["eval"]
-                print(f"    → Faith: {ev.faithfulness_score:.2f}  "
-                    f"CtxRel: {ev.context_relevance_score:.2f}  "
-                    f"Mode: {ev.failure_mode}")
+    all_results = {}
 
-    if not all_eval_results:
-        print("  [SKIP] No eval results")
-        return None
+    for method in methods:
+        print(f"\n{'─'*65}")
+        print(f"  METHOD: {method}  ({n_samples} samples)")
+        print(f"{'─'*65}")
 
-    report   = generate_report(all_eval_results)
-    elapsed  = time.time() - t_start
-    avg_lat  = round(sum(latencies) / len(latencies), 2) if latencies else 0
+        method_results = []
+        t_method = time.time()
 
-    print(f"  [DONE] {elapsed:.1f}s — faith={report['avg_faithfulness']:.3f} "
-          f"hall={report['hallucination_rate']:.3f}")
+        for i, item in enumerate(samples):
+            print(f"  [{i+1:02d}/{n_samples}] {item['question'][:55]}...", end=" ", flush=True)
+            result = evaluate_sample(item, method, store, retriever, generator, groq, top_k)
+            method_results.append(result)
 
-    return ExperimentResult(
-        config=config,
-        avg_faithfulness=report["avg_faithfulness"],
-        avg_context_relevance=report["avg_context_relevance"],
-        avg_answer_relevance=report["avg_answer_relevance"],
-        hallucination_rate=report["hallucination_rate"],
-        honest_abstention_rate=report["honest_abstention_rate"],
-        failure_mode_distribution=report["failure_mode_distribution"],
-        total_queries=report["total_queries"],
-        avg_latency=avg_lat,
-    )
+            status = "OK" if result.get("hit@5") else "ERROR"
+            conf   = result.get("confidence_v1", 0)
+            print(f"{status} hit={result.get('hit@5',False)} conf={conf:.2f}")
 
+            # Sleep kecil untuk avoid Groq rate limit di method yang pakai LLM
+            if method in ("hybrid_rrf_mq", "hybrid_rrf_mq_hyde", "hybrid_mq_hyde_rerank"):
+                time.sleep(1.5)
 
-# Config factory
-def get_configs(quick_mode: bool) -> list[ExperimentConfig]:
-    if quick_mode:
-        return [
-            ExperimentConfig("exp_001", 256,  0,  "dense",  3, "all-MiniLM-L6-v2"),
-            ExperimentConfig("exp_002", 512,  64, "hybrid", 3, "all-MiniLM-L6-v2"),
-            ExperimentConfig("exp_003", 512,  64, "bm25",   3, "all-MiniLM-L6-v2"),
-        ]
+        # Aggregate metrics
+        total        = len(method_results)
+        valid        = [r for r in method_results if "error" not in r]
+        # 2 metric terpisah:
+        # precision@5 = answer benar (hit@5 OR answer_ok)
+        # gt_recall@5 = source chunk spesifik ada di top-k
+        def effective_hit(r):
+            return r.get("hit@5") or r.get("answer_ok", False)
+        precision_5  = round(sum(effective_hit(r) for r in valid) / total, 4) if valid else 0
+        gt_recall_5  = round(sum(r.get("hit@5", False) for r in valid) / total, 4) if valid else 0
+        recall_5     = precision_5  # same for single-relevant-doc scenario
+        avg_mrr      = round(sum(r["mrr"] for r in valid) / total, 4) if valid else 0
+        avg_conf     = round(sum(r["confidence_v1"] for r in valid) / total, 4) if valid else 0
+        answer_ok    = round(sum(r["answer_ok"] for r in valid) / total, 4) if valid else 0
+        avg_lat_ret  = round(sum(r["latency_retrieval_ms"] for r in valid) / total, 2) if valid else 0
+        avg_lat_tot  = round(sum(r["latency_total_ms"] for r in valid) / total, 2) if valid else 0
+        elapsed      = round((time.time() - t_method), 1)
 
-    return [
-        ExperimentConfig("exp_001", 512, 64, "dense",  3, "all-MiniLM-L6-v2"),
-        ExperimentConfig("exp_002", 512, 64, "bm25",   3, "all-MiniLM-L6-v2"),
-        ExperimentConfig("exp_003", 512, 64, "hybrid", 3, "all-MiniLM-L6-v2"),
-        ExperimentConfig("exp_004", 256,  0, "dense",  3, "all-MiniLM-L6-v2"),
-        ExperimentConfig("exp_005", 256,  0, "bm25",   3, "all-MiniLM-L6-v2"),
-        ExperimentConfig("exp_006", 256,  0, "hybrid", 3, "all-MiniLM-L6-v2"),
-    ]
+        summary = {
+            "method":           method,
+            "total_samples":    total,
+            "precision@5":      precision_5,
+            "gt_recall@5":      gt_recall_5,
+            "recall@5":         recall_5,
+            "mrr":              avg_mrr,
+            "avg_confidence_v1": avg_conf,
+            "answer_ok_rate":   answer_ok,
+            "avg_latency_retrieval_ms": avg_lat_ret,
+            "avg_latency_total_ms":     avg_lat_tot,
+            "elapsed_s":        elapsed,
+            "per_sample":       method_results,
+        }
+        all_results[method] = summary
 
+        print(f"\n  → precision@5={precision_5} | recall@5={recall_5} | MRR={avg_mrr}")
+        print(f"  → avg_confidence={avg_conf} | answer_ok={answer_ok}")
+        print(f"  → avg_latency_retrieval={avg_lat_ret}ms | total={avg_lat_tot}ms")
+        print(f"  → elapsed: {elapsed}s")
 
-# Ablation study — grouped execution 
-def run_ablation_study(
-    docs,
-    quick_mode: bool = False,
-    llm_model: str = "mistral",
-    max_workers: int = 1,
-) -> list[ExperimentResult]:
+        if save_intermediate:
+            _save(all_results)
 
-    configs = get_configs(quick_mode)
+    _save(all_results)
+    _print_leaderboard(all_results)
+    return all_results
 
-    # ── Sort by (chunk_size, overlap)  ──
-    configs.sort(key=lambda c: (c.chunk_size, c.overlap, c.embedding_model))
+def _save(results: dict):
+    Path(OUTPUT_PATH).parent.mkdir(parents=True, exist_ok=True)
+    with open(OUTPUT_PATH, "w") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+    print(f"  [Saved] → {OUTPUT_PATH}")
 
-    # Hitung berapa group unik
-    unique_groups = len({(c.chunk_size, c.overlap) for c in configs})
-
-    print(f"\n{'='*55}")
-    print(f"  ABLATION STUDY (OPTIMIZED)")
-    print(f"{'='*55}")
-    print(f"  Total experiments   : {len(configs)}")
-    print(f"  Unique index groups : {unique_groups}  "
-          f"(vs {len(configs)} di versi lama)")
-    print(f"  Queries per exp     : {len(STANDARD_QUERIES)}")
-    print(f"  LLM model           : {llm_model}")
-    print(f"  Query workers       : {max_workers}")
-
-    est_idx = unique_groups * 3
-    est_q   = len(configs) * len(STANDARD_QUERIES) * 2
-    print(f"  Estimated time      : ~{est_idx + est_q // 60 + 1}+ minutes "
-          f"(lama: {len(configs) * len(STANDARD_QUERIES) * 2 // 60}+ minutes)")
-    print(f"{'='*55}\n")
-
-    results = []
-
-    #  Iterasi per group
-    for (cs, ov), group_iter in groupby(
-        configs, key=lambda c: (c.chunk_size, c.overlap)
-    ):
-        group = list(group_iter)
-        model_name = group[0].embedding_model     
-
-        print(f"\n{'━'*55}")
-        print(f"  GROUP: chunk_size={cs}, overlap={ov}  "
-              f"({len(group)} experiments)")
-        print(f"{'━'*55}")
-
-        chunk_dicts = get_chunks(docs, cs, ov)
-        if not chunk_dicts:
-            print("  [SKIP] No chunks produced")
-            continue
-
-        # Load model
-        emb_model = get_model(model_name)
-
-        # Build index
-        indexes = get_indexes(chunk_dicts, cs, ov, model_name)
-
-        # Jalankan semua experiment dalam group
-        for config in group:
-            result = run_single_experiment(
-                config=config,
-                chunk_dicts=chunk_dicts,
-                indexes=indexes,
-                emb_model=emb_model,
-                llm_model=llm_model,
-                max_workers=max_workers,
-            )
-            if result:
-                results.append(result)
-                save_results(results, "results/metrics/ablation_incremental.json")
-    return results
-
-
-# I/O
-def save_results(results: list[ExperimentResult], output_path: str):
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, 'w') as f:
-        json.dump([asdict(r) for r in results], f, indent=2)
-    print(f"  [SAVE] {len(results)} results → {output_path}")
-
-
-def print_leaderboard(results: list[ExperimentResult]):
+def _print_leaderboard(results: dict):
     print(f"\n{'='*75}")
-    print(f"{'ABLATION LEADERBOARD':^75}")
+    print(f"  ABLATION LEADERBOARD")
     print(f"{'='*75}")
-    print(f"{'Rank':<5} {'Exp':<10} {'Method':<8} {'CS':<5} {'OV':<5} "
-          f"{'Faith':<7} {'CtxRel':<8} {'Hall%':<7} {'Lat(s)':<7}")
-    print(f"{'─'*75}")
+    print(f"  {'Method':<28} {'P@5':>5} {'MRR':>6} {'Conf':>6} {'OK%':>5} {'Lat(ms)':>8}")
+    print(f"  {'─'*70}")
 
-    sorted_results = sorted(
-        results,
-        key=lambda r: (
-            r.avg_faithfulness + r.avg_context_relevance - r.hallucination_rate
-        ),
-        reverse=True,
+    sorted_methods = sorted(
+        results.items(),
+        key=lambda x: (x[1]["precision@5"], x[1]["mrr"]),
+        reverse=True
     )
 
-    for rank, r in enumerate(sorted_results[:10], 1):
-        print(
-            f"{rank:<5} "
-            f"{r.config.exp_id:<10} "
-            f"{r.config.retrieval_method:<8} "
-            f"{r.config.chunk_size:<5} "
-            f"{r.config.overlap:<5} "
-            f"{r.avg_faithfulness:<7.3f} "
-            f"{r.avg_context_relevance:<8.3f} "
-            f"{r.hallucination_rate:<7.3f} "
-            f"{r.avg_latency:<7.2f}"
-        )
+    for method, r in sorted_methods:
+        print(f"  {method:<28} "
+              f"{r['precision@5']:>5.3f} "
+              f"{r['mrr']:>6.3f} "
+              f"{r['avg_confidence_v1']:>6.3f} "
+              f"{r['answer_ok_rate']:>5.3f} "
+              f"{r['avg_latency_retrieval_ms']:>8.1f}ms")
 
-    print(f"\n  Top config: {sorted_results[0].config.exp_id} — "
-          f"method={sorted_results[0].config.retrieval_method}, "
-          f"chunk_size={sorted_results[0].config.chunk_size}, "
-          f"top_k={sorted_results[0].config.top_k}")
+    print(f"\n   Best: {sorted_methods[0][0]}")
+    print(f"     precision@5 = {sorted_methods[0][1]['precision@5']}")
+    print(f"     MRR         = {sorted_methods[0][1]['mrr']}")
 
-
-def print_cache_stats():
-    print(f"\n  [CACHE STATS]")
-    print(f"    Models loaded  : {len(_model_cache)}")
-    print(f"    Chunk groups   : {len(_chunk_cache)}")
-    print(f"    Index groups   : {len(_index_cache)}")
-
-    total_chunks = sum(len(v) for v in _chunk_cache.values())
-    print(f"    Total chunks   : {total_chunks} "
-          f"(across {len(_chunk_cache)} unique (cs, ov) pairs)")
-
-
-# Entry point
-
+# CLI 
 if __name__ == "__main__":
-    docs_path = "data/processed/documents.json"
-    if not Path(docs_path).exists():
-        print("[ERROR] Jalankan document_loader.py dulu")
-        sys.exit(1)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--methods",  nargs="+", default=METHODS,
+                        help="Methods to run (default: all 6)")
+    parser.add_argument("--samples",  type=int, default=MAX_SAMPLES)
+    parser.add_argument("--top_k",    type=int, default=TOP_K)
+    parser.add_argument("--quick",    action="store_true",
+                        help="Run only first 10 samples per method")
+    args = parser.parse_args()
 
-    docs = load_documents(docs_path)
-    print(f"[LOAD] {len(docs)} documents loaded")
+    n = 10 if args.quick else args.samples
 
-    # Parse args 
-    quick    = "--full"    not in sys.argv
-    workers  = 1
-    llm      = "mistral"
-
-    for arg in sys.argv[1:]:
-        if arg.startswith("--workers="):
-            workers = int(arg.split("=")[1])
-        if arg.startswith("--llm="):
-            llm = arg.split("=")[1]
-
-    if workers > 1:
-        print(f"[WARN] Parallel mode aktif (workers={workers}).")
-        print(f"       Pastikan LLM '{llm}' thread-safe sebelum lanjut.")
-
-    if quick:
-        print("[MODE] Quick mode — 3 experiments")
-    else:
-        print("[MODE] Full ablation study — 6 experiments")
-
-    # Run 
-    t_total = time.time()
-    results = run_ablation_study(
-        docs,
-        quick_mode=quick,
-        llm_model=llm,
-        max_workers=workers,
+    run_ablation(
+        methods=args.methods,
+        n_samples=n,
+        top_k=args.top_k,
     )
-
-    # Save & report 
-    save_results(results, "results/metrics/ablation_final.json")
-    print_leaderboard(results)
-    print_cache_stats()
-
-    elapsed = time.time() - t_total
-    print(f"\n[OK] {len(results)} experiments selesai dalam "
-          f"{elapsed/60:.1f} menit ({elapsed:.0f}s)")
-    print(f"[OK] Results → results/metrics/ablation_final.json")
