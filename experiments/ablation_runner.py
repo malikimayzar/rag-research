@@ -306,7 +306,6 @@ def evaluate_sample(
     top_k: int = TOP_K,
 ) -> dict:
     from src.generation.generator import build_context
-
     query          = item["question"]
     ground_truth   = item.get("ground_truth", "")
     source_chunk   = item.get("source_chunk", "")

@@ -1,20 +1,22 @@
 from __future__ import annotations
 
 import time
+import logging
+import json
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
+logger = logging.getLogger(__name__)
 load_dotenv()
-
 
 # ── Lazy globals (loaded once at startup) ──────────────────────
 store = None
 retriever = None
 generator = None
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -27,7 +29,7 @@ async def lifespan(app: FastAPI):
 
     store = QdrantVectorStore()
     retriever = MasterHybridRetriever(vector_store=store)
-    generator = GroqGenerator(model="llama-3.3-70b-versatile")
+    generator = GroqGenerator(model="llama-3.1-8b-instant")
 
     count = store.client.count(store.collection_name).count
     print(f"[STARTUP] Ready — {count} vectors loaded")
@@ -93,7 +95,7 @@ async def health():
         "version": "2.0.0",
         "vectors": count,
         "retrieval": "hybrid_rrf+bge_reranker",
-        "generator": "groq/llama-3.3-70b-versatile",
+        "generator": "llama-3.1-8b-instant",
         "chunks": "rust_semantic_982",
     }
 
@@ -104,7 +106,8 @@ async def retrieve(req: RetrieveRequest):
         raise HTTPException(status_code=503, detail="Service not ready")
 
     t0 = time.time()
-    results = retriever.search(
+    results = await run_in_threadpool(
+        retriever.search,
         query=req.query,
         top_k=req.top_k,
         use_reranker=req.use_reranker,
@@ -134,7 +137,8 @@ async def generate(req: GenerateRequest):
 
     # Retrieve
     t0 = time.time()
-    chunks = retriever.search(
+    chunks = await run_in_threadpool(
+        retriever.search,
         query=req.query,
         top_k=req.top_k,
         use_reranker=req.use_reranker,
@@ -146,13 +150,22 @@ async def generate(req: GenerateRequest):
 
     # Generate
     t1 = time.time()
-    response = generator.generate(req.query, chunks)
+    response = await run_in_threadpool(generator.generate, req.query, chunks)
     latency_generation_ms = round((time.time() - t1) * 1000, 2)
+
+    logger.info(json.dumps({
+        "query": req.query,
+        "top_score": round(chunks[0]["retrieval_score"], 4) if chunks else None,
+        "num_chunks_retrieved": req.top_k,
+        "num_chunks_used": len(response.retrieved_chunks),
+        "rejected": response.answer.startswith("The provided context does not"),
+        "latency_retrieval_ms": latency_retrieval_ms,
+    }))
 
     return GenerateResponse(
         query=req.query,
         answer=response.answer,
-        contexts=[c["text"] if isinstance(c, dict) else c.text for c in chunks],
+        contexts=[c["text"] for c in response.retrieved_chunks],
         retrieval_method=response.retrieval_method,
         latency_retrieval_ms=latency_retrieval_ms,
         latency_generation_ms=latency_generation_ms,

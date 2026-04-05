@@ -51,7 +51,7 @@ class MasterHybridRetriever:
         reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
         rrf_k: int = 60,
         use_multi_query: bool = True,
-        use_hyde: bool = True,
+        use_hyde: bool = False,
     ):
         self.vector_store = vector_store
         self.rrf_k = rrf_k

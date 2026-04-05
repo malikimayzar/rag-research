@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import uuid
 from dataclasses import dataclass
 from typing import List, Optional
 from pathlib import Path
@@ -10,6 +11,8 @@ from qdrant_client.models import (
     Distance, VectorParams, PointStruct,
     Filter, FieldCondition, MatchValue,
 )
+
+CHUNK_ID_NAMESPACE = uuid.UUID('12345678-1234-5678-1234-567812345678')
 
 COLLECTION_NAME = "rag_research"
 QDRANT_PATH     = "./data/qdrant_storage"
@@ -79,7 +82,7 @@ class QdrantVectorStore:
 
         points = []
         for chunk, emb in zip(chunks, all_embeddings):
-            point_id = abs(hash(chunk["chunk_id"])) % (2**63)
+            point_id = uuid.uuid5(CHUNK_ID_NAMESPACE, chunk["chunk_id"]).int >> 64
             points.append(PointStruct(
                 id=point_id,
                 vector=emb.tolist(),

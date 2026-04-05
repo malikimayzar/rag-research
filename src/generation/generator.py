@@ -18,15 +18,15 @@ DEFAULT_TEMP      = 0.1
 DEFAULT_TOP_K     = 5
 
 SYSTEM_PROMPT = (
-    "You are a strict research assistant for academic NLP/AI papers.\n\n"
-    "RULES (non-negotiable):\n"
-    "1. Answer ONLY using information explicitly stated in the CONTEXT provided.\n"
-    "2. If the answer is not in the context, respond exactly: "
+    "You are a research assistant for academic NLP/AI papers.\n\n"
+    "RULES:\n"
+    "1. Answer using information stated or reasonably implied in the CONTEXT provided.\n"
+    "2. If the context is clearly unrelated to the question, respond exactly: "
     "'The provided context does not contain enough information to answer this question.'\n"
-    "3. Do NOT use prior knowledge, even if you are confident the answer is correct.\n"
-    "4. Every factual claim must be traceable to a specific [Source N] in the context.\n"
-    "5. Cite sources inline using [Source N] notation.\n"
-    "6. Be concise — 1-3 sentences unless the question requires more detail."
+    "3. Prefer context over prior knowledge, but you may use general knowledge "
+    "to interpret or connect concepts mentioned in the context.\n"
+    "4. Cite sources inline using [Source N] notation where applicable.\n"
+    "5. Be concise — 1-3 sentences unless the question requires more detail."
 )
 
 @dataclass
@@ -36,7 +36,7 @@ class RAGResponse:
     retrieved_chunks:   list
     retrieval_method:   str
     context_used:       str
-    latency_retrieval:  float
+    latency_context_build_ms: float
     latency_generation: float
     model:              str
 
@@ -70,6 +70,37 @@ def build_context(chunks: list, max_chars: int = DEFAULT_MAX_CHARS) -> str:
         total_chars += len(block)
     return "\n\n".join(context_parts)
 
+def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
+    """
+    Gap-aware filtering:
+    1. Kalau top score positif → ambil semua chunk sampai ada gap besar (> 2.0)
+    2. Kalau top score negatif → fallback ke top-1 saja
+    3. Minimum return: 1 chunk (tidak pernah return kosong)
+    """
+    if not chunks:
+        return chunks
+
+    scores = [
+        c.get("retrieval_score", 0) if isinstance(c, dict)
+        else getattr(c, "score", 0)
+        for c in chunks
+    ]
+
+    # Kalau top score negatif → semua tidak relevan, return top-1
+    if scores[0] <= 0:
+        return [chunks[0]]
+
+    # Top score positif → ambil sampai ketemu gap besar atau score drop ke negatif
+    GAP_THRESHOLD = 2.0
+    selected = [chunks[0]]
+    for i in range(1, len(chunks)):
+        gap = scores[i-1] - scores[i]
+        if scores[i] < 0 or gap > GAP_THRESHOLD:
+            break
+        selected.append(chunks[i])
+
+    return selected
+
 def build_messages(query: str, context: str) -> list:
     user_content = "CONTEXT:\n" + context + "\n\nQUESTION:\n" + query + "\n\nANSWER (using ONLY the context above):"
     return [
@@ -97,6 +128,10 @@ class GroqGenerator:
         temperature: float = DEFAULT_TEMP,
     ) -> RAGResponse:
         t0 = time.time()
+        before = len(chunks)
+        chunks = filter_chunks_by_score(chunks)
+        after = len(chunks)
+        import logging; logging.getLogger(__name__).info(f'[Filter] before={before} after={after} dropped={before-after}')
         context  = build_context(chunks, max_chars)
         t1 = time.time()
 
@@ -139,7 +174,7 @@ class GroqGenerator:
             retrieved_chunks=formatted_chunks,
             retrieval_method=method,
             context_used=context,
-            latency_retrieval=round(t1 - t0, 3),
+            latency_context_build_ms=round((t1 - t0) * 1000, 3),
             latency_generation=round(t2 - t1, 3),
             model=self.model,
         )
