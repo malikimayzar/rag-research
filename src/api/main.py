@@ -145,7 +145,25 @@ async def generate(req: GenerateRequest):
 
     if not chunks:
         raise HTTPException(status_code=404, detail="No relevant chunks found")
-
+    
+    # Early reject
+    if chunks[0].get("retrieval_score", 0) < 0:
+        logger.info(json.dumps({
+            "event": "early_reject",
+            "query": req.query,
+            "top_score": round(chunks[0].get("retrieval_score", 0), 4),
+            "reason": "negative_top_score",
+        }))
+        return GenerateResponse(
+            query=req.query,
+            answer="The provided context does not contain enough information to answer this question.",
+            contexts=[],
+            retrieval_method="rejected_low_score",
+            latency_retrieval_ms=latency_retrieval_ms,
+            latency_generation_ms=0,
+            model="none",
+        )
+    
     # Generate
     t1 = time.time()
     response = await run_in_threadpool(generator.generate, req.query, chunks)
