@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import json
 import os
 import time
@@ -10,6 +11,7 @@ from typing import Optional
 from dotenv import load_dotenv
 from groq import Groq
 
+logger = logging.getLogger("rag.generator")
 load_dotenv()
 
 DEFAULT_MODEL     = "llama-3.3-70b-versatile"
@@ -71,12 +73,6 @@ def build_context(chunks: list, max_chars: int = DEFAULT_MAX_CHARS) -> str:
     return "\n\n".join(context_parts)
 
 def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
-    """
-    Gap-aware filtering:
-    1. Kalau top score positif → ambil semua chunk sampai ada gap besar (> 2.0)
-    2. Kalau top score negatif → fallback ke top-1 saja
-    3. Minimum return: 1 chunk (tidak pernah return kosong)
-    """
     if not chunks:
         return chunks
 
@@ -86,11 +82,9 @@ def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
         for c in chunks
     ]
 
-    # Kalau top score negatif → semua tidak relevan, return top-1
     if scores[0] <= 0:
         return [chunks[0]]
 
-    # Top score positif → ambil sampai ketemu gap besar atau score drop ke negatif
     GAP_THRESHOLD = 2.0
     selected = [chunks[0]]
     for i in range(1, len(chunks)):
@@ -118,7 +112,7 @@ class GroqGenerator:
             raise ValueError("GROQ_API_KEY tidak ditemukan.")
         self.client = Groq(api_key=key)
         self.model  = model
-        print(f"[GroqGenerator] Ready. Model: {model}")
+        logger.info(f"[GroqGenerator] Ready. Model: {model}")
 
     def generate(
         self,
@@ -131,7 +125,7 @@ class GroqGenerator:
         before = len(chunks)
         chunks = filter_chunks_by_score(chunks)
         after = len(chunks)
-        import logging; logging.getLogger(__name__).info(f'[Filter] before={before} after={after} dropped={before-after}')
+        logger.info(f'[Filter] before={before} after={after} dropped={before-after}')
         context  = build_context(chunks, max_chars)
         t1 = time.time()
 
@@ -168,6 +162,15 @@ class GroqGenerator:
             else:
                 formatted_chunks.append({"text": str(c)})
 
+        logger.info(json.dumps({
+            "event": "generation",
+            "model": self.model,
+            "chunks_before_filter": before,
+            "chunks_after_filter": after,
+            "context_chars": len(context),
+            "latency_generation_ms": round((t2 - t1) * 1000, 2),
+                }))
+        
         return RAGResponse(
             query=query,
             answer=answer,
@@ -179,18 +182,16 @@ class GroqGenerator:
             model=self.model,
         )
 
-
 def generate(query: str, chunks: list, **kwargs) -> RAGResponse:
     gen = GroqGenerator(model=kwargs.get("model_name", DEFAULT_MODEL))
     return gen.generate(query, chunks, max_chars=kwargs.get("max_chars", DEFAULT_MAX_CHARS))
-
 
 def save_response(response: RAGResponse, output_path: str) -> None:
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     data = asdict(response)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    print(f"[Saved] -> {output_path}")
+    logger.info(f"[Saved] -> {output_path}")
 
 if __name__ == "__main__":
     from src.retrieval.qdrant_store import QdrantVectorStore, HybridRetriever
@@ -208,7 +209,7 @@ if __name__ == "__main__":
     for q in queries:
         chunks = retriever.search(q, k=5)
         resp = gen.generate(q, chunks)
-        print(f"\nQ: {q}")
-        print(f"A: {resp.answer}")
-        print(f"Latency: {resp.latency_generation}s")
-        print("-" * 60)
+        logger.info(f"\nQ: {q}")
+        logger.info(f"A: {resp.answer}")
+        logger.info(f"Latency: {resp.latency_generation}s")
+        logger.info("-" * 60)

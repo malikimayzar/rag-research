@@ -1,0 +1,78 @@
+{
+  "covered": [
+    "RAG / Retrieval-Augmented Generation",
+    "BM25 / Sparse Retrieval",
+    "Dense Retrieval / Embeddings",
+    "Hybrid Retrieval",
+    "Cross Encoder / Reranker",
+    "RAGAS Evaluation",
+    "Attention Mechanism / Transformer",
+    "Hallucination",
+    "HyDE",
+    "LLM Fine-tuning",
+    "Vector Database",
+    "Chunking Strategy"
+  ],
+  "missing": [
+    "Semantic Chunking",
+    "RRF / Reciprocal Rank Fusion"
+  ],
+  "detail": {
+    "RAG / Retrieval-Augmented Generation": {
+      "found": true,
+      "chunk_count": 289
+    },
+    "Semantic Chunking": {
+      "found": false,
+      "chunk_count": 0
+    },
+    "BM25 / Sparse Retrieval": {
+      "found": true,
+      "chunk_count": 7
+    },
+    "Dense Retrieval / Embeddings": {
+      "found": true,
+      "chunk_count": 47
+    },
+    "Hybrid Retrieval": {
+      "found": true,
+      "chunk_count": 4
+    },
+    "RRF / Reciprocal Rank Fusion": {
+      "found": false,
+      "chunk_count": 0
+    },
+    "Cross Encoder / Reranker": {
+      "found": true,
+      "chunk_count": 10
+    },
+    "RAGAS Evaluation": {
+      "found": true,
+      "chunk_count": 8
+    },
+    "Attention Mechanism / Transformer": {
+      "found": true,
+      "chunk_count": 64
+    },
+    "Hallucination": {
+      "found": true,
+      "chunk_count": 20
+    },
+    "HyDE": {
+      "found": true,
+      "chunk_count": 3
+    },
+    "LLM Fine-tuning": {
+      "found": true,
+      "chunk_count": 130
+    },
+    "Vector Database": {
+      "found": true,
+      "chunk_count": 8
+    },
+    "Chunking Strategy": {
+      "found": true,
+      "chunk_count": 2
+    }
+  }
+}

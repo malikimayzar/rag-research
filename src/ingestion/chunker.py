@@ -24,10 +24,6 @@ def chunk_by_size(
     chunk_size: int = 512,
     overlap: int = 64
 ) -> list[Chunk]:
-    """
-    Fixed-size chunking dengan overlap.
-    Parameter utama untuk eksperimen ablation.
-    """
     text = doc.text
     chunks = []
     start = 0

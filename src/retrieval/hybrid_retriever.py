@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import json
 import os
 import numpy as np
@@ -11,6 +12,8 @@ from rank_bm25 import BM25Okapi
 from concurrent.futures import ThreadPoolExecutor
 from groq import Groq
 from dotenv import load_dotenv
+
+logger = logging.getLogger("rag.retriever")
 
 def _best_window(query: str, text: str, window: int = 600, step: int = 200) -> str:
     """Ambil window 600-char yang paling banyak overlap keyword dengan query."""
@@ -65,20 +68,20 @@ class MasterHybridRetriever:
                 self._chunks = json.load(f)
             tokenized_corpus = [c["text"].lower().split() for c in self._chunks]
             self._bm25 = BM25Okapi(tokenized_corpus)
-            print(f"[MasterRetriever] BM25 loaded: {len(self._chunks)} chunks")
+            logger.info(f"[MasterRetriever] BM25 loaded: {len(self._chunks)} chunks")
 
         from src.retrieval.model_registry import ModelRegistry
         self.reranker = ModelRegistry.get().reranker
-        print(f"[MasterRetriever] Reranker reused from ModelRegistry")
+        logger.info(f"[MasterRetriever] Reranker reused from ModelRegistry")
 
         # Groq client untuk multi-query + HyDE
         api_key = os.getenv("GROQ_API_KEY")
         if api_key:
             self.groq = Groq(api_key=api_key)
-            print(f"[MasterRetriever] Groq ready (multi-query + HyDE)")
+            logger.info(f"[MasterRetriever] Groq ready (multi-query + HyDE)")
         else:
             self.groq = None
-            print(f"[MasterRetriever] WARNING: No GROQ_API_KEY, multi-query + HyDE disabled")
+            logger.info(f"[MasterRetriever] WARNING: No GROQ_API_KEY, multi-query + HyDE disabled")
 
     # ── Query Expansion ────────────────────────────────────────────────────────
 
@@ -118,16 +121,16 @@ class MasterHybridRetriever:
                 raw = futures["mq"].result(timeout=5)
                 alternatives = [q.strip() for q in raw.split("\n") if q.strip()][:2]
                 queries = [query] + alternatives
-                print(f"[MultiQuery] Expanded to {len(queries)} queries: {alternatives}")
+                logger.info(f"[MultiQuery] Expanded to {len(queries)} queries: {alternatives}")
             except Exception as e:
-                print(f"[MultiQuery] Failed: {e}")
+                logger.info(f"[MultiQuery] Failed: {e}")
 
         if "hyde" in futures:
             try:
                 hyde_text = futures["hyde"].result(timeout=5)
-                print(f"[HyDE] Generated: {hyde_text[:80]}...")
+                logger.info(f"[HyDE] Generated: {hyde_text[:80]}...")
             except Exception as e:
-                print(f"[HyDE] Failed: {e}")
+                logger.info(f"[HyDE] Failed: {e}")
 
         return queries, hyde_text
 
@@ -222,8 +225,8 @@ class MasterHybridRetriever:
             all_dense_hits, all_bm25_hits, candidate_k, dense_weight, bm25_weight
         )
 
-        print(f"[DEBUG] Queries: {len(queries)} | HyDE: {'yes' if hyde_text else 'no'}")
-        print(f"[DEBUG] Dense sources: {len(all_dense_hits)} | Fused candidates: {len(fused_results)}")
+        logger.info(f"[DEBUG] Queries: {len(queries)} | HyDE: {'yes' if hyde_text else 'no'}")
+        logger.info(f"[DEBUG] Dense sources: {len(all_dense_hits)} | Fused candidates: {len(fused_results)}")
 
         # Step 6: Reranker pada original query (bukan expanded)
         if not use_reranker or not fused_results:
@@ -254,7 +257,16 @@ class MasterHybridRetriever:
             key=lambda x: (x.score if hasattr(x, 'score') else x['score']),
             reverse=True
         )
-
+        logger.info(json.dumps({
+            "event": "retrieval",
+            "query": query,
+            "top_scores": [
+                round(r.score if hasattr(r, 'score') else r["retrieval_score"], 3)
+                for r in final_results[:5]
+            ],
+            "num_candidates": len(fused_results),
+            "num_returned": len(final_results[:top_k]),
+        }))
         return self._format_output(final_results[:top_k], "hybrid_multiquery_hyde_rerank")
 
     # ── Output Formatter ───────────────────────────────────────────────────────
@@ -287,7 +299,7 @@ if __name__ == "__main__":
     retriever = MasterHybridRetriever(store)
     query = "impact of semantic chunking on RAG performance"
     results = retriever.search(query, top_k=3)
-    print(f"\n[OK] Top Results for: {query}")
+    logger.info(f"\n[OK] Top Results for: {query}")
     for r in results:
-        print(f"[{r['retrieval_rank']}] Score: {r['retrieval_score']:.4f} | {r['doc_id']}")
-        print(f"Text: {r['text'][:150]}...\n")
+        logger.info(f"[{r['retrieval_rank']}] Score: {r['retrieval_score']:.4f} | {r['doc_id']}")
+        logger.info(f"Text: {r['text'][:150]}...\n")

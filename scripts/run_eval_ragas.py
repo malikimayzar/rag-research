@@ -15,7 +15,7 @@ with open("data/processed/ground_truth_qa.json") as f:
 print(f"Total QA pairs: {len(gt_data)}")
 
 # Ambil 15 sample dulu — cukup untuk signal, hemat token
-samples_gt = gt_data[:15]
+samples_gt = gt_data[:30]
 
 # Hit API untuk dapat answer + contexts
 print("Retrieving answers from API...")
@@ -46,18 +46,18 @@ for i, item in enumerate(samples_gt):
             contexts=contexts if contexts else ["No context retrieved"],
             ground_truth=ground_truth,
         ))
-        print(f"[{i+1}/15] {'REJECTED' if is_rejected else 'OK'} | {question[:60]}")
+        print(f"[{i+1}/30] {'REJECTED' if is_rejected else 'OK'} | {question[:60]}")
         
     except Exception as e:
-        print(f"[{i+1}/15] ERROR: {e}")
+        print(f"[{i+1}/30] ERROR: {e}")
 
 print(f"\nReject rate: {rejected}/{len(ragas_samples)} ({rejected/len(ragas_samples):.0%})")
 print("\nRunning RAGAS eval...")
 
 evaluator = RAGASEvaluator(
-    llm_model="llama-3.1-8b-instant",
+    llm_model="llama-3.3-70b-versatile",
     include_answer_correctness=False,
 )
 
-result = evaluator.evaluate(ragas_samples, exp_id="phase2_postfix_8b")
+result = evaluator.evaluate(ragas_samples, exp_id="phase2_30sample_70b")
 evaluator.save_result(result, "results/metrics/ragas_phase2_postfix_8b.json")

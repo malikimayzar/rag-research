@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import time
-import logging
 import json
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+)
+logger = logging.getLogger("rag.api")
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
@@ -10,7 +15,6 @@ from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-logger = logging.getLogger(__name__)
 load_dotenv()
 
 # ── Lazy globals (loaded once at startup) ──────────────────────
@@ -21,7 +25,7 @@ generator = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global store, retriever, generator
-    print("[STARTUP] Loading RAG Research Master Engine...")
+    logger.info("[STARTUP] Loading RAG Research Master Engine...")
 
     from src.retrieval.qdrant_store import QdrantVectorStore
     from src.retrieval.hybrid_retriever import MasterHybridRetriever
@@ -29,13 +33,12 @@ async def lifespan(app: FastAPI):
 
     store = QdrantVectorStore()
     retriever = MasterHybridRetriever(vector_store=store)
-    generator = GroqGenerator(model="llama-3.1-8b-instant")
+    generator = GroqGenerator(model="llama-3.3-70b-versatile")
 
     count = store.client.count(store.collection_name).count
-    print(f"[STARTUP] Ready — {count} vectors loaded")
+    logger.info(f"[STARTUP] Ready — {count} vectors loaded")
     yield
-    print("[SHUTDOWN] RAG Research Master Engine stopped")
-
+    logger.info("[SHUTDOWN] RAG Research Master Engine stopped")
 
 app = FastAPI(
     title="RAG Research Master Engine",
@@ -44,14 +47,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-
 # ── Request / Response Models ───────────────────────────────────
 class RetrieveRequest(BaseModel):
     query: str
     top_k: int = 5
     use_reranker: bool = True
-    method: str = "hybrid"  # hybrid, dense, bm25 — for mcp-gateway compat
-
+    method: str = "hybrid"  
 
 class ChunkResult(BaseModel):
     chunk_id: str
@@ -59,19 +60,16 @@ class ChunkResult(BaseModel):
     text: str
     score: float
 
-
 class RetrieveResponse(BaseModel):
     query: str
     results: list[ChunkResult]
     retrieval_method: str
     latency_ms: float
 
-
 class GenerateRequest(BaseModel):
     query: str
     top_k: int = 5
     use_reranker: bool = True
-
 
 class GenerateResponse(BaseModel):
     query: str
@@ -81,7 +79,6 @@ class GenerateResponse(BaseModel):
     latency_retrieval_ms: float
     latency_generation_ms: float
     model: str
-
 
 # ── Endpoints ───────────────────────────────────────────────────
 @app.get("/health")
@@ -154,12 +151,14 @@ async def generate(req: GenerateRequest):
     latency_generation_ms = round((time.time() - t1) * 1000, 2)
 
     logger.info(json.dumps({
+        "event": "generate",
         "query": req.query,
-        "top_score": round(chunks[0]["retrieval_score"], 4) if chunks else None,
+        "top_score": round(chunks[0].get("retrieval_score", chunks[0].get("score", 0)), 4) if chunks else None,
         "num_chunks_retrieved": req.top_k,
         "num_chunks_used": len(response.retrieved_chunks),
         "rejected": response.answer.startswith("The provided context does not"),
         "latency_retrieval_ms": latency_retrieval_ms,
+        "latency_generation_ms": latency_generation_ms,
     }))
 
     return GenerateResponse(
@@ -171,7 +170,6 @@ async def generate(req: GenerateRequest):
         latency_generation_ms=latency_generation_ms,
         model=response.model,
     )
-
 
 @app.get("/metrics")
 async def metrics():
@@ -187,7 +185,6 @@ async def metrics():
         "reranker": "BAAI/bge-reranker-base",
         "llm": "groq/llama-3.3-70b-versatile",
     }
-
 
 if __name__ == "__main__":
     import uvicorn
