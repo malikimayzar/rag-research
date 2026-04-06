@@ -7,7 +7,7 @@ import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
-from sentence_transformers import CrossEncoder
+from src.api.config import settings
 from rank_bm25 import BM25Okapi
 from concurrent.futures import ThreadPoolExecutor
 from groq import Groq
@@ -54,7 +54,7 @@ class MasterHybridRetriever:
         reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
         rrf_k: int = 60,
         use_multi_query: bool = True,
-        use_hyde: bool = False,
+        use_hyde: bool = settings.use_hyde,
     ):
         self.vector_store = vector_store
         self.rrf_k = rrf_k

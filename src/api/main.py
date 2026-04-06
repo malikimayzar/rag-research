@@ -16,6 +16,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 
 load_dotenv()
+from src.api.config import settings
 
 # ── Lazy globals (loaded once at startup) ──────────────────────
 store = None
@@ -33,7 +34,7 @@ async def lifespan(app: FastAPI):
 
     store = QdrantVectorStore()
     retriever = MasterHybridRetriever(vector_store=store)
-    generator = GroqGenerator(model="llama-3.3-70b-versatile")
+    generator = GroqGenerator(model=settings.groq_model)
 
     count = store.client.count(store.collection_name).count
     logger.info(f"[STARTUP] Ready — {count} vectors loaded")
@@ -188,4 +189,4 @@ async def metrics():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8003, reload=False)
+    uvicorn.run(app, host=settings.api_host, port=settings.api_host, reload=False)

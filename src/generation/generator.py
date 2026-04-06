@@ -4,6 +4,7 @@ import logging
 import json
 import os
 import time
+from src.api.config import settings
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Optional
@@ -85,7 +86,7 @@ def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
     if scores[0] <= 0:
         return [chunks[0]]
 
-    GAP_THRESHOLD = 2.0
+    GAP_THRESHOLD = settings.score_gap_threshold
     selected = [chunks[0]]
     for i in range(1, len(chunks)):
         gap = scores[i-1] - scores[i]
@@ -134,7 +135,7 @@ class GroqGenerator:
             model=self.model,
             messages=messages,
             temperature=temperature,
-            max_tokens=512,
+            max_tokens=settings.generation_max_tokens,
         )
 
         t2 = time.time()
