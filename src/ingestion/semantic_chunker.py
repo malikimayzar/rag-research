@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import json
 import time
+import numpy as np
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import List
 
-import numpy as np
+from src.ingestion.document_loader import extract_sections
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -69,36 +70,53 @@ class SemanticChunker:
 
     def chunk_document(self, doc: dict) -> List[SemanticChunk]:
         doc_id = doc.get("doc_id", "unknown")
-        text   = doc.get("text", "")
+        full_text = doc.get("text", "")
         
-        if not text.strip():
-            print(f"  [SKIP] {doc_id} — empty text")
-            return []
-        sentences = semantic_chunker_rust.split_sentences_rs(text)
+        # 1. Gunakan fungsi extractor kita
+        # Pastikan fungsi ini sudah di-import di atas
+        sections = extract_sections(full_text)
         
-        if len(sentences) < 2:
-            return [self._make_chunk(doc_id, sentences, 0, len(sentences)-1, 0, doc.get("metadata", {}))]
-        embeddings = self.model.encode(sentences, batch_size=64, show_progress_bar=False)
-        similarities = _compute_similarity_matrix(embeddings)
-        threshold = np.percentile(similarities, 100 - self.breakpoint_percentile)
-        breakpoints = semantic_chunker_rust.find_breakpoints_rs(similarities, float(threshold))
-        chunk_groups = semantic_chunker_rust.assemble_chunks_rs(
-            sentences, breakpoints, self.overlap_sentences
-        )
         final_chunks = []
         chunk_idx = 0
 
-        for group_sentences in chunk_groups:
-            sub_chunks = self._enforce_max_tokens(group_sentences)
-            for sub_sentences in sub_chunks:
-                chunk = self._make_chunk(
-                    doc_id, sub_sentences, 0, 0, chunk_idx, 
-                    doc.get("metadata", {})
-                )
-                if chunk.token_count >= self.min_chunk_tokens:
-                    final_chunks.append(chunk)
-                    chunk_idx += 1     
-        print(f"  [OK] {doc_id} → {len(sentences)} sents → {len(final_chunks)} chunks (via Rust)")
+        for sec in sections:
+            sec_name = sec["section_name"]
+            sec_text = sec["text"]
+            
+            # Split per section supaya konteks bab tetap terjaga
+            sentences = semantic_chunker_rust.split_sentences_rs(sec_text)
+            
+            if len(sentences) < 1: continue
+            
+            # Jika cuma 1 kalimat, langsung buat chunk
+            if len(sentences) < 2:
+                meta = {**doc.get("metadata", {}), "section": sec_name}
+                final_chunks.append(self._make_chunk(doc_id, sentences, 0, 0, chunk_idx, meta))
+                chunk_idx += 1
+                continue
+
+            # Logic Semantic (Rust + Python) tetap sama
+            embeddings = self.model.encode(sentences, batch_size=64, show_progress_bar=False)
+            similarities = _compute_similarity_matrix(embeddings)
+            
+            threshold = np.percentile(similarities, 100 - self.breakpoint_percentile)
+            breakpoints = semantic_chunker_rust.find_breakpoints_rs(similarities, float(threshold))
+            
+            chunk_groups = semantic_chunker_rust.assemble_chunks_rs(
+                sentences, breakpoints, self.overlap_sentences
+            )
+
+            for group_sentences in chunk_groups:
+                sub_chunks = self._enforce_max_tokens(group_sentences)
+                for sub_sentences in sub_chunks:
+                    # SIMPAN DATA SECTION DI SINI
+                    meta = {**doc.get("metadata", {}), "section": sec_name}
+                    chunk = self._make_chunk(doc_id, sub_sentences, 0, 0, chunk_idx, meta)
+                    
+                    if chunk.token_count >= self.min_chunk_tokens:
+                        final_chunks.append(chunk)
+                        chunk_idx += 1
+                        
         return final_chunks
 
     def _enforce_max_tokens(self, sentences: List[str]) -> List[List[str]]:

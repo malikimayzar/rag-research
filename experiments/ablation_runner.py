@@ -10,8 +10,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
-# Constants
-GROUND_TRUTH_PATH = "data/processed/paraphrase_queries.json"
+GROUND_TRUTH_PATH = "data/processed/ground_truth_qa.json"
 OUTPUT_PATH       = "results/metrics/ablation_sprint2.json"
 MAX_SAMPLES       = 55
 TOP_K             = 5

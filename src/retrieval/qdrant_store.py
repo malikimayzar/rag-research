@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+import os
 import uuid
 from dataclasses import dataclass
 from typing import List, Optional
@@ -38,8 +38,12 @@ class QdrantVectorStore:
         qdrant_api_key: Optional[str] = None,
         vector_dim: int = VECTOR_DIM,
     ):
-        self.collection_name = collection_name
+        self.collection_name = os.getenv("QDRANT_COLLECTION", collection_name)
         self.vector_dim = vector_dim
+
+        qdrant_url = qdrant_url or os.getenv("QDRANT_URL")
+        qdrant_api_key = qdrant_api_key or os.getenv("QDRANT_API_KEY")
+        qdrant_path = os.getenv("QDRANT_PATH", qdrant_path or QDRANT_PATH)
 
         # ── Qdrant client ──────────────────────────────────────────
         if qdrant_url:
@@ -77,15 +81,16 @@ class QdrantVectorStore:
         print(f"[QdrantStore] Indexing {len(chunks)} chunks...")
         texts = [c["text"] for c in chunks]
         all_embeddings = self.embedder.encode(
-            texts, batch_size=BATCH_SIZE, show_progress_bar=True
+            texts, batch_size=BATCH_SIZE, show_progress_bar=False
         )
 
         points = []
         for chunk, emb in zip(chunks, all_embeddings):
             point_id = uuid.uuid5(CHUNK_ID_NAMESPACE, chunk["chunk_id"]).int >> 64
+            vector = emb.tolist() if hasattr(emb, "tolist") else list(emb)
             points.append(PointStruct(
                 id=point_id,
-                vector=emb.tolist(),
+                vector=vector,
                 payload={
                     "chunk_id": chunk["chunk_id"],
                     "doc_id":   chunk["doc_id"],
@@ -107,7 +112,8 @@ class QdrantVectorStore:
         k: int = 5,
         filter_doc_id: Optional[str] = None
     ) -> List[RetrievalResult]:
-        query_emb = self.embedder.encode([query])[0].tolist()
+        query_emb = self.embedder.encode([query], show_progress_bar=False)[0]
+        query_emb = query_emb.tolist() if hasattr(query_emb, "tolist") else list(query_emb)
         qdrant_filter = (
             Filter(must=[FieldCondition(key="doc_id", match=MatchValue(value=filter_doc_id))])
             if filter_doc_id else None
@@ -133,3 +139,10 @@ class QdrantVectorStore:
             )
             for r in response.points
         ]
+    def close(self):
+        if hasattr(self, 'client'):
+            try:
+                self.client.close()
+                print("[QdrantStore] Connection closed gracefully.")
+            except Exception:
+                pass

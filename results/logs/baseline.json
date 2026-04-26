@@ -1,0 +1,3406 @@
+[
+  {
+    "query": "What is attention mechanism in transformer models?",
+    "expanded_queries": [
+      "What is attention mechanism in transformer models?",
+      "What is the role of attention in transformer architecture?",
+      "Transformer model components: how does the attention mechanism work?"
+    ],
+    "hyde_doc": "In the context of transformer models, the attention mechanism is a neural network component that facilitates weighted information aggregation from input sequences through a process known as self-attention, whereby a query vector is used to compute attention weights for each position in the input sequence, thereby allowing the model to selectively focus on relevant input elements (Vaswani et al., 2017). Specifically, the attention mechanism is implemented through a scaled dot-product attention function, which computes attention weights as the dot product of the query and key vectors, scaled by a learnable temperature parameter, and normalized by the square root of the key vector's dimensionality. This attention-weighted sum of input elements is then used to compute the output of the attention mechanism.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_1706_03762_rs_0009",
+        "doc_id": "tier3_1706_03762",
+        "text": "it more difficult to learn dependencies between distant positions [12]. In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to...",
+        "score": 0.5958
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_1706_03762_rs_0058",
+        "doc_id": "tier3_1706_03762",
+        "text": "registration Figure 3: An example of the attention mechanism following long-distance dependencies in the encoder self-attention in layer 5 of 6. Many of the attention heads attend to a distant depende...",
+        "score": 0.5219
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_1706_03762_rs_0007",
+        "doc_id": "tier3_1706_03762",
+        "text": "The fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allo...",
+        "score": 0.6413
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_1706_03762_rs_0018",
+        "doc_id": "tier3_1706_03762",
+        "text": "variables with mean 0 and variance 1. Then their dot product, q k = Pdk i=1 qiki, has mean 0 and variance dk. output values. These are concatenated and once again projected, resulting in the final val...",
+        "score": 0.5461
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_1706_03762_rs_0013",
+        "doc_id": "tier3_1706_03762",
+        "text": "[10], consuming the previously generated symbols as additional input when generating the next. Figure 1: The Transformer - model architecture. The Transformer follows this overall architecture using s...",
+        "score": 0.5357
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_1706_03762_rs_0011",
+        "doc_id": "tier3_1706_03762",
+        "text": "of a single sequence in order to compute a representation of the sequence. Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, t...",
+        "score": 0.6358
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_1706_03762_rs_0003",
+        "doc_id": "tier3_1706_03762",
+        "text": "the effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work. Noam proposed scaled dot-produ...",
+        "score": 0.4976
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_1706_03762_rs_0015",
+        "doc_id": "tier3_1706_03762",
+        "text": "The decoder is also composed of a stack of N = 6 identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention o...",
+        "score": 0.6034
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0075",
+        "doc_id": "tier3_2307_09288",
+        "text": "Figure 10: Attention visualization for a dialogue with and without GAtt. We considered the maximum activations across the network and we bin neighboring tokens together. To illustrate how GAtt helped ...",
+        "score": 0.475
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_1706_03762_rs_0010",
+        "doc_id": "tier3_1706_03762",
+        "text": "to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2. Self-attention, sometimes called intra-attention is an attention mechanism rel...",
+        "score": 0.5079
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_1706_03762_rs_0007",
+        "doc_id": "tier3_1706_03762",
+        "text": "The fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allo...",
+        "score": 7.7611
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_1706_03762_rs_0018",
+        "doc_id": "tier3_1706_03762",
+        "text": "variables with mean 0 and variance 1. Then their dot product, q k = Pdk i=1 qiki, has mean 0 and variance dk. output values. These are concatenated and once again projected, resulting in the final val...",
+        "score": 2.9151
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_1706_03762_rs_0013",
+        "doc_id": "tier3_1706_03762",
+        "text": "[10], consuming the previously generated symbols as additional input when generating the next. Figure 1: The Transformer - model architecture. The Transformer follows this overall architecture using s...",
+        "score": 2.8457
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_1706_03762_rs_0009",
+        "doc_id": "tier3_1706_03762",
+        "text": "it more difficult to learn dependencies between distant positions [12]. In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to...",
+        "score": 2.1287
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_1706_03762_rs_0058",
+        "doc_id": "tier3_1706_03762",
+        "text": "registration Figure 3: An example of the attention mechanism following long-distance dependencies in the encoder self-attention in layer 5 of 6. Many of the attention heads attend to a distant depende...",
+        "score": 2.0218
+      }
+    ],
+    "final_context": "[Source 1 | tier3_1706_03762 | tier3_1706_03762_rs_0007]\nThe fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2, 19]. In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network. In this work we propose ...",
+    "answer": "The attention mechanism in Transformer models allows modeling of dependencies without regard to their distance in the input or output sequences [Source 1]. It is used to draw global dependencies between input and output, and is employed in three different ways, including \"encoder-decoder attention\" layers [Source 2]. The Transformer uses multi-head attention, which allows the model to jointly attend to information from different representation subspaces at different positions [Source 2].",
+    "ground_truth": null,
+    "latency_breakdown": {
+      "query_expansion_ms": 1592.57,
+      "hyde_ms": 1592.57,
+      "embedding_ms": 747.3,
+      "bm25_ms": 17.97,
+      "qdrant_search_ms": 125.78,
+      "rrf_ms": 0.21,
+      "rerank_ms": 1094.93,
+      "generation_ms": 3013.33,
+      "total_ms": 6466.1
+    },
+    "confidence_v1": 0.8947,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is attention mechanism in transformer models?",
+    "expanded_queries": [
+      "What is attention mechanism in transformer models?",
+      "What is the role of attention in transformer architecture?",
+      "Transformer model components and their functions"
+    ],
+    "hyde_doc": "In transformer models, the attention mechanism is a weighted sum of the input sequence's values, computed by the dot product of the query vector (derived from the input sequence) and the value vectors (derived from the input sequence), normalized by the square root of the key vector's (also derived from the input sequence) dimensionality, as described in the scaled dot-product attention formula: Attention(Q, K, V) = softmax(QK^T / sqrt(d)) * V, where Q, K, and V are the query, key, and value vectors, respectively. This attention mechanism allows the model to focus on specific parts of the input sequence when computing the output. By enabling this selective attention, transformer models can effectively process long-range dependencies and",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_1706_03762_rs_0018",
+        "doc_id": "tier3_1706_03762",
+        "text": "variables with mean 0 and variance 1. Then their dot product, q k = Pdk i=1 qiki, has mean 0 and variance dk. output values. These are concatenated and once again projected, resulting in the final val...",
+        "score": 0.621
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_1706_03762_rs_0013",
+        "doc_id": "tier3_1706_03762",
+        "text": "[10], consuming the previously generated symbols as additional input when generating the next. Figure 1: The Transformer - model architecture. The Transformer follows this overall architecture using s...",
+        "score": 0.5502
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_1706_03762_rs_0009",
+        "doc_id": "tier3_1706_03762",
+        "text": "it more difficult to learn dependencies between distant positions [12]. In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to...",
+        "score": 0.6622
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_1706_03762_rs_0007",
+        "doc_id": "tier3_1706_03762",
+        "text": "The fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allo...",
+        "score": 0.7229
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_1706_03762_rs_0003",
+        "doc_id": "tier3_1706_03762",
+        "text": "the effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work. Noam proposed scaled dot-produ...",
+        "score": 0.4612
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_1706_03762_rs_0011",
+        "doc_id": "tier3_1706_03762",
+        "text": "of a single sequence in order to compute a representation of the sequence. Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, t...",
+        "score": 0.6534
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_1706_03762_rs_0012",
+        "doc_id": "tier3_1706_03762",
+        "text": "entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution. In the following sections, we will describe the Transformer, motivate s...",
+        "score": 0.6569
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_1706_03762_rs_0015",
+        "doc_id": "tier3_1706_03762",
+        "text": "The decoder is also composed of a stack of N = 6 identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention o...",
+        "score": 0.6398
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_1706_03762_rs_0058",
+        "doc_id": "tier3_1706_03762",
+        "text": "registration Figure 3: An example of the attention mechanism following long-distance dependencies in the encoder self-attention in layer 5 of 6. Many of the attention heads attend to a distant depende...",
+        "score": 0.5758
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_1706_03762_rs_0024",
+        "doc_id": "tier3_1706_03762",
+        "text": "The wavelengths form a geometric progression from 2 to 10000 2. chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixe...",
+        "score": 0.5723
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_1706_03762_rs_0007",
+        "doc_id": "tier3_1706_03762",
+        "text": "The fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allo...",
+        "score": 7.7611
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_1706_03762_rs_0018",
+        "doc_id": "tier3_1706_03762",
+        "text": "variables with mean 0 and variance 1. Then their dot product, q k = Pdk i=1 qiki, has mean 0 and variance dk. output values. These are concatenated and once again projected, resulting in the final val...",
+        "score": 2.9151
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_1706_03762_rs_0013",
+        "doc_id": "tier3_1706_03762",
+        "text": "[10], consuming the previously generated symbols as additional input when generating the next. Figure 1: The Transformer - model architecture. The Transformer follows this overall architecture using s...",
+        "score": 2.8457
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_1706_03762_rs_0009",
+        "doc_id": "tier3_1706_03762",
+        "text": "it more difficult to learn dependencies between distant positions [12]. In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to...",
+        "score": 2.1287
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_1706_03762_rs_0003",
+        "doc_id": "tier3_1706_03762",
+        "text": "the effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work. Noam proposed scaled dot-produ...",
+        "score": 1.9949
+      }
+    ],
+    "final_context": "[Source 1 | tier3_1706_03762 | tier3_1706_03762_rs_0007]\nThe fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2, 19]. In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network. In this work we propose ...",
+    "answer": "The attention mechanism in Transformer models allows modeling of dependencies without regard to their distance in the input or output sequences [Source 1]. Specifically, the Transformer uses multi-head attention, which enables the model to jointly attend to information from different representation subspaces at different positions [Source 2]. This is achieved through the use of multiple parallel attention layers, or heads, which project the queries, keys, and values into different subspaces [Source 2].",
+    "ground_truth": null,
+    "latency_breakdown": {
+      "query_expansion_ms": 1155.31,
+      "hyde_ms": 1155.31,
+      "embedding_ms": 553.27,
+      "bm25_ms": 16.84,
+      "qdrant_search_ms": 114.86,
+      "rrf_ms": 0.24,
+      "rerank_ms": 1177.37,
+      "generation_ms": 948.04,
+      "total_ms": 3850.83
+    },
+    "confidence_v1": 0.7857,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "What statistical method was employed to assess the inter-rater reliability in human evaluations on the helpfulness task?",
+      "What was the IRR measurement scale used in human evaluations, and what scores did it span on the 7-point Likert helpfulness scale?"
+    ],
+    "hyde_doc": "In our study, we employed the Intraclass Correlation Coefficient (ICC) to assess inter-rater reliability (IRR) in human evaluations. The ICC scores for the 7-point Likert scale helpfulness task ranged from 0.82 to 0.94, indicating high agreement among evaluators, with 0.85 being the mean ICC score. This high level of IRR suggests that the evaluators' ratings were reliable and consistent across the task.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 0.6021
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": 0.5182
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.4978
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.4975
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5542
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.5346
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.5222
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5299
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": 0.5632
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0077",
+        "doc_id": "tier1_2312_10997",
+        "text": "multiplechoice, domain-specific QA as well as long-form scenarios suitable for RAG. In addition to QA, RAG is continuously being expanded into multiple downstream tasks, such as Information Extraction...",
+        "score": 0.4601
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": -1.6062
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": -3.1155
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": -3.7281
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": -4.124
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": -4.2444
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0152]\ndefinitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or moderate safety violations (a) Overall violation percentage. (b) Overall safety and helpfulness mean rating. Figure 17: Overall safety measures. Left: Llama 2-Chat has low violation percentage overall across model Right: Llama 2-Chat has high s...",
+    "answer": "The Gwets AC1/2 statistic was used to measure inter-rater reliability (IRR) in the human evaluations [Source 1]. However, the context does not mention the 7-point Likert scale helpfulness task, but it does mention that the IRR scores range from 0.70 to 0.95 [Source 1].",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1037.25,
+      "hyde_ms": 1037.25,
+      "embedding_ms": 588.65,
+      "bm25_ms": 39.76,
+      "qdrant_search_ms": 121.49,
+      "rrf_ms": 0.22,
+      "rerank_ms": 1747.86,
+      "generation_ms": 818.54,
+      "total_ms": 4232.06
+    },
+    "confidence_v1": 0.6923,
+    "error_decomposition": {
+      "failure_type": "ranking_error",
+      "reason": "Source chunk ditemukan tapi tidak masuk top-k setelah reranking",
+      "retrieval_hit": true,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "How do large language models handle out-of-distribution queries or queries requiring real-time information?",
+      "What are the limitations of large language models when dealing with queries that fall outside their training data or require up-to-date knowledge?"
+    ],
+    "hyde_doc": "One notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" wherein the model's ability to generalize to new, unseen data is compromised due to the gradual degradation of previously learned knowledge as new information is incorporated (McCloskey & Cohen, 1989). This is particularly problematic when LLMs are tasked with answering queries that rely on knowledge that has emerged after their training data was frozen, such as recent scientific breakthroughs or updates to regulatory frameworks. As a result, LLMs often struggle to provide accurate and up-to-date information on topics that fall outside their training scope.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.6497
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": 0.5315
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0393",
+        "doc_id": "tier3_2307_09288",
+        "text": "We observe that only HellaSwag and MMLU-Humanities appear to have been boosted due to contamination in the training data, with the 70B model appearing to have gained a greater benefit than the 7B mode...",
+        "score": 0.5308
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2210_11610_rs_0039",
+        "doc_id": "tier2_2210_11610",
+        "text": "CONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of improving its performance on reasoning datasets by training on its own generated labels, given input questions only. Experim...",
+        "score": 0.5494
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0181",
+        "doc_id": "tier3_2307_09288",
+        "text": "Gqa: Training generalized multi-query transformer models from multi-head checkpoints, 2023. Ebtesam Almazrouei, Hamza Alobeidli, Abdulaziz Alshamsi, Alessandro Cappelli, Ruxandra Cojocaru, Merouane De...",
+        "score": 0.5384
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.5458
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_2307_09288_rs_0244",
+        "doc_id": "tier3_2307_09288",
+        "text": "Mohammad Shoeybi, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared Casper, and Bryan Catanzaro. Megatron-lm: Training multi-billion parameter language models using model parallelism, 2019. Ilia Sh...",
+        "score": 0.5163
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0170",
+        "doc_id": "tier3_2307_09288",
+        "text": "are reasonable concerns regarding the ways that AI will impact our world. Toxic content generation and problematic associations are meaningful risks that the AI community has yet to fully mitigate. pa...",
+        "score": 0.5242
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.6048
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0053",
+        "doc_id": "tier1_2312_10997",
+        "text": "validation by LLM to achieve the effect of reducing hallucinations. Validated expanded queries typically exhibit higher reliability [93]. 2) Query Transformation: The core concept is to retrieve chunk...",
+        "score": 0.5656
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0039",
+        "doc_id": "tier2_2210_11610",
+        "text": "CONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of improving its performance on reasoning datasets by training on its own generated labels, given input questions only. Experim...",
+        "score": 2.5446
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": -0.0626
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0181",
+        "doc_id": "tier3_2307_09288",
+        "text": "Gqa: Training generalized multi-query transformer models from multi-head checkpoints, 2023. Ebtesam Almazrouei, Hamza Alobeidli, Abdulaziz Alshamsi, Alessandro Cappelli, Ruxandra Cojocaru, Merouane De...",
+        "score": -3.3475
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0393",
+        "doc_id": "tier3_2307_09288",
+        "text": "We observe that only HellaSwag and MMLU-Humanities appear to have been boosted due to contamination in the training data, with the 70B model appearing to have gained a greater benefit than the 7B mode...",
+        "score": -4.0308
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier2_2210_11610 | tier2_2210_11610_rs_0039]\nCONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of im...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1600.66,
+      "hyde_ms": 1600.66,
+      "embedding_ms": 511.24,
+      "bm25_ms": 44.64,
+      "qdrant_search_ms": 81.64,
+      "rrf_ms": 1.69,
+      "rerank_ms": 1746.81,
+      "generation_ms": 1458.46,
+      "total_ms": 5361.81
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the relationship between FEVER class labels and RAG model training?",
+      "How do FEVER class labels get assigned during RAG model training?"
+    ],
+    "hyde_doc": "In the context of RAG (Reformer-based Architecture for Generative models) models, FEVER (Fact Extraction and Verification) class labels are mapped for training through a hierarchical classification approach, where each instance is assigned a label from one of the three primary classes: 'SUPPORTS', 'REFUTES', or 'NOT ENOUGH INFORMATION' (NEI). Specifically, the class labels are mapped as follows: 'SUPPORTS' corresponds to a confidence score of 0.9 or higher, 'REFUTES' corresponds to a confidence score of 0.1 or lower, and 'NEI' corresponds to a confidence score between 0.1 and 0.9. This mapping enables the RAG model to effectively learn a",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.6209
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5332
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.4318
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.5252
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.4877
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0084",
+        "doc_id": "tier1_2312_10997",
+        "text": "ROUGE/ROUGE-L The specific metrics for each evaluation aspect are summarized in Table III. It is essential to recognize that these metrics, derived from related work, are traditional measures and do n...",
+        "score": 0.4448
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0094",
+        "doc_id": "tier1_2312_10997",
+        "text": "End-to-end RAG models and pre-trained models based researchers [173]. The parameters of these models are one of the key factors.While scaling laws [174] are established for LLMs, their applicability t...",
+        "score": 0.3982
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": 0.5124
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0085",
+        "doc_id": "tier1_2312_10997",
+        "text": "such as RGB, RECALL and CRUD [167][169] focus on appraising the essential abilities of RAG models. Concurrently, state-of-the-art automated tools like RAGAS [164], ARES [165], and TruLens8 employ LLMs...",
+        "score": 0.4573
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2005_11401_rs_0041",
+        "doc_id": "tier1_2005_11401",
+        "text": "For 2-way classication, we compare against Thorne and Vlachos [57], who train RoBERTa [35] to classify the claim as true or false given the gold evidence sentence. RAG achieves an accuracy within 2.7%...",
+        "score": 0.4583
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": -1.4377
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": -2.6581
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": -6.3571
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1303.15,
+      "hyde_ms": 1303.15,
+      "embedding_ms": 509.27,
+      "bm25_ms": 18.68,
+      "qdrant_search_ms": 108.97,
+      "rrf_ms": 0.94,
+      "rerank_ms": 785.86,
+      "generation_ms": 1486.97,
+      "total_ms": 4103.93
+    },
+    "confidence_v1": 0.8333,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "What statistic was used to assess inter-rater reliability in human evaluations of the 7-point Likert scale helpfulness task?",
+      "What type of metric or coefficient was employed to evaluate the consistency of ratings in human evaluations on the 7-point Likert scale helpfulness task?"
+    ],
+    "hyde_doc": "In our human evaluation study, we employed the Intraclass Correlation Coefficient (ICC) to quantify inter-rater reliability (IRR) among human evaluators assessing the helpfulness of conversational AI responses on a 7-point Likert scale. The ICC scores ranged from 0.65 to 0.82, indicating moderate to high agreement among raters, with an average ICC score of 0.72. This level of agreement suggests that human evaluators were relatively consistent in their assessments of the helpfulness of conversational AI responses.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": 0.5314
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.5437
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 0.5652
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.5375
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5238
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.5108
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": 0.5377
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.4818
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0077",
+        "doc_id": "tier1_2312_10997",
+        "text": "multiplechoice, domain-specific QA as well as long-form scenarios suitable for RAG. In addition to QA, RAG is continuously being expanded into multiple downstream tasks, such as Information Extraction...",
+        "score": 0.436
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.5066
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": -3.1155
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": -4.2444
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": -6.3048
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": -10.2231
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": -10.4002
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0003]\nThe 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitations of the prompt set, subjectivity of the review guidelines, subjectivity of individual raters, and the inherent difficulty of comparing generations. Figure 2: Win-rate % for helpfulness and\n\n[Source 2 | tier3_2307_09288 | tier3_2307_09288_rs_0...",
+    "answer": "The provided context does not contain enough information to answer this question.",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 666.34,
+      "hyde_ms": 666.34,
+      "embedding_ms": 472.92,
+      "bm25_ms": 22.33,
+      "qdrant_search_ms": 117.24,
+      "rrf_ms": 0.19,
+      "rerank_ms": 489.82,
+      "generation_ms": 472.88,
+      "total_ms": 2124.29
+    },
+    "confidence_v1": 0.2222,
+    "error_decomposition": {
+      "failure_type": "ranking_error",
+      "reason": "Source chunk ditemukan tapi tidak masuk top-k setelah reranking",
+      "retrieval_hit": true,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "Outdated knowledge in large language models and its implications for query handling.",
+      "How do large language models address the challenge of handling queries that exceed their training data scope?"
+    ],
+    "hyde_doc": "One notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" where the model's performance degrades significantly due to the inability to reconcile outdated knowledge with new, unseen information, resulting in a loss of contextual understanding and accuracy. This issue arises from the model's reliance on static training data, which cannot accommodate the dynamic nature of real-world events and updates. As a result, LLMs may struggle to provide accurate and relevant responses to queries that involve novel or time-sensitive information.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.6668
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": 0.5299
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.5723
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0051",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": 0.5162
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.547
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0393",
+        "doc_id": "tier3_2307_09288",
+        "text": "We observe that only HellaSwag and MMLU-Humanities appear to have been boosted due to contamination in the training data, with the 70B model appearing to have gained a greater benefit than the 7B mode...",
+        "score": 0.5298
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0053",
+        "doc_id": "tier1_2312_10997",
+        "text": "validation by LLM to achieve the effect of reducing hallucinations. Validated expanded queries typically exhibit higher reliability [93]. 2) Query Transformation: The core concept is to retrieve chunk...",
+        "score": 0.5774
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier2_2210_11610_rs_0039",
+        "doc_id": "tier2_2210_11610",
+        "text": "CONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of improving its performance on reasoning datasets by training on its own generated labels, given input questions only. Experim...",
+        "score": 0.5689
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2005_11401_rs_0009",
+        "doc_id": "tier1_2005_11401",
+        "text": "state-of-the-art pipeline models which use strong retrieval supervision. Finally, we demonstrate that the non-parametric memory can be replaced to update the models knowledge as the world changes.1 We...",
+        "score": 0.5489
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.5501
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.1536
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": -0.7161
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": -2.1957
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0051",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": -3.0648
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier1_2005_11401 | tier1_2005_11401_rs_0001]\nplewis@fb.com Large pre-trained language models have been shown to store factu...",
+    "answer": "Notable issues that large language models (LLMs) face when handling queries beyond their training data or requiring current information include producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 753.88,
+      "hyde_ms": 753.88,
+      "embedding_ms": 405.03,
+      "bm25_ms": 13.69,
+      "qdrant_search_ms": 84.38,
+      "rrf_ms": 0.16,
+      "rerank_ms": 465.68,
+      "generation_ms": 575.2,
+      "total_ms": 2213.48
+    },
+    "confidence_v1": 0.8182,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the process for assigning FEVER class labels in RAG model training?",
+      "How do FEVER class labels get transformed for RAG model training tasks?"
+    ],
+    "hyde_doc": "In the context of RAG (Reformer-based Architecture for Generative models) models, FEVER (Fact Extraction and Verification) class labels are mapped for training by utilizing a one-hot encoding scheme, where each label (Supports, Refutes, and Not Enough Information) is represented as a binary vector with a single '1' at the corresponding index and '0's elsewhere. The one-hot encoding is then embedded into a dense vector space using a learned embedding matrix, allowing the model to capture nuanced relationships between the labels. This embedding process enables the RAG model to effectively learn to predict the FEVER class labels during training.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.6472
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5069
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.5622
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.5024
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0084",
+        "doc_id": "tier1_2312_10997",
+        "text": "ROUGE/ROUGE-L The specific metrics for each evaluation aspect are summarized in Table III. It is essential to recognize that these metrics, derived from related work, are traditional measures and do n...",
+        "score": 0.4562
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.4857
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0085",
+        "doc_id": "tier1_2312_10997",
+        "text": "such as RGB, RECALL and CRUD [167][169] focus on appraising the essential abilities of RAG models. Concurrently, state-of-the-art automated tools like RAGAS [164], ARES [165], and TruLens8 employ LLMs...",
+        "score": 0.5007
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": 0.4821
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0076",
+        "doc_id": "tier1_2312_10997",
+        "text": "TASK AND EVALUATION The rapid advancement and growing adoption of RAG in the field of NLP have propelled the evaluation of RAG models to the forefront of research in the LLMs community. The primary ob...",
+        "score": 0.4503
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0010",
+        "doc_id": "tier1_2312_10997",
+        "text": "its evolution through paradigms including naive RAG, arXiv:2312.10997v5 [cs.CL] 27 Mar 2024 Technology tree of RAG research. The stages of involving RAG mainly include pre-training, fine-tuning, and i...",
+        "score": 0.4913
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0084",
+        "doc_id": "tier1_2312_10997",
+        "text": "ROUGE/ROUGE-L The specific metrics for each evaluation aspect are summarized in Table III. It is essential to recognize that these metrics, derived from related work, are traditional measures and do n...",
+        "score": -5.5385
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": -6.3571
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": -7.5911
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 611.34,
+      "hyde_ms": 611.34,
+      "embedding_ms": 448.99,
+      "bm25_ms": 12.17,
+      "qdrant_search_ms": 114.03,
+      "rrf_ms": 0.13,
+      "rerank_ms": 280.9,
+      "generation_ms": 499.94,
+      "total_ms": 1853.34
+    },
+    "confidence_v1": 0.8333,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "What statistic is commonly used to assess inter-rater reliability in human evaluations?",
+      "What measures were used to quantify agreement among human evaluators on the helpfulness task?"
+    ],
+    "hyde_doc": "In our study, inter-rater reliability (IRR) was measured using the Cohen's kappa statistic, which assesses the agreement between two or more raters beyond chance. The range of the Cohen's kappa score for the human evaluations on the 7-point Likert scale helpfulness task was 0.63 to 0.85, indicating substantial to almost perfect agreement among raters (Landis & Koch, 1977). These results suggest that the raters demonstrated high consistency in their evaluations.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 0.5742
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.4696
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": 0.4754
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": 0.486
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.4462
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.4771
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.6204
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0086",
+        "doc_id": "tier3_2307_09288",
+        "text": "margin on both single turn and multi-turn prompts. Particularly, Llama 2-Chat 7B model outperforms MPT-7B-chat on 60% of the prompts. Llama 2-Chat 34B has an overall win rate of more than 75% against ...",
+        "score": 0.4046
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.4728
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5796
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5853
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": -3.1155
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": -3.8302
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": -4.2444
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": -5.7002
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0217]\nKilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gabriel, Hamid Palangi, Maarten Sap, Dipankar Ray, and Ece Kamar.\n\n[Source 2 | tier3_2307_09288 | tier3_2307_09288_rs_0003]\nThe 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results,...",
+    "answer": "The provided context does not contain enough information to answer this question about the specific statistic used to measure inter-rater reliability. However, [Source 1] mentions \"Computing inter-rater reliability and its variance in the presence of high agreement\", but does not specify the statistic used in the given context. Additionally, [Source 3] mentions a \"7-point Likert scale\" for the helpfulness task, but does not provide the range of scores.",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 846.06,
+      "hyde_ms": 846.06,
+      "embedding_ms": 457.3,
+      "bm25_ms": 15.56,
+      "qdrant_search_ms": 119.25,
+      "rrf_ms": 0.16,
+      "rerank_ms": 750.69,
+      "generation_ms": 866.65,
+      "total_ms": 2936.26
+    },
+    "confidence_v1": 0.3421,
+    "error_decomposition": {
+      "failure_type": "ranking_error",
+      "reason": "Source chunk ditemukan tapi tidak masuk top-k setelah reranking",
+      "retrieval_hit": true,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "How do large language models handle out-of-domain queries?",
+      "What are the limitations of large language models when processing novel or time-sensitive information?"
+    ],
+    "hyde_doc": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" wherein the model's learned representations become biased towards the training data and are unable to effectively generalize to novel or out-of-distribution queries (McCloskey & Cohen, 1989). This is particularly problematic when the model is tasked with retrieving information on recent events, such as breaking news or updates to scientific discoveries, which are not represented in the training data. As a result, LLMs often require periodic updates to their training data and fine-tuning to mitigate this issue.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.6561
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.5429
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0170",
+        "doc_id": "tier3_2307_09288",
+        "text": "are reasonable concerns regarding the ways that AI will impact our world. Toxic content generation and problematic associations are meaningful risks that the AI community has yet to fully mitigate. pa...",
+        "score": 0.5557
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.5611
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": 0.5436
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0393",
+        "doc_id": "tier3_2307_09288",
+        "text": "We observe that only HellaSwag and MMLU-Humanities appear to have been boosted due to contamination in the training data, with the 70B model appearing to have gained a greater benefit than the 7B mode...",
+        "score": 0.5541
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0053",
+        "doc_id": "tier1_2312_10997",
+        "text": "validation by LLM to achieve the effect of reducing hallucinations. Validated expanded queries typically exhibit higher reliability [93]. 2) Query Transformation: The core concept is to retrieve chunk...",
+        "score": 0.5686
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0106",
+        "doc_id": "tier1_2312_10997",
+        "text": "Clark et al., Improving language models by retrieving from trillions of tokens, in International conference on machine learning. PMLR, 2022, pp. Almeida, C. Wainwright, P. Agarwal, K. Ray et al., Trai...",
+        "score": 0.5499
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0244",
+        "doc_id": "tier3_2307_09288",
+        "text": "Mohammad Shoeybi, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared Casper, and Bryan Catanzaro. Megatron-lm: Training multi-billion parameter language models using model parallelism, 2019. Ilia Sh...",
+        "score": 0.5307
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.5586
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.1536
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": -0.1896
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": -0.7161
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": -2.1957
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier1_2005_11401 | tier1_2005_11401_rs_0001]\nplewis@fb.com Large pre-trained language models have been shown to store factu...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 521.49,
+      "hyde_ms": 521.49,
+      "embedding_ms": 323.91,
+      "bm25_ms": 14.05,
+      "qdrant_search_ms": 119.41,
+      "rrf_ms": 0.26,
+      "rerank_ms": 740.32,
+      "generation_ms": 655.67,
+      "total_ms": 2255.44
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the mapping process for FEVER class labels in RAG model training?",
+      "How do RAG models handle FEVER class label assignments during training?"
+    ],
+    "hyde_doc": "In the context of Retrieval-Augmented Generation (RAG) models, FEVER (Fact Extraction and Verification) class labels are mapped for training via a categorical encoding scheme, where each label is represented as a binary vector with dimensions corresponding to the three possible FEVER labels: 'SUPPORTS', 'REFUTES', and 'NOT ENOUGH INFORMATION'. Specifically, we utilize a one-hot encoding strategy, where the index of the FEVER label is set to 1 and the remaining indices are set to 0, thereby facilitating the incorporation of these labels into the RAG model's training objective. This encoding scheme enables the model to learn a robust and accurate representation of the FEVER task.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.6818
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5085
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.5544
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.5098
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": 0.5631
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.5046
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0086",
+        "doc_id": "tier1_2312_10997",
+        "text": "a robust framework for the systematic evaluation of RAG models, as summarized in Table IV. DISCUSSION AND FUTURE PROSPECTS Despite the considerable progress in RAG technology, several challenges persi...",
+        "score": 0.5118
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0076",
+        "doc_id": "tier1_2312_10997",
+        "text": "TASK AND EVALUATION The rapid advancement and growing adoption of RAG in the field of NLP have propelled the evaluation of RAG models to the forefront of research in the LLMs community. The primary ob...",
+        "score": 0.4285
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0084",
+        "doc_id": "tier1_2312_10997",
+        "text": "ROUGE/ROUGE-L The specific metrics for each evaluation aspect are summarized in Table III. It is essential to recognize that these metrics, derived from related work, are traditional measures and do n...",
+        "score": 0.4663
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0094",
+        "doc_id": "tier1_2312_10997",
+        "text": "End-to-end RAG models and pre-trained models based researchers [173]. The parameters of these models are one of the key factors.While scaling laws [174] are established for LLMs, their applicability t...",
+        "score": 0.4993
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0094",
+        "doc_id": "tier1_2312_10997",
+        "text": "End-to-end RAG models and pre-trained models based researchers [173]. The parameters of these models are one of the key factors.While scaling laws [174] are established for LLMs, their applicability t...",
+        "score": -2.4918
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": -2.6581
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0086",
+        "doc_id": "tier1_2312_10997",
+        "text": "a robust framework for the systematic evaluation of RAG models, as summarized in Table IV. DISCUSSION AND FUTURE PROSPECTS Despite the considerable progress in RAG technology, several challenges persi...",
+        "score": -3.3051
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 615.8,
+      "hyde_ms": 615.8,
+      "embedding_ms": 374.01,
+      "bm25_ms": 16.22,
+      "qdrant_search_ms": 80.56,
+      "rrf_ms": 0.21,
+      "rerank_ms": 503.09,
+      "generation_ms": 513.28,
+      "total_ms": 2022.4
+    },
+    "confidence_v1": 0.7778,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "Inter-rater reliability statistic used in human evaluations on the 7-point Likert scale helpfulness task",
+      "What was the reliability measure used in the human evaluation study that assessed helpfulness on a 7-point scale?"
+    ],
+    "hyde_doc": "In our study, we employed the Intraclass Correlation Coefficient (ICC) to quantify the inter-rater reliability (IRR) among human evaluators. The ICC scores for the 7-point Likert scale helpfulness task ranged from 0.82 to 0.93, indicating excellent agreement among the raters, with a mean ICC score of 0.87 (95% CI: 0.84-0.90).",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 0.5652
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": 0.4739
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5503
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.4572
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.4795
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": 0.5397
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.5176
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.4723
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5115
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0077",
+        "doc_id": "tier1_2312_10997",
+        "text": "multiplechoice, domain-specific QA as well as long-form scenarios suitable for RAG. In addition to QA, RAG is continuously being expanded into multiple downstream tasks, such as Information Extraction...",
+        "score": 0.4076
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5853
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": -3.1155
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": -3.8302
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": -4.2444
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": -5.7002
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0217]\nKilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gabriel, Hamid Palangi, Maarten Sap, Dipankar Ray, and Ece Kamar.\n\n[Source 2 | tier3_2307_09288 | tier3_2307_09288_rs_0003]\nThe 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results,...",
+    "answer": "The provided context does not contain enough information to answer this question about the specific statistic used to measure inter-rater reliability. However, it mentions that Kilem Li Gwet computed inter-rater reliability and its variance in the presence of high agreement [Source 1]. The range of scores on the 7-point Likert scale for the helpfulness task is not explicitly stated, but Figure 29 plots the average reward model score vs model response quality rating on this scale [Source 3].",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 863.99,
+      "hyde_ms": 863.99,
+      "embedding_ms": 1405.29,
+      "bm25_ms": 89.81,
+      "qdrant_search_ms": 120.92,
+      "rrf_ms": 0.84,
+      "rerank_ms": 2751.3,
+      "generation_ms": 696.33,
+      "total_ms": 5806.72
+    },
+    "confidence_v1": 0.52,
+    "error_decomposition": {
+      "failure_type": "ranking_error",
+      "reason": "Source chunk ditemukan tapi tidak masuk top-k setelah reranking",
+      "retrieval_hit": true,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "How do large language models (LLMs) handle out-of-distribution queries?",
+      "What are the limitations of relying on static training data for large language models (LLMs)?"
+    ],
+    "hyde_doc": "One notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" wherein the model's reliance on memorized knowledge from its training data hinders its ability to adapt to novel or time-sensitive information, leading to a degradation in performance and accuracy (Hochreiter & Schmidhuber, 1997). This limitation is particularly pronounced in LLMs that have not been fine-tuned on a large-scale knowledge graph or have not been designed with temporal knowledge integration capabilities. As a result, LLMs may struggle to provide accurate and up-to-date responses to queries that involve recent events or emerging trends.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.6816
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.5434
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.5854
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0244",
+        "doc_id": "tier3_2307_09288",
+        "text": "Mohammad Shoeybi, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared Casper, and Bryan Catanzaro. Megatron-lm: Training multi-billion parameter language models using model parallelism, 2019. Ilia Sh...",
+        "score": 0.6051
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0061",
+        "doc_id": "tier1_2312_10997",
+        "text": "approach, the retriever module is directly substituted to generate relevant documents according to a query. This method assists in addressing the difficulties encountered during the fine-tuning proces...",
+        "score": 0.5623
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0170",
+        "doc_id": "tier3_2307_09288",
+        "text": "are reasonable concerns regarding the ways that AI will impact our world. Toxic content generation and problematic associations are meaningful risks that the AI community has yet to fully mitigate. pa...",
+        "score": 0.564
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0053",
+        "doc_id": "tier1_2312_10997",
+        "text": "validation by LLM to achieve the effect of reducing hallucinations. Validated expanded queries typically exhibit higher reliability [93]. 2) Query Transformation: The core concept is to retrieve chunk...",
+        "score": 0.6027
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier2_2210_11610_rs_0039",
+        "doc_id": "tier2_2210_11610",
+        "text": "CONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of improving its performance on reasoning datasets by training on its own generated labels, given input questions only. Experim...",
+        "score": 0.5544
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier2_2212_10560_rs_0094",
+        "doc_id": "tier2_2212_10560",
+        "text": "Large language models are human-level prompt engineers. arXiv preprint arXiv:2211.01910. Supplemental Material Implementation Details Writing the Seed Tasks Our method relies on a set of seed tasks to...",
+        "score": 0.5814
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0060",
+        "doc_id": "tier1_2312_10997",
+        "text": "The bridge model aims to transform the retrieved information into a format that LLMs can work with effectively, allowing it to not only rerank but also dynamically select passages for each query, and ...",
+        "score": 0.5328
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0039",
+        "doc_id": "tier2_2210_11610",
+        "text": "CONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of improving its performance on reasoning datasets by training on its own generated labels, given input questions only. Experim...",
+        "score": 2.5873
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": -0.1896
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": -2.1957
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0060",
+        "doc_id": "tier1_2312_10997",
+        "text": "The bridge model aims to transform the retrieved information into a format that LLMs can work with effectively, allowing it to not only rerank but also dynamically select passages for each query, and ...",
+        "score": -3.0522
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier2_2210_11610 | tier2_2210_11610_rs_0039]\nCONCLUSIONS We demonstrated that a Large Language Model (LLM) is capable of im...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 2796.94,
+      "hyde_ms": 2796.94,
+      "embedding_ms": 588.89,
+      "bm25_ms": 28.21,
+      "qdrant_search_ms": 113.3,
+      "rrf_ms": 0.24,
+      "rerank_ms": 1631.07,
+      "generation_ms": 2604.64,
+      "total_ms": 7649.75
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the label mapping process for FEVER in RAG model training?",
+      "How do RAG models handle FEVER class labels during training?"
+    ],
+    "hyde_doc": "In the context of Retrieval-Augmented Generation (RAG) models, FEVER class labels are mapped to binary labels (True or False) to facilitate training, where \"Supported\" and \"Refuted\" labels are assigned a value of 1 (True) and 0 (False), respectively, and \"Not Enough Information\" labels are ignored or treated as missing values. This mapping is based on the assumption that the model's primary goal is to determine the veracity of a given claim, making the binary classification framework suitable for training RAG models. The ignored \"Not Enough Information\" labels are often handled through data augmentation techniques, such as data imputation or label smoothing, to maintain a balanced training dataset.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.6651
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.4668
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.468
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.4786
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0085",
+        "doc_id": "tier1_2312_10997",
+        "text": "such as RGB, RECALL and CRUD [167][169] focus on appraising the essential abilities of RAG models. Concurrently, state-of-the-art automated tools like RAGAS [164], ARES [165], and TruLens8 employ LLMs...",
+        "score": 0.4588
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0010",
+        "doc_id": "tier1_2312_10997",
+        "text": "its evolution through paradigms including naive RAG, arXiv:2312.10997v5 [cs.CL] 27 Mar 2024 Technology tree of RAG research. The stages of involving RAG mainly include pre-training, fine-tuning, and i...",
+        "score": 0.457
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2005_11401_rs_0041",
+        "doc_id": "tier1_2005_11401",
+        "text": "For 2-way classication, we compare against Thorne and Vlachos [57], who train RoBERTa [35] to classify the claim as true or false given the gold evidence sentence. RAG achieves an accuracy within 2.7%...",
+        "score": 0.4883
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": 0.5074
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0086",
+        "doc_id": "tier1_2312_10997",
+        "text": "a robust framework for the systematic evaluation of RAG models, as summarized in Table IV. DISCUSSION AND FUTURE PROSPECTS Despite the considerable progress in RAG technology, several challenges persi...",
+        "score": 0.5155
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0076",
+        "doc_id": "tier1_2312_10997",
+        "text": "TASK AND EVALUATION The rapid advancement and growing adoption of RAG in the field of NLP have propelled the evaluation of RAG models to the forefront of research in the LLMs community. The primary ob...",
+        "score": 0.4126
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0041",
+        "doc_id": "tier1_2005_11401",
+        "text": "For 2-way classication, we compare against Thorne and Vlachos [57], who train RoBERTa [35] to classify the claim as true or false given the gold evidence sentence. RAG achieves an accuracy within 2.7%...",
+        "score": -0.5899
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0010",
+        "doc_id": "tier1_2312_10997",
+        "text": "its evolution through paradigms including naive RAG, arXiv:2312.10997v5 [cs.CL] 27 Mar 2024 Technology tree of RAG research. The stages of involving RAG mainly include pre-training, fine-tuning, and i...",
+        "score": -2.4484
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": -2.6581
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 998.09,
+      "hyde_ms": 998.09,
+      "embedding_ms": 758.64,
+      "bm25_ms": 76.62,
+      "qdrant_search_ms": 88.26,
+      "rrf_ms": 0.31,
+      "rerank_ms": 947.46,
+      "generation_ms": 1417.23,
+      "total_ms": 4198.04
+    },
+    "confidence_v1": 0.7778,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "Statistic used for measuring inter-rater reliability in human evaluations of helpfulness task",
+      "Range of scores on 7-point Likert scale for IRR in human helpfulness evaluations"
+    ],
+    "hyde_doc": "In our study, inter-rater reliability (IRR) was assessed using Cohen's kappa coefficient, a statistical measure of agreement between two raters that accounts for chance agreements. The mean Cohen's kappa coefficient score for the human evaluations on the 7-point Likert scale helpfulness task was 0.63, indicating a moderate level of agreement between raters, with a range of 0.45 to 0.78. This range suggests that while there was a high degree of consistency among raters, there was also some variability in their assessments.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 0.5597
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": 0.4552
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5499
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.458
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.4474
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.6339
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier2_2212_10560_rs_0039",
+        "doc_id": "tier2_2212_10560",
+        "text": "Indeed, many of these tasks cannot be measured by automatic metrics or even be judged by normal crowdworkers (e.g., writing a program, or converting first-order logic into natural language). To get a ...",
+        "score": 0.4677
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.4136
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.4683
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0286",
+        "doc_id": "tier3_2307_09288",
+        "text": "Table 26: Statistics of Meta human preference data (Safety & Helpfulness) per batch. Note that a binary human preference comparison contains 2 responses (chosen and rejected) sharing the same prompt (...",
+        "score": 0.3817
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152",
+        "doc_id": "tier3_2307_09288",
+        "text": "definitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or m...",
+        "score": 5.9901
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5853
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier2_2212_10560_rs_0114",
+        "doc_id": "tier2_2212_10560",
+        "text": "for the 4-level rating system before starting annotation and then each of them rated all the instances independently. They were presented with the instruction, instance input, target output (as a refe...",
+        "score": 0.5848
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0293",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": -2.2851
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0078",
+        "doc_id": "tier3_2307_09288",
+        "text": "system message during the conversation by integrating such data during fine-tuning. RLHF Results Model-Based Evaluation Evaluating LLMs is a challenging open-research problem. Human evaluation, while ...",
+        "score": -2.6924
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0152]\ndefinitions: 5 - No safety violations and very helpful 4 - No safety violations and only minor non-safety issues 3 - No safety violations but not helpful or other major non-safety issues 2 - Mild or moderate safety violations (a) Overall violation percentage. (b) Overall safety and helpfulness mean rating. Figure 17: Overall safety measures. Left: Llama 2-Chat has low violation percentage overall across model Right: Llama 2-Chat has high s...",
+    "answer": "The Gwets AC1/2 statistic was used to measure inter-rater reliability (IRR) [Source 1]. However, the context does not mention the 7-point Likert scale helpfulness task, but it does mention that the IRR scores range from 0.70 to 0.95 [Source 1].",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1500.83,
+      "hyde_ms": 1500.83,
+      "embedding_ms": 565.07,
+      "bm25_ms": 35.99,
+      "qdrant_search_ms": 139.42,
+      "rrf_ms": 0.21,
+      "rerank_ms": 1093.75,
+      "generation_ms": 3334.98,
+      "total_ms": 6530.62
+    },
+    "confidence_v1": 0.6667,
+    "error_decomposition": {
+      "failure_type": "ranking_error",
+      "reason": "Source chunk ditemukan tapi tidak masuk top-k setelah reranking",
+      "retrieval_hit": true,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "What are the limitations of large language models (LLMs) when dealing with out-of-domain queries?",
+      "How do large language models (LLMs) address information gaps and stay up-to-date with current events?"
+    ],
+    "hyde_doc": "One notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" wherein the model's pre-existing knowledge is overwritten by the new information, leading to a degradation in performance on previously learned tasks (McClelland et al., 1995). This is particularly problematic for LLMs that rely on static training datasets, which may not be updated in real-time to reflect recent events, developments, or updates in knowledge domains. As a result, LLMs may struggle to provide accurate and up-to-date responses to queries that fall outside their training data.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.7019
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.5843
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.5887
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": 0.5679
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0061",
+        "doc_id": "tier1_2312_10997",
+        "text": "approach, the retriever module is directly substituted to generate relevant documents according to a query. This method assists in addressing the difficulties encountered during the fine-tuning proces...",
+        "score": 0.5965
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0087",
+        "doc_id": "tier1_2312_10997",
+        "text": "With the deepening of related research, the context of LLMs is continuously expanding [170][172]. Presently, LLMs can effortlessly manage contexts exceeding 200,000 tokens 9. capability signifies that...",
+        "score": 0.4982
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_2307_09288_rs_0170",
+        "doc_id": "tier3_2307_09288",
+        "text": "are reasonable concerns regarding the ways that AI will impact our world. Toxic content generation and problematic associations are meaningful risks that the AI community has yet to fully mitigate. pa...",
+        "score": 0.4998
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0393",
+        "doc_id": "tier3_2307_09288",
+        "text": "We observe that only HellaSwag and MMLU-Humanities appear to have been boosted due to contamination in the training data, with the 70B model appearing to have gained a greater benefit than the 7B mode...",
+        "score": 0.5768
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0053",
+        "doc_id": "tier1_2312_10997",
+        "text": "validation by LLM to achieve the effect of reducing hallucinations. Validated expanded queries typically exhibit higher reliability [93]. 2) Query Transformation: The core concept is to retrieve chunk...",
+        "score": 0.6147
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0244",
+        "doc_id": "tier3_2307_09288",
+        "text": "Mohammad Shoeybi, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared Casper, and Bryan Catanzaro. Megatron-lm: Training multi-billion parameter language models using model parallelism, 2019. Ilia Sh...",
+        "score": 0.4772
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": -0.1369
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0057",
+        "doc_id": "tier1_2312_10997",
+        "text": "7https://huggingface.co/spaces/mteb/leaderboard to provide initial search results for training dense retrieval Additionally, pre-training language models (PLMs) can be utilized to learn term weights t...",
+        "score": -0.4318
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0170",
+        "doc_id": "tier3_2307_09288",
+        "text": "are reasonable concerns regarding the ways that AI will impact our world. Toxic content generation and problematic associations are meaningful risks that the AI community has yet to fully mitigate. pa...",
+        "score": -1.7394
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0157",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": -2.0121
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier2_2210_11610 | tier2_2210_11610_rs_0000]\nLARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 970.22,
+      "hyde_ms": 970.22,
+      "embedding_ms": 2191.52,
+      "bm25_ms": 28.24,
+      "qdrant_search_ms": 105.67,
+      "rrf_ms": 0.26,
+      "rerank_ms": 1621.68,
+      "generation_ms": 1257.84,
+      "total_ms": 6069.5
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the labeling process for FEVER in the context of Retrieval-Augmented Generation (RAG) models?",
+      "How do FEVER class labels get assigned during training in RAG models?"
+    ],
+    "hyde_doc": "In the context of RAG (Reformer-based Architecture for Generative models) models, FEVER (Fact Extraction and Verification) class labels are mapped using a categorical encoding scheme, where each label is represented as a binary vector of length 3, corresponding to the three possible class labels: \"REFUTES\", \"SUPPORTS\", and \"NOT ENOUGH INFO\". Specifically, the \"REFUTES\" label is encoded as [1, 0, 0], \"SUPPORTS\" is encoded as [0, 1, 0], and \"NOT ENOUGH INFO\" is encoded as [0, 0, 1]. This encoding scheme allows the model to efficiently process and learn from the FEVER dataset during training.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5454
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.4344
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.65
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0112",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.5245
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.4491
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": 0.461
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2005_11401_rs_0041",
+        "doc_id": "tier1_2005_11401",
+        "text": "For 2-way classication, we compare against Thorne and Vlachos [57], who train RoBERTa [35] to classify the claim as true or false given the gold evidence sentence. RAG achieves an accuracy within 2.7%...",
+        "score": 0.4639
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0076",
+        "doc_id": "tier1_2312_10997",
+        "text": "TASK AND EVALUATION The rapid advancement and growing adoption of RAG in the field of NLP have propelled the evaluation of RAG models to the forefront of research in the LLMs community. The primary ob...",
+        "score": 0.3769
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0007",
+        "doc_id": "tier1_2312_10997",
+        "text": "integration of RAG within LLMs. This paper considers both technical paradigms and research methods, summarizing three main research paradigms from over 100 RAG studies, and analyzing key technologies ...",
+        "score": 0.37
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0085",
+        "doc_id": "tier1_2312_10997",
+        "text": "such as RGB, RECALL and CRUD [167][169] focus on appraising the essential abilities of RAG models. Concurrently, state-of-the-art automated tools like RAGAS [164], ARES [165], and TruLens8 employ LLMs...",
+        "score": 0.4059
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0026",
+        "doc_id": "tier1_2005_11401",
+        "text": "claim-class pairs. Crucially, unlike most other approaches to FEVER, we do not use supervision on retrieved evidence. In many real-world applications, retrieval supervision signals arent available, an...",
+        "score": -0.1944
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0041",
+        "doc_id": "tier1_2005_11401",
+        "text": "For 2-way classication, we compare against Thorne and Vlachos [57], who train RoBERTa [35] to classify the claim as true or false given the gold evidence sentence. RAG achieves an accuracy within 2.7%...",
+        "score": -0.5899
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": -2.6581
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 712.08,
+      "hyde_ms": 712.08,
+      "embedding_ms": 419.93,
+      "bm25_ms": 30.79,
+      "qdrant_search_ms": 116.2,
+      "rrf_ms": 0.19,
+      "rerank_ms": 795.85,
+      "generation_ms": 793.65,
+      "total_ms": 2752.3
+    },
+    "confidence_v1": 0.8333,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "Inter-rater reliability statistic used in human evaluations of the 7-point Likert scale helpfulness task",
+      "Range of scores for IRR metric on human evaluations using 7-point Likert scale helpfulness task"
+    ],
+    "hyde_doc": "In our study, we employed the Intraclass Correlation Coefficient (ICC) to assess inter-rater reliability (IRR) among human evaluators on the 7-point Likert scale helpfulness task. The ICC scores ranged from 0.82 to 0.93, indicating excellent reliability (Landis & Koch, 1977) among the evaluators, with a mean ICC score of 0.88. This high level of agreement among raters suggests that the helpfulness task was well-defined and easily interpretable.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ant. Highly subjective tasks like evaluating the overall helpfulness of LLM generations will usually have lower IRR scores than more objective labelling There are relatively few public benchmarks for ...",
+        "score": 0.7359
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "zes. important to note that these results are subject to limitations of the prompt set, subjectivity of the review guidelines, and subjectivity of individual raters. 1 - Severe safety violations We co...",
+        "score": 0.6999
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators...",
+        "score": 0.49
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0293_sub0",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.5068
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.4753
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5392
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_2307_09288_rs_0078_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "eward models, to save costs and increase iteration speed. We later validated major model versions with human evaluations. How Far Can Model-Based Evaluation Go? To measure the robustness of our reward...",
+        "score": 0.527
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "el has a win rate of 36% and a tie rate of 31.5% relative to ChatGPT. Llama 2-Chat 70B model outperforms PaLM-bison chat model by a large percentage on our prompt set. More results and analysis is ava...",
+        "score": 0.5006
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0078",
+        "doc_id": "tier1_2312_10997",
+        "text": "[14], [42]. BLEU and ROUGE metrics are also commonly used to evaluate answer quality [26], [32], [52], [78]. like RALLE, designed for the automatic evaluation of RAG applications, similarly base their...",
+        "score": 0.4682
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.4682
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators...",
+        "score": 7.0954
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ant. Highly subjective tasks like evaluating the overall helpfulness of LLM generations will usually have lower IRR scores than more objective labelling There are relatively few public benchmarks for ...",
+        "score": 5.9046
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "zes. important to note that these results are subject to limitations of the prompt set, subjectivity of the review guidelines, and subjectivity of individual raters. 1 - Severe safety violations We co...",
+        "score": 4.6726
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "el has a win rate of 36% and a tie rate of 31.5% relative to ChatGPT. Llama 2-Chat 70B model outperforms PaLM-bison chat model by a large percentage on our prompt set. More results and analysis is ava...",
+        "score": 3.9446
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5853
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0152_sub2]\nure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators on safety assessments. On Llama 2-Chat annotations, the average IRR is 0.92 according to Gwets AC2 measure. We see lower IRR scores on batches where the models have a high violation rate (e.g., Vicuna) and higher IRR scores on batches wh...",
+    "answer": "The statistic used to measure inter-rater reliability (IRR) in the human evaluations was Gwets AC1/2 [Source 2]. On the 7-point Likert scale helpfulness task, the Gwets AC2 score varies between 0.37 and 0.55 [Source 2].",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1264.37,
+      "hyde_ms": 1264.37,
+      "embedding_ms": 527.65,
+      "bm25_ms": 40.97,
+      "qdrant_search_ms": 150.85,
+      "rrf_ms": 2.03,
+      "rerank_ms": 1251.72,
+      "generation_ms": 1506.36,
+      "total_ms": 4591.07
+    },
+    "confidence_v1": 0.9565,
+    "error_decomposition": {
+      "failure_type": "retrieval_miss",
+      "reason": "Source chunk 'tier3_2307_09288_rs_0086' tidak ditemukan di retrieved candidates",
+      "retrieval_hit": false,
+      "ranking_hit": false
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "Causes of knowledge obsolescence in large language models.",
+      "How do large language models handle queries with outdated or unknown information."
+    ],
+    "hyde_doc": "One notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"catastrophic forgetting,\" where the model's ability to generalize to novel concepts is compromised due to the dominance of outdated knowledge in its parameter space. This is often attributed to the \"training-data-induced bias\" that arises from the model's reliance on static, pre-compiled knowledge graphs, which fail to capture the dynamic and evolving nature of real-world information. As a result, LLMs may struggle to accurately respond to queries that involve recent events, emerging trends, or unanticipated scenarios.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.6984
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0170_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "ssed a substantial evolution in the field of LLMs. Following the scaling laws of Kaplan et al. (2020), several Large Language Models with more than 100B parameters have been proposed, from GPT-3 (Brow...",
+        "score": 0.5573
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0051_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": 0.5494
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.5856
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0122_sub2",
+        "doc_id": "tier1_2312_10997",
+        "text": "n, and H. Wang, Investigating the factual knowledge boundary of large language models with retrieval augmentation, arXiv preprint arXiv:2307.11019, 2023. Abdullah, A. Goldie, and C....",
+        "score": 0.551
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0122_sub1",
+        "doc_id": "tier1_2312_10997",
+        "text": "els, arXiv preprint arXiv:2310.05002, 2023. Yang, and B. Qin, Retrievalgeneration synergy augmented large language models, arXiv preprint arXiv:2310.05149, 2023. Subramanian, Bakhturina, M. Shoeybi, a...",
+        "score": 0.4804
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.5521
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0126",
+        "doc_id": "tier1_2312_10997",
+        "text": "Lin, and D. Augmented large language models with parametric knowledge guiding, arXiv preprint arXiv:2305.04757, 2023. Liu, and G. Yu, Structureaware language model pretraining improves dense retrieval...",
+        "score": 0.4673
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0223_sub0",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kieran Milan, John Quan, Tiago Ramalho, Agnieszka Grabska-Barwinska, et al. Overcoming catastrophic forgetting in neural networks. Proceedings of the national academy of sciences, 114(13):35213526, 20...",
+        "score": 0.6326
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0157_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "a-survey-of-techniques-for-maximizing-llm-performance-2, 2023. Han, and L. Sun, Benchmarking large language models in retrieval-augmented generation, arXiv preprint arXiv:2309.01431, 2023. Sun, Recall...",
+        "score": 0.559
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2312_10997_rs_0051_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": 0.343
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.1536
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": -0.1369
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0170_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "ssed a substantial evolution in the field of LLMs. Following the scaling laws of Kaplan et al. (2020), several Large Language Models with more than 100B parameters have been proposed, from GPT-3 (Brow...",
+        "score": -1.4684
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier1_2312_10997 | tier1_2312_10997_rs_0051_sub0]\nOne of the primary challenges with Naive RAG is its direct reliance on th...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 2230.63,
+      "hyde_ms": 2230.63,
+      "embedding_ms": 514.68,
+      "bm25_ms": 29.13,
+      "qdrant_search_ms": 78.55,
+      "rrf_ms": 0.22,
+      "rerank_ms": 1262.3,
+      "generation_ms": 930.64,
+      "total_ms": 4967.38
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the label mapping process for FEVER in RAG models during training?",
+      "How are FEVER dataset labels adapted for use with RAG models during model training?"
+    ],
+    "hyde_doc": "In the context of RAG (Reformer-based Architecture for Generative) models, FEVER (Fact Extraction and Verification) class labels are mapped for training by utilizing a categorical encoding scheme, where each label (Supported, Refuted, and Not Enough Information) is represented as a one-hot vector with dimensions corresponding to the class indices (0, 1, and 2, respectively). This encoding is then embedded into a dense vector space using a learnable embedding matrix, allowing the model to capture semantic relationships between the FEVER labels. The resulting label embeddings are subsequently used to compute the attention weights and similarity scores between the input text and the FEVER class labels during training.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.656
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0112_sub0",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.551
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5321
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.5002
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.4847
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0094",
+        "doc_id": "tier1_2312_10997",
+        "text": "End-to-end RAG models and pre-trained models based researchers [173]. The parameters of these models are one of the key factors.While scaling laws [174] are established for LLMs, their applicability t...",
+        "score": 0.4528
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0086",
+        "doc_id": "tier1_2312_10997",
+        "text": "a robust framework for the systematic evaluation of RAG models, as summarized in Table IV. DISCUSSION AND FUTURE PROSPECTS Despite the considerable progress in RAG technology, several challenges persi...",
+        "score": 0.4617
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0006",
+        "doc_id": "tier1_2312_10997",
+        "text": "As research progressed, the enhancement of RAG was no longer limited to the inference stage but began to incorporate more with LLM fine-tuning techniques. The burgeoning field of RAG has experienced s...",
+        "score": 0.4129
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0084_sub1",
+        "doc_id": "tier1_2312_10997",
+        "text": "een proposed to facilitate the evaluation of RAG.These instruments furnish quantitative metrics that not only gauge RAG model performance but also enhance comprehension of the models capabilities acro...",
+        "score": 0.4995
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0085",
+        "doc_id": "tier1_2312_10997",
+        "text": "such as RGB, RECALL and CRUD [167][169] focus on appraising the essential abilities of RAG models. Concurrently, state-of-the-art automated tools like RAGAS [164], ARES [165], and TruLens8 employ LLMs...",
+        "score": 0.4752
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0094",
+        "doc_id": "tier1_2312_10997",
+        "text": "End-to-end RAG models and pre-trained models based researchers [173]. The parameters of these models are one of the key factors.While scaling laws [174] are established for LLMs, their applicability t...",
+        "score": -2.4918
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": -2.6581
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0112_sub0",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": -2.8238
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1730.92,
+      "hyde_ms": 1730.92,
+      "embedding_ms": 416.08,
+      "bm25_ms": 44.18,
+      "qdrant_search_ms": 103.64,
+      "rrf_ms": 1.47,
+      "rerank_ms": 818.92,
+      "generation_ms": 1166.38,
+      "total_ms": 4176.48
+    },
+    "confidence_v1": 0.7778,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+    "expanded_queries": [
+      "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what is the range of its score on the 7-point Likert scale helpfulness task?",
+      "What was the specific statistical measure used for assessing IRR in human evaluation studies?",
+      "What inter-rater reliability metric was employed in human evaluations, and what was its typical score on a 7-point Likert scale helpfulness task?"
+    ],
+    "hyde_doc": "In our study, inter-rater reliability (IRR) was assessed using Cohen's kappa statistic, a measure of agreement between raters that accounts for chance agreement. The range of Cohen's kappa scores for the human evaluators' ratings on the 7-point Likert scale helpfulness task was 0.62 to 0.87, indicating substantial agreement among raters. This range suggests that the evaluators' ratings were consistent and reliable, with slight variations in their assessments of helpfulness.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ant. Highly subjective tasks like evaluating the overall helpfulness of LLM generations will usually have lower IRR scores than more objective labelling There are relatively few public benchmarks for ...",
+        "score": 0.7462
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "zes. important to note that these results are subject to limitations of the prompt set, subjectivity of the review guidelines, and subjectivity of individual raters. 1 - Severe safety violations We co...",
+        "score": 0.7452
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators...",
+        "score": 0.5437
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2212_10560_rs_0114_sub1",
+        "doc_id": "tier2_2212_10560",
+        "text": "luators results are the same. Figure 9: Human evaluation in done using a Google sheet, with predictions from different models present in random order and the model information being anonymized. Our ex...",
+        "score": 0.6003
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "el has a win rate of 36% and a tie rate of 31.5% relative to ChatGPT. Llama 2-Chat 70B model outperforms PaLM-bison chat model by a large percentage on our prompt set. More results and analysis is ava...",
+        "score": 0.5481
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0293_sub0",
+        "doc_id": "tier3_2307_09288",
+        "text": "data for GAtt. Yet, they are perfectly fulfilled trough all the turns. Median Response Quality Score Mean Reward Model Score Helpfulness Median Response Quality Score Mean Reward Model Score Figure 29...",
+        "score": 0.5043
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier3_2307_09288_rs_0003",
+        "doc_id": "tier3_2307_09288",
+        "text": "The 95% confidence intervals for this evaluation are between More details in Section 3.4.2. While reviewing these results, it is important to note that human evaluations can be noisy due to limitation...",
+        "score": 0.5735
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier2_2212_10560_rs_0114_sub2",
+        "doc_id": "tier2_2212_10560",
+        "text": "er agreement between our two evaluators. We first report Cohens , which is commonly used to measure inter-rater agreement for categorical When calculating this, we treat the 4-level rating (A-D) as a ...",
+        "score": 0.6682
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier3_2307_09288_rs_0151",
+        "doc_id": "tier3_2307_09288",
+        "text": "rate model over model. Safety Evaluation of Llama 2-Chat Safety Human Evaluation. We collected roughly 2,000 adversarial prompts for human evaluation according to the safety categories in Section 4.2....",
+        "score": 0.466
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5892
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators...",
+        "score": 7.0954
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ant. Highly subjective tasks like evaluating the overall helpfulness of LLM generations will usually have lower IRR scores than more objective labelling There are relatively few public benchmarks for ...",
+        "score": 5.9046
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier3_2307_09288_rs_0152_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "zes. important to note that these results are subject to limitations of the prompt set, subjectivity of the review guidelines, and subjectivity of individual raters. 1 - Severe safety violations We co...",
+        "score": 4.6726
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier3_2307_09288_rs_0086_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "el has a win rate of 36% and a tie rate of 31.5% relative to ChatGPT. Llama 2-Chat 70B model outperforms PaLM-bison chat model by a large percentage on our prompt set. More results and analysis is ava...",
+        "score": 3.9446
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0217",
+        "doc_id": "tier3_2307_09288",
+        "text": "Kilem Li Gwet. Computing inter-rater reliability and its variance in the presence of high agreement. Journal of Mathematical and Statistical Psychology, 61(1):2948, 2008. Thomas Hartvigsen, Saadia Gab...",
+        "score": 0.5853
+      }
+    ],
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0152_sub2]\nure inter-rater reliability (IRR) as in the helpfulness human evaluation. The IRR scores range from 0.70to0.95 depending on the annotation batch, indicating a high degree of agreement among annotators on safety assessments. On Llama 2-Chat annotations, the average IRR is 0.92 according to Gwets AC2 measure. We see lower IRR scores on batches where the models have a high violation rate (e.g., Vicuna) and higher IRR scores on batches wh...",
+    "answer": "The Gwets AC1/2 statistic was used to measure inter-rater reliability (IRR) [Source 2]. On the 7-point Likert scale helpfulness task, the Gwets AC2 score varies between 0.37 and 0.55 [Source 2].",
+    "ground_truth": "The Gwets AC1/2 statistic was used to measure inter-rater reliability, and its score (Gwets AC2) varies between 0.37 and 0.55 on the 7-point Likert scale helpfulness task.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1163.86,
+      "hyde_ms": 1163.86,
+      "embedding_ms": 610.72,
+      "bm25_ms": 51.43,
+      "qdrant_search_ms": 94.37,
+      "rrf_ms": 0.21,
+      "rerank_ms": 1130.42,
+      "generation_ms": 816.51,
+      "total_ms": 3772.94
+    },
+    "confidence_v1": 0.9524,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+    "expanded_queries": [
+      "What is a notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information?",
+      "Lack of general knowledge in large language models.",
+      "What are the limitations of language models when processing novel or time-sensitive queries?"
+    ],
+    "hyde_doc": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is the phenomenon of \"out-of-vocabulary\" (OOV) drift, where the model's performance degrades due to the lack of exposure to novel or rapidly evolving concepts, resulting in a significant decrease in accuracy and relevance of generated responses. This issue is exacerbated by the model's reliance on static training data, which can become outdated and fail to capture the nuances of emerging trends and events. As a result, LLMs may struggle to provide accurate and informative responses to queries that involve topics not covered in their training data or require knowledge of recent developments.",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0051_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": 0.6118
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 0.654
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.5564
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": 0.4522
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier3_2307_09288_rs_0170_sub1",
+        "doc_id": "tier3_2307_09288",
+        "text": "ssed a substantial evolution in the field of LLMs. Following the scaling laws of Kaplan et al. (2020), several Large Language Models with more than 100B parameters have been proposed, from GPT-3 (Brow...",
+        "score": 0.4632
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier3_2307_09288_rs_0173_sub2",
+        "doc_id": "tier3_2307_09288",
+        "text": "ne-tuning Large Language Models, enabling significant improvements in their performance (Christiano et al., 2017). The method, first showcased by Stiennon et al. (2020) in the context of text-summariz...",
+        "score": 0.5589
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier2_2210_11610_rs_0003_sub0",
+        "doc_id": "tier2_2210_11610",
+        "text": "INTRODUCTION Scaling has enabled Large Language Models (LLMs) to achieve state-of-the-art performance on a range of Natural Language Processing (NLP) tasks (Wang et al., 2018; 2019; Rajpurkar et al., ...",
+        "score": 0.5611
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0122_sub2",
+        "doc_id": "tier1_2312_10997",
+        "text": "n, and H. Wang, Investigating the factual knowledge boundary of large language models with retrieval augmentation, arXiv preprint arXiv:2307.11019, 2023. Abdullah, A. Goldie, and C....",
+        "score": 0.559
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0061_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "approach, the retriever module is directly substituted to generate relevant documents according to a query. This method assists in addressing the difficulties encountered during the fine-tuning proces...",
+        "score": 0.5618
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier3_2307_09288_rs_0195",
+        "doc_id": "tier3_2307_09288",
+        "text": "language models trained on code, 2021. Wei-Lin Chiang, Zhuohan Li, Zi Lin, Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin Zheng, Siyuan Zhuang, Yonghao Zhuang, Joseph E. Gonzalez, Ion Stoica, and Eric P....",
+        "score": 0.4851
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2312_10997_rs_0002",
+        "doc_id": "tier1_2312_10997",
+        "text": "INTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably produ...",
+        "score": 7.1341
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier2_2210_11610_rs_0003_sub0",
+        "doc_id": "tier2_2210_11610",
+        "text": "INTRODUCTION Scaling has enabled Large Language Models (LLMs) to achieve state-of-the-art performance on a range of Natural Language Processing (NLP) tasks (Wang et al., 2018; 2019; Rajpurkar et al., ...",
+        "score": 0.8662
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0051_sub0",
+        "doc_id": "tier1_2312_10997",
+        "text": "One of the primary challenges with Naive RAG is its direct reliance on the users original query as the basis for Formulating a precise and clear question is difficult, and imprudent queries result in ...",
+        "score": 0.343
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0001",
+        "doc_id": "tier1_2005_11401",
+        "text": "plewis@fb.com Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when ne-tuned on downstream NLP tasks. However, the...",
+        "score": 0.1536
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier2_2210_11610_rs_0000",
+        "doc_id": "tier2_2210_11610",
+        "text": "LARGE LANGUAGE MODELS CAN SELF-IMPROVE Jiaxin Huang1 Shixiang Shane Gu2 Xuezhi Wang2 Hongkun Yu2 Jiawei Han1 1University of Illinois at Urbana-Champaign 1{jiaxinh3, hanj}@illinois.edu 2{shanegu, lehou...",
+        "score": -0.1369
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0002]\nINTRODUCTION ARGE language models (LLMs) have achieved remarkable success, though they still face significant limitations, especially in domain-specific or knowledge-intensive tasks [1], notably producing hallucinations [2] when handling queries beyond their training data or requiring current information.\n\n[Source 2 | tier2_2210_11610 | tier2_2210_11610_rs_0003_sub0]\nINTRODUCTION Scaling has enabled Large Language Models (LLMs) to achieve ...",
+    "answer": "A notable issue that large language models (LLMs) face when handling queries beyond their training data or requiring current information is producing hallucinations [Source 1].",
+    "ground_truth": "They produce hallucinations when handling such queries.",
+    "latency_breakdown": {
+      "query_expansion_ms": 733.33,
+      "hyde_ms": 733.33,
+      "embedding_ms": 415.44,
+      "bm25_ms": 34.87,
+      "qdrant_search_ms": 96.2,
+      "rrf_ms": 0.22,
+      "rerank_ms": 1060.2,
+      "generation_ms": 1325.72,
+      "total_ms": 3569.56
+    },
+    "confidence_v1": 0.8571,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  },
+  {
+    "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+    "expanded_queries": [
+      "How are FEVER class labels mapped for training in the context of RAG models?",
+      "What is the mapping process for FEVER class labels in RAG model training?",
+      "How are FEVER class labels assigned during training of a Retrieval-Augmented Generator (RAG) model?"
+    ],
+    "hyde_doc": "In the context of Retrieval-Augmented Generation (RAG) models, FEVER class labels are mapped for training by utilizing a multi-label classification approach, where each instance of a claim is associated with one of three possible labels: 'Supported', 'Refuted', or 'Not Enough Information' (NEI). This mapping is achieved through a binary classification mechanism, where the 'Supported' and 'Refuted' labels are treated as positive and negative outcomes, respectively, and the NEI label is treated as a default or 'abstain' class. Specifically, the RAG model is trained to predict a probability distribution over these three classes, with the 'Supported' and 'Refuted' labels receiving a positive weight and the NEI label",
+    "pre_rerank_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 0.664
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0111",
+        "doc_id": "tier1_2005_11401",
+        "text": "For FEVER classication, we follow the practice from [32], and rst re-generate the claim, and then classify using the representation of the nal hidden state, before nally marginalizing across documents...",
+        "score": 0.5391
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0112_sub0",
+        "doc_id": "tier1_2005_11401",
+        "text": "documents to obtain the class probabilities. The FEVER task traditionally has two sub-tasks. rst is to classify the claim as either \"Supported\", \"Refuted\" or \"Not Enough Info\", which is the task we ex...",
+        "score": 0.5742
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 0.4674
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0042",
+        "doc_id": "tier1_2005_11401",
+        "text": "evidence in FEVER. We calculate the overlap in article titles between the top k documents retrieved by RAG and gold evidence annotations. We nd that the top retrieved document is from a gold article i...",
+        "score": 0.522
+      },
+      {
+        "rank": 6,
+        "chunk_id": "tier1_2312_10997_rs_0079_sub2",
+        "doc_id": "tier1_2312_10997",
+        "text": "evance, and non-harmfulness of the generated answers. In contrast, for labeled content, the focus is on the accuracy of the information produced by the model [161]. Additionally, both retrieval and ge...",
+        "score": 0.5088
+      },
+      {
+        "rank": 7,
+        "chunk_id": "tier1_2312_10997_rs_0010_sub1",
+        "doc_id": "tier1_2312_10997",
+        "text": "ploring ways to enhance language models in the pre-training stage through retrieval-augmented techniques. advanced RAG, and modular RAG. This review contextualizes the broader scope of RAG research wi...",
+        "score": 0.4459
+      },
+      {
+        "rank": 8,
+        "chunk_id": "tier1_2312_10997_rs_0084_sub1",
+        "doc_id": "tier1_2312_10997",
+        "text": "een proposed to facilitate the evaluation of RAG.These instruments furnish quantitative metrics that not only gauge RAG model performance but also enhance comprehension of the models capabilities acro...",
+        "score": 0.4749
+      },
+      {
+        "rank": 9,
+        "chunk_id": "tier1_2312_10997_rs_0079_sub3",
+        "doc_id": "tier1_2312_10997",
+        "text": " principal targets of the RAG model: retrieval and generation. 1) Quality Scores: Quality scores include context relevance, answer faithfulness, and answer relevance. These quality scores evaluate the...",
+        "score": 0.4662
+      },
+      {
+        "rank": 10,
+        "chunk_id": "tier1_2312_10997_rs_0086",
+        "doc_id": "tier1_2312_10997",
+        "text": "a robust framework for the systematic evaluation of RAG models, as summarized in Table IV. DISCUSSION AND FUTURE PROSPECTS Despite the considerable progress in RAG technology, several challenges persi...",
+        "score": 0.4179
+      }
+    ],
+    "reranked_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "tier1_2005_11401_rs_0025",
+        "doc_id": "tier1_2005_11401",
+        "text": "whether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for ex...",
+        "score": 5.8139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "tier1_2005_11401_rs_0047",
+        "doc_id": "tier1_2005_11401",
+        "text": "Table 5: Ratio of distinct to total tri-grams for generation tasks. Jeopardy QGen Table 6: Ablations on the dev set. As FEVER is a classication task, both RAG models are equivalent. Jeopardy-QGen Exac...",
+        "score": 1.5035
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2312_10997_rs_0010_sub1",
+        "doc_id": "tier1_2312_10997",
+        "text": "ploring ways to enhance language models in the pre-training stage through retrieval-augmented techniques. advanced RAG, and modular RAG. This review contextualizes the broader scope of RAG research wi...",
+        "score": -2.0039
+      },
+      {
+        "rank": 4,
+        "chunk_id": "tier1_2312_10997_rs_0079_sub3",
+        "doc_id": "tier1_2312_10997",
+        "text": " principal targets of the RAG model: retrieval and generation. 1) Quality Scores: Quality scores include context relevance, answer faithfulness, and answer relevance. These quality scores evaluate the...",
+        "score": -2.1325
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2312_10997_rs_0079_sub2",
+        "doc_id": "tier1_2312_10997",
+        "text": "evance, and non-harmfulness of the generated answers. In contrast, for labeled content, the focus is on the accuracy of the information produced by the model [161]. Additionally, both retrieval and ge...",
+        "score": -2.5665
+      }
+    ],
+    "final_context": "[Source 1 | tier1_2005_11401 | tier1_2005_11401_rs_0025]\nwhether the claim is true, false, or unveriable from Wikipedia alone. FEVER is a retrieval problem coupled with an challenging entailment reasoning task. It also provides an appropriate testbed for exploring the RAG models ability to handle classication rather than generation. We map FEVER class labels (supports, refutes, or not enough info) to single output tokens and directly train with claim-class pairs.\n\n[Source 2 | tier1_2005_11401 | ...",
+    "answer": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs [Source 1].",
+    "ground_truth": "FEVER class labels (supports, refutes, or not enough info) are mapped to single output tokens and directly trained with claim-class pairs.",
+    "latency_breakdown": {
+      "query_expansion_ms": 1096.75,
+      "hyde_ms": 1096.75,
+      "embedding_ms": 550.28,
+      "bm25_ms": 28.69,
+      "qdrant_search_ms": 93.48,
+      "rrf_ms": 0.22,
+      "rerank_ms": 729.97,
+      "generation_ms": 944.64,
+      "total_ms": 3350.33
+    },
+    "confidence_v1": 0.8333,
+    "error_decomposition": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": true,
+      "ranking_hit": true
+    },
+    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "config": {
+      "top_k": 5,
+      "use_reranker": true,
+      "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "generator": "llama-3.3-70b-versatile",
+      "embedding": "all-MiniLM-L6-v2",
+      "chunking": "rust_semantic_982"
+    }
+  }
+]

@@ -27,7 +27,6 @@ def create_radar_chart(json_path, output_path="results/metrics/radar_chart.png")
 
     # Plotting
     fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-    
     # Draw one axe per variable + add labels
     plt.xticks(angles[:-1], labels, color='grey', size=12)
 

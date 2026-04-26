@@ -1,0 +1,674 @@
+{
+  "generated_at": "2026-04-07T15:50:12.228657+00:00",
+  "faithfulness_mode": "hybrid",
+  "thresholds": {
+    "hard_gap": 0.0,
+    "retrieval_fail": 0.2,
+    "faithfulness_min": 0.5
+  },
+  "definition": {
+    "coverage": "answered / answerable",
+    "effective_coverage": "(answered AND faithful) / answerable",
+    "answerable": "total - hard_gap",
+    "hard_gap": "top_score <= 0.0",
+    "retrieval_fail": "0.0 < top_score < 0.2",
+    "abstained": "top_score >= 0.2 but LLM abstained"
+  },
+  "overall": {
+    "total": 65,
+    "answered": 46,
+    "abstained": 4,
+    "retrieval_fail": 6,
+    "hard_gap": 9,
+    "answerable": 56,
+    "answered_and_faithful": 1,
+    "coverage": 0.8214,
+    "effective_coverage": 0.0179,
+    "gap_rate": 0.1385,
+    "retrieval_fail_rate": 0.0923,
+    "abstention_rate": 0.0714,
+    "faithfulness_available": 14,
+    "avg_latency_retrieval_ms": 2993.1,
+    "avg_latency_generation_ms": 876.4
+  },
+  "by_source": {
+    "primary": {
+      "total": 2,
+      "answered": 0,
+      "abstained": 0,
+      "retrieval_fail": 2,
+      "hard_gap": 0,
+      "answerable": 2,
+      "answered_and_faithful": 0,
+      "coverage": 0.0,
+      "effective_coverage": 0.0,
+      "gap_rate": 0.0,
+      "retrieval_fail_rate": 1.0,
+      "abstention_rate": 0.0,
+      "faithfulness_available": 2,
+      "avg_latency_retrieval_ms": null,
+      "avg_latency_generation_ms": null
+    },
+    "logs": {
+      "total": 11,
+      "answered": 0,
+      "abstained": 0,
+      "retrieval_fail": 4,
+      "hard_gap": 7,
+      "answerable": 4,
+      "answered_and_faithful": 0,
+      "coverage": 0.0,
+      "effective_coverage": 0.0,
+      "gap_rate": 0.6364,
+      "retrieval_fail_rate": 0.3636,
+      "abstention_rate": 0.0,
+      "faithfulness_available": 10,
+      "avg_latency_retrieval_ms": null,
+      "avg_latency_generation_ms": 117.2
+    },
+    "live": {
+      "total": 52,
+      "answered": 46,
+      "abstained": 4,
+      "retrieval_fail": 0,
+      "hard_gap": 2,
+      "answerable": 50,
+      "answered_and_faithful": 1,
+      "coverage": 0.92,
+      "effective_coverage": 0.02,
+      "gap_rate": 0.0385,
+      "retrieval_fail_rate": 0.0,
+      "abstention_rate": 0.08,
+      "faithfulness_available": 2,
+      "avg_latency_retrieval_ms": 2993.1,
+      "avg_latency_generation_ms": 937.2
+    }
+  },
+  "per_query": [
+    {
+      "query": "What is chunking and why does chunk size matter?",
+      "class": "retrieval_fail",
+      "top_score": 0.016261,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "primary"
+    },
+    {
+      "query": "What metrics evaluate RAG system quality?",
+      "class": "retrieval_fail",
+      "top_score": 0.016261,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "primary"
+    },
+    {
+      "query": "What is chunking and why does chunk size matter?",
+      "class": "retrieval_fail",
+      "top_score": 0.016261,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:generation_test.json"
+    },
+    {
+      "query": "How does hybrid retrieval combine BM25 and dense search?",
+      "class": "retrieval_fail",
+      "top_score": 0.016393,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:generation_test.json"
+    },
+    {
+      "query": "What metrics evaluate RAG system quality?",
+      "class": "retrieval_fail",
+      "top_score": 0.016261,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:generation_test.json"
+    },
+    {
+      "query": "What happens when the answer is not in the documents?",
+      "class": "retrieval_fail",
+      "top_score": 0.016261,
+      "abstention": true,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:generation_test.json"
+    },
+    {
+      "query": "what is chunking in RAG?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:hybrid_search_test.json"
+    },
+    {
+      "query": "how does hybrid retrieval work?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:hybrid_search_test.json"
+    },
+    {
+      "query": "what metrics are used to evaluate RAG systems?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:hybrid_search_test.json"
+    },
+    {
+      "query": "What is attention mechanism in transformer models?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:single_query_debug.json"
+    },
+    {
+      "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what ",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": 0.0,
+      "faithful": false,
+      "source": "log:single_query_debug.json"
+    },
+    {
+      "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their tr",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "log:single_query_debug.json"
+    },
+    {
+      "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "log:single_query_debug.json"
+    },
+    {
+      "query": "How are FEVER class labels mapped for training in the context of RAG models?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What statistic was used to measure inter-rater reliability (IRR) in the human evaluations, and what ",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": 0.0,
+      "faithful": false,
+      "source": "live_api"
+    },
+    {
+      "query": "What is a notable issue that large language models (LLMs) face when handling queries beyond their tr",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": 1.0,
+      "faithful": true,
+      "source": "live_api"
+    },
+    {
+      "query": "How are high-confidence predictions filtered in the method described?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does RAG compare to Fine-tuning (FT) in terms of its suitability for specific tasks?",
+      "class": "abstained",
+      "top_score": 0.5,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of language models are being considered for pretraining with retrieval?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How many SFT annotations were collected before stopping the annotation process?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How much CPU memory is required to store the document index after compression using FAISS's compress",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What limitation do instruction-tuning with human annotation and SELFINSTRUCT share, according to the",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What percentage of cases did evaluators indicate that RAG was more factual than BART?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "Why may RAG-Token perform best at generating Jeopardy questions?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of pretraining is used to improve dense retrieval on structured data, according to Liu and",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How do attention mechanisms typically function in sequence modeling and transduction models, accordi",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What characteristic of RAG allows it to achieve strong results without requiring expensive pre-train",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does the margin component affect the Helpfulness reward model accuracy?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What are some limitations of human evaluations that can introduce noise into the results?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the unexpected effect of including irrelevant documents in the context on accuracy, accordin",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the primary reason for the limited proficiency of the Llama 2-Chat model in non-English lang",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does the HateBERT classifier assign a toxicity score to documents in the pretraining corpus?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How is the inter-rater reliability (IRR) measured among annotators for safety assessments, and what ",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is believed to be the first step toward higher-quality data for building better instruction-fol",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What task is a large language model found to be good at, according to Hong and A. Sun's findings?",
+      "class": "abstained",
+      "top_score": 0.5,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of data was used to bootstrap the SFT stage?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the state-of-the-art zero-shot performance achieved by the proposed approach on the GSM8K da",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How can RAG be fine-tuned for sequence-to-sequence tasks?",
+      "class": "abstained",
+      "top_score": 0.5,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What are some challenges that language models face when dealing with user queries in Naive RAG?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How did red team participants annotate the attributes of the dialogue they created, in terms of capt",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What additional step is included for accuracy scores on the GSM8K and DROP benchmarks?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does the hierarchical structure in the Structural Index method aid in the retrieval and processi",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What technique is used to enable complex reasoning in large language models?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What method is used to mitigate model biases in sentence-pair classification according to the work b",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How many instructions out of 52,445 contain a verb-noun structure, and what happens in the instructi",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What happens to Llama 2-Chat's behavior when more safety data is used, particularly in regards to ge",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of learners are the models by Brown, Benjamin Mann, et al.?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does the performance of GPT3SELF-INST compare to models trained on T0 or SUPERNI data?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the challenge that large language models face according to the International Conference on M",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "Where can the illustration of the model's consistency be found?",
+      "class": "hard_gap",
+      "top_score": 0.0,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What factors affect the final generation results in the context of Retrieval Source RAG?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What are some of the datasets mentioned in the chunk for question answering tasks?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the name of the benchmark proposed for evaluating the robustness of large language models ag",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the format of the publication where the capacity for moral self-correction in large language",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the name of the model or method proposed by Nagrani et al. for dense video captioning?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "At what point does the improvement in GPT3SELF-INST models almost plateau with increasing data size?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of examples are formulated for each tool in the evaluation on the math datasets?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the name of the benchmark for general-purpose language understanding systems mentioned in th",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the name of the preprint repository where the paper \"Googles neural machine translation syst",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the dimension of the output produced by all sub-layers and embedding layers in the model?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of evaluation was used to complement human evaluation in assessing the models?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How many tasks were used for generalization via declarative instructions in the Super-naturalinstruc",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What is the name of the conference where the case study on the colossal clean crawled corpus was pre",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "How does the delta of potential gain of fine-tuning change with the number of samples?",
+      "class": "answered",
+      "top_score": 0.5,
+      "abstention": false,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    },
+    {
+      "query": "What type of language models are learned in the Zemi approach?",
+      "class": "abstained",
+      "top_score": 0.5,
+      "abstention": true,
+      "faithfulness": null,
+      "faithful": null,
+      "source": "live_api"
+    }
+  ]
+}

@@ -1,13 +1,14 @@
 from __future__ import annotations
-
 import logging
 import json
 import os
 import numpy as np
+import time
+import re
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
-from src.api.config import settings
+from src.controller.policy_engine import PolicyEngine
 from rank_bm25 import BM25Okapi
 from concurrent.futures import ThreadPoolExecutor
 from groq import Groq
@@ -30,9 +31,66 @@ def _best_window(query: str, text: str, window: int = 600, step: int = 200) -> s
 
 load_dotenv()
 
+def rrf_fuse(
+    all_hits: List[List],
+    k: int = 60,
+    weights: Optional[List[float]] = None,
+    section_boost_fn=None,
+) -> List:
+    """
+    Standalone RRF — single source of truth untuk seluruh pipeline.
+
+    Args:
+        all_hits:         List of ranked lists (dict atau object).
+        k:                RRF constant (default 60, Cormack 2009).
+        weights:          Optional per-list weight. None = semua bobot 1.0.
+        section_boost_fn: Optional callable(metadata) -> float untuk section boost.
+
+    Returns:
+        List chunk sorted by RRF score descending.
+        Setiap item dapat field retrieval_score berisi skor RRF final.
+    """
+    if weights is not None and len(weights) != len(all_hits):
+        raise ValueError(f"weights length ({len(weights)}) != all_hits length ({len(all_hits)})")
+
+    fused_scores: dict[str, float] = {}
+    chunk_map: dict[str, Any] = {}
+
+    for list_idx, hits in enumerate(all_hits):
+        w = weights[list_idx] if weights is not None else 1.0
+        for rank, hit in enumerate(hits):
+            cid = hit.get("chunk_id") if isinstance(hit, dict) else getattr(hit, "chunk_id", None)
+            if not cid:
+                continue
+            boost = 1.0
+            if section_boost_fn is not None:
+                meta = (hit.get("metadata", {}) if isinstance(hit, dict)
+                        else getattr(hit, "metadata", {})) or {}
+                boost = section_boost_fn(meta)
+            fused_scores[cid] = fused_scores.get(cid, 0.0) + w * boost / (k + rank + 1)
+            if cid not in chunk_map:
+                chunk_map[cid] = hit
+
+    result = []
+    for cid, score in sorted(fused_scores.items(), key=lambda x: x[1], reverse=True):
+        item = chunk_map[cid]
+        rrf_score = round(score, 6)
+        if isinstance(item, dict):
+            item["retrieval_score"] = rrf_score
+        elif hasattr(item, "score"):
+            item.score = rrf_score
+        result.append(item)
+
+    return result
+
+
 MULTI_QUERY_PROMPT = """Generate 2 alternative search queries for the following question.
-These should capture different aspects or phrasings of the same information need.
-Return ONLY the queries, one per line, no numbering, no explanation.
+
+STRICT RULES:
+- Stay in the SAME technical domain as the original query
+- Do NOT switch fields (e.g., from machine learning to neuroscience)
+- Preserve key technical terms (e.g., "transformer", "attention")
+- Rephrase, don't reinterpret
 
 Original query: {query}
 
@@ -45,7 +103,6 @@ Question: {query}
 
 Hypothetical passage:"""
 
-
 class MasterHybridRetriever:
     def __init__(
         self,
@@ -53,13 +110,14 @@ class MasterHybridRetriever:
         bm25_chunks_path: str = "data/processed/chunks_semantic.json",
         reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
         rrf_k: int = 60,
-        use_multi_query: bool = True,
-        use_hyde: bool = settings.use_hyde,
+        use_multi_query: bool = False,
+        use_hyde: bool = False,
     ):
         self.vector_store = vector_store
         self.rrf_k = rrf_k
         self.use_multi_query = use_multi_query
         self.use_hyde = use_hyde
+        self._policy = PolicyEngine()
         self._chunks = []
         self._bm25 = None
 
@@ -72,21 +130,72 @@ class MasterHybridRetriever:
 
         from src.retrieval.model_registry import ModelRegistry
         self.reranker = ModelRegistry.get().reranker
-        logger.info(f"[MasterRetriever] Reranker reused from ModelRegistry")
+        logger.info(f"[MasterRetriever] Reranker loaded (disabled in baseline)")
 
-        # Groq client untuk multi-query + HyDE
         api_key = os.getenv("GROQ_API_KEY")
         if api_key:
             self.groq = Groq(api_key=api_key)
-            logger.info(f"[MasterRetriever] Groq ready (multi-query + HyDE)")
+            logger.info(f"[MasterRetriever] Groq available (expansion disabled)")
         else:
             self.groq = None
-            logger.info(f"[MasterRetriever] WARNING: No GROQ_API_KEY, multi-query + HyDE disabled")
+            logger.info(f"[MasterRetriever] No GROQ_API_KEY available")
+
+    def _is_valid_section(self, metadata: dict) -> bool:
+        section = str(metadata.get("section", "")).lower()
+        return section not in ["references", "bibliography"]
+    def _is_reference_chunk(self, chunk) -> bool:
+        """
+        Content-aware reference detection — catches reference chunks that
+        slipped through with wrong/missing section metadata.
+
+        Layer 1: section name
+        Layer 2: citation bracket pattern [1], [23], etc.
+        Layer 3: comma density (citation lists like "Smith, J., Jones, K., ...")
+        """
+        if isinstance(chunk, dict):
+            meta = chunk.get("metadata", {})
+            text = chunk.get("text", "")
+        else:
+            meta = getattr(chunk, "metadata", {})
+            text = getattr(chunk, "text", "")
+
+        section = str(meta.get("section", "")).lower()
+
+        # Layer 1: section name check
+        if any(ref in section for ref in ["reference", "bibliography"]):
+            return True
+
+        # Layer 2: citation bracket pattern [1], [23]
+        if re.search(r"\[\d+\]", text):
+            return True
+
+        # Layer 3: comma density (citation lists)
+        if text.count(",") > 10:
+            return True
+
+        return False
+    
+    @staticmethod
+    def _section_boost(metadata: dict) -> float:
+        section = str(metadata.get("section", "")).lower()
+
+        if any(kw in section for kw in ("method", "architect", "approach", "model")):
+            return 1.4   
+        elif any(kw in section for kw in ("experiment", "result", "evaluat", "finding")):
+            return 1.3   # high: results are the evidence
+        elif "abstract" in section:
+            return 1.1   # medium: abstract is dense but broad
+        elif "introduction" in section:
+            return 1.05  # slight: intro has context
+        elif "conclusion" in section:
+            return 1.0   # neutral
+        elif any(ref in section for ref in ("reference", "bibliography")):
+            return 0.3   # soft penalty — survives if no better match exists
+        else:
+            return 1.0   # body/default
 
     # ── Query Expansion ────────────────────────────────────────────────────────
-
     def _call_groq(self, prompt: str, temperature: float, max_tokens: int) -> str:
-        """Single Groq call — dipakai di thread pool."""
         resp = self.groq.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt}],
@@ -96,7 +205,6 @@ class MasterHybridRetriever:
         return resp.choices[0].message.content.strip()
 
     def _expand_and_hyde_parallel(self, query: str):
-        """Run multi-query expansion + HyDE secara parallel via ThreadPoolExecutor."""
         queries = [query]
         hyde_text = None
 
@@ -135,12 +243,64 @@ class MasterHybridRetriever:
         return queries, hyde_text
 
     def _expand_queries(self, query: str) -> List[str]:
-        """Kept for backward compat — pakai parallel version di search()."""
         return [query]
 
     def _generate_hyde(self, query: str) -> Optional[str]:
-        """Kept for backward compat — pakai parallel version di search()."""
         return None
+
+    def _classify_query(self, query: str) -> int:
+        words = len(query.strip().split())
+        if words <= 5:
+            return 3
+        if words >= 15:
+            return 7
+        return 5
+
+    def _resolve_top_k(self, query: str, top_k: int) -> int:
+        if top_k <= 0:
+            top_k = self._classify_query(query)
+            logger.info(f"[TopK] auto-selected top_k={top_k} for query length={len(query.split())}")
+        return top_k
+
+    def _choose_candidate_k(self, top_k: int) -> int:
+        return min(top_k * 3, 30)
+
+    def _rerank(self, query: str, candidates: list) -> list:
+        if not self.reranker or not candidates:
+            return candidates
+
+        pairs = []
+        for hit in candidates:
+            text = hit.get("text") if isinstance(hit, dict) else getattr(hit, "text", "")
+            pairs.append([query, text])
+
+        try:
+            scores = self.reranker.predict(pairs)
+            
+            # STEP 1: Print raw rerank scores for debugging
+            print("=== RERANK RAW SCORES ===")
+            for i, s in enumerate(scores):
+                print(f"  candidate_{i}: {float(s)}")
+            
+            # STEP 2: Attach rerank_score to each chunk
+            for chunk, score in zip(candidates, scores):
+                rerank_score = float(score)
+                if isinstance(chunk, dict):
+                    chunk["rerank_score"] = rerank_score
+                else:
+                    chunk.rerank_score = rerank_score
+            
+            # STEP 3: Sort by rerank_score
+            ranked = sorted(
+                candidates,
+                key=lambda x: (x["rerank_score"] if isinstance(x, dict) else getattr(x, "rerank_score", 0)),
+                reverse=True,
+            )
+            
+            return ranked
+        except Exception as exc:
+            logger.info(f"[Rerank] failed: {exc}")
+            return candidates
 
     # ── Core Retrieval ─────────────────────────────────────────────────────────
     def _dense_search(self, query: str, k: int) -> List[RetrievalResult]:
@@ -156,11 +316,11 @@ class MasterHybridRetriever:
                 "chunk_id": self._chunks[i]["chunk_id"],
                 "text": self._chunks[i]["text"],
                 "score": float(scores[i]),
-                "doc_id": self._chunks[i]["doc_id"]
+                "doc_id": self._chunks[i]["doc_id"],
+                "metadata": self._chunks[i].get("metadata", {}),
             }
-            for i in top_indices if scores[i] > 0
+            for i in top_indices
         ]
-
     def _rrf_fuse(
         self,
         all_dense_hits: List[List],
@@ -169,29 +329,29 @@ class MasterHybridRetriever:
         dense_weight: float = 0.7,
         bm25_weight: float = 0.3,
     ) -> List:
-        """RRF fusion across multiple query results."""
-        fused_scores = {}
-        chunk_map = {}
+        """Thin wrapper around standalone rrf_fuse."""
+        all_hits = all_dense_hits + all_bm25_hits
+        weights  = [dense_weight] * len(all_dense_hits) + [bm25_weight] * len(all_bm25_hits)
 
-        # Fuse semua dense hits dari semua queries
-        for hits in all_dense_hits:
-            for rank, hit in enumerate(hits):
-                cid = hit.chunk_id
-                fused_scores[cid] = fused_scores.get(cid, 0) + dense_weight / (self.rrf_k + rank + 1)
-                chunk_map[cid] = hit
+        results = rrf_fuse(
+            all_hits=all_hits,
+            k=self.rrf_k,
+            weights=weights,
+            section_boost_fn=self._section_boost,
+        )[:candidate_k]
 
-        # Fuse semua BM25 hits dari semua queries
-        for hits in all_bm25_hits:
-            for rank, hit in enumerate(hits):
-                cid = hit["chunk_id"]
-                fused_scores[cid] = fused_scores.get(cid, 0) + bm25_weight / (self.rrf_k + rank + 1)
-                if cid not in chunk_map:
-                    chunk_map[cid] = hit
-
-        fused_ids = sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)[:candidate_k]
-        return [chunk_map[cid] for cid, _ in fused_ids]
-
-    # ── Main Search ────────────────────────────────────────────────────────────
+        ref_penalized = sum(
+            1 for c in results
+            if self._section_boost(
+                (c.get("metadata", {}) if isinstance(c, dict)
+                 else getattr(c, "metadata", {})) or {}
+            ) == 0.3
+        )
+        logger.info(
+            f"[RRF_FILTER] candidates={len(results)} | "
+            f"refs_penalized={ref_penalized} (boost=0.3, not blocked)"
+        )
+        return results
 
     def search(
         self,
@@ -199,107 +359,236 @@ class MasterHybridRetriever:
         top_k: int = 5,
         dense_weight: float = 0.7,
         bm25_weight: float = 0.3,
-        use_reranker: bool = True,
     ) -> List[Dict[str, Any]]:
+        t_search_start = time.time()
+        top_k = self._resolve_top_k(query, top_k)
+        plan = self._policy.initial_plan(query)
+        self.use_multi_query = plan.allow_multi_query
+        self.use_hyde = plan.allow_hyde
+        logger.info(
+            f"[POLICY] query_type={plan.query_type} | "
+            f"multi_query={self.use_multi_query} | hyde={self.use_hyde}"
+        )
+        candidate_k = max(40, top_k * 6)  # 40–50 candidates for reranker
 
-        candidate_k = min(top_k * 4, 20)
-
-        # Step 1+2: Query expansion + HyDE secara PARALLEL (hemat ~2 detik)
-        queries, hyde_text = self._expand_and_hyde_parallel(query)
-
-        # Step 3: Retrieve untuk setiap query
         all_dense_hits = []
         all_bm25_hits = []
 
-        for q in queries:
-            all_dense_hits.append(self._dense_search(q, k=candidate_k))
-            all_bm25_hits.append(self._bm25_search(q, k=candidate_k))
+        t_dense_start = time.time()
+        all_dense_hits.append(self._dense_search(query, k=candidate_k))
+        t_dense = time.time() - t_dense_start
 
-        # Step 4: HyDE dense retrieval (pakai hypothetical text untuk embed)
-        if hyde_text:
-            hyde_hits = self._dense_search(hyde_text, k=candidate_k)
-            all_dense_hits.append(hyde_hits)
+        t_bm25_start = time.time()
+        all_bm25_hits.append(self._bm25_search(query, k=candidate_k))
+        t_bm25 = time.time() - t_bm25_start
 
-        # Step 5: RRF fusion semua results
-        fused_results = self._rrf_fuse(
-            all_dense_hits, all_bm25_hits, candidate_k, dense_weight, bm25_weight
-        )
+        t_fuse_start = time.time()
+        fused_results = self._rrf_fuse(all_dense_hits, all_bm25_hits, candidate_k, dense_weight, bm25_weight)
 
-        logger.info(f"[DEBUG] Queries: {len(queries)} | HyDE: {'yes' if hyde_text else 'no'}")
-        logger.info(f"[DEBUG] Dense sources: {len(all_dense_hits)} | Fused candidates: {len(fused_results)}")
+        # STEP 3: Filter low-quality chunks
+        def is_low_quality(chunk):
+            text = chunk["text"].strip() if isinstance(chunk, dict) else getattr(chunk, "text", "").strip()
+            if len(text) < 50:
+                return True
+            if text.count(",") > 5 and len(text.split()) < 30:
+                return True
+            return False
+        candidates = [c for c in fused_results if not is_low_quality(c)]
 
-        # Step 6: Reranker pada original query (bukan expanded)
-        if not use_reranker or not fused_results:
-            return self._format_output(fused_results[:top_k], "hybrid_rrf_multiquery")
+        # STEP 4: Limit per doc (diversity) BEFORE rerank
+        def limit_per_doc(chunks, max_per_doc=2):
+            result = []
+            counter = {}
+            for c in chunks:
+                doc = c["doc_id"] if isinstance(c, dict) else getattr(c, "doc_id", None)
+                counter[doc] = counter.get(doc, 0)
+                if counter[doc] < max_per_doc:
+                    result.append(c)
+                    counter[doc] += 1
+            return result
+        candidates = limit_per_doc(candidates, max_per_doc=2)
 
-        rerank_candidates = fused_results[:10]
+        # STEP 2: Logging BEFORE rerank
+        print("=== BEFORE RERANK ===")
+        for c in candidates:
+            cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
+            score = c["score"] if isinstance(c, dict) else getattr(c, "score", None)
+            print(cid, score)
 
-        MAX_RERANK_CHARS = 500
+        # STEP 1: Always rerank
+        reranked = self._rerank(query, candidates)
 
-        def _truncate(text: str) -> str:
-            return text[:MAX_RERANK_CHARS] if  len(text) > MAX_RERANK_CHARS else text
+        # STEP 2: Logging AFTER rerank
+        print("=== AFTER RERANK ===")
+        for c in reranked:
+            cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
+            # Use rerank_score (should exist after _rerank)
+            rerank_score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
+            print(cid, rerank_score)
 
-        pairs = [
-            [query, _best_window(query, getattr(hit, 'text') if hasattr(hit, 'text') else hit['text'])]
-            for hit in rerank_candidates
+        # STEP 5: QUALITY-BASED SELECTION (relevance + informativeness)
+        # Filter 1: rerank_score threshold
+        if reranked:
+            top_rerank_score = reranked[0].get("rerank_score") if isinstance(reranked[0], dict) else getattr(reranked[0], "rerank_score", 0)
+            dynamic_threshold = max(top_rerank_score - 4.0, -8.0)
+        else:
+            dynamic_threshold = 0.0
+        
+        # Filter 2: text informativeness (must be substantial)
+        def is_informative(chunk):
+            text = chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")
+            word_count = len(text.strip().split())
+            return word_count > 20  # Substantial content (not just titles/headers)
+        
+        # Filter 3: text completeness (no sentence fragments)
+        def is_complete_text(chunk):
+            text = (chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")).strip()
+            
+            # Too short to be meaningful (likely fragment)
+            if len(text.split()) < 40:
+                return False
+            
+            # Starts with conjunction (sign of fragment)
+            if text.lower().startswith(("and ", "or ", "but ", "however ", "thus ", "therefore ")):
+                return False
+            
+            # Doesn't end with sentence ending punctuation
+            if not text.endswith((".", ":", ";", "?", ")")):
+                return False
+            
+            return True
+        
+        # Apply all three filters: relevance + informativeness + completeness
+        filtered_chunks = [
+            c for c in reranked 
+            if (c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None) or 0) > dynamic_threshold 
+            and is_informative(c)
+            and is_complete_text(c)
         ]
-        rerank_scores = self.reranker.predict(pairs)
+        
+        # Selection logic: prefer quality over quantity
+        if filtered_chunks:
+            final_chunks = filtered_chunks[:top_k]  # Take top-k from quality-filtered results
+        else:
+            final_chunks = []
+        
+        layer1 = [c for c in reranked if (c.get('rerank_score') if isinstance(c, dict) else getattr(c, 'rerank_score', None) or 0) > dynamic_threshold]
+        layer2 = [c for c in layer1 if is_informative(c)]
+        layer3 = filtered_chunks  
 
-        for i, hit in enumerate(rerank_candidates):
-            score = float(rerank_scores[i])
-            if hasattr(hit, 'score'):
-                hit.score = score
-            else:
-                hit['score'] = score
+        print("\n=== QUALITY-BASED SELECTION (3-LAYER FILTERING) ===")
+        print(f"After rerank: {len(reranked)} chunks")
+        print(f"Layer 1 (relevance > 0.0): {len(layer1)} chunks")
+        print(f"Layer 2 (+ informative):   {len(layer2)} chunks")
+        print(f"Layer 3 (+ complete):      {len(layer3)} chunks ✓ FINAL")
+        print(f"Selected: {len(final_chunks)} chunks")
+        for c in final_chunks:
+            cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
+            rerank_score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
+            text = c.get("text") if isinstance(c, dict) else getattr(c, "text", "")
+            text_len = len(text.split())
+            starts_ok = not text.strip().lower().startswith(("and ", "or ", "but "))
+            ends_ok = text.strip().endswith((".", ":", ";", "?", ")"))
+            print(f"  {cid}: score={rerank_score:.2f}, words={text_len}, complete=({starts_ok}&{ends_ok})")
 
-        final_results = sorted(
-            rerank_candidates,
-            key=lambda x: (x.score if hasattr(x, 'score') else x['score']),
-            reverse=True
+        formatted = self._format_output(final_chunks, "hybrid_rrf_rerank")
+
+        t_fuse = time.time() - t_fuse_start
+        t_search_total = time.time() - t_search_start
+
+        # Observability: reference contamination check on raw hits
+        raw_hits = (all_dense_hits[0] if all_dense_hits else []) + (all_bm25_hits[0] if all_bm25_hits else [])
+        ref_count = sum(1 for hit in raw_hits if self._is_reference_chunk(hit))
+
+        logger.info(
+            f"[RETRIEVAL_LATENCY] query='{query[:50]}' | "
+            f"dense_ms={t_dense*1000:.1f} | bm25_ms={t_bm25*1000:.1f} | "
+            f"fuse_ms={t_fuse*1000:.1f} | total_ms={t_search_total*1000:.1f} | "
+            f"raw_refs={ref_count} | final={len(formatted)}"
         )
-        logger.info(json.dumps({
-            "event": "retrieval",
-            "query": query,
-            "top_scores": [
-                round(r.score if hasattr(r, 'score') else r["retrieval_score"], 3)
-                for r in final_results[:5]
-            ],
-            "num_candidates": len(fused_results),
-            "num_returned": len(final_results[:top_k]),
-        }))
-        return self._format_output(final_results[:top_k], "hybrid_multiquery_hyde_rerank")
 
-    # ── Output Formatter ───────────────────────────────────────────────────────
+        return formatted
 
     def _format_output(self, results: list, method: str) -> List[Dict[str, Any]]:
         formatted = []
         for i, r in enumerate(results):
-            if hasattr(r, 'chunk_id'):
-                formatted.append({
-                    "chunk_id": r.chunk_id,
-                    "text": r.text,
-                    "doc_id": r.doc_id,
-                    "retrieval_score": r.score,
-                    "retrieval_rank": i + 1,
-                    "retrieval_method": method
-                })
+            if isinstance(r, dict):
+                cid  = r.get("chunk_id")
+                txt  = r.get("text")
+                did  = r.get("doc_id")
+                # Prefer rerank_score over RRF score
+                scr  = r.get("rerank_score") if "rerank_score" in r else r.get("score", 0)
+                meta = r.get("metadata", {})
             else:
-                formatted.append({
-                    **r,
-                    "retrieval_score": r["score"],
-                    "retrieval_rank": i + 1,
-                    "retrieval_method": method
-                })
+                cid  = getattr(r, "chunk_id", "unknown")
+                txt  = getattr(r, "text", "")
+                did  = getattr(r, "doc_id", "unknown")
+                # Prefer rerank_score over RRF score
+                scr  = getattr(r, "rerank_score", None) or getattr(r, "score", 0)
+                meta = getattr(r, "metadata", {})
+
+            formatted.append({
+                "chunk_id":         cid,
+                "text":             txt,
+                "doc_id":           did,
+                "retrieval_score":  round(float(scr), 4),
+                "retrieval_rank":   i + 1,
+                "retrieval_method": method,
+                "metadata":         meta,
+            })
         return formatted
 
 
 # --- CLI TEST ---
 if __name__ == "__main__":
-    store = QdrantVectorStore()
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+
+    store     = QdrantVectorStore()
     retriever = MasterHybridRetriever(store)
-    query = "impact of semantic chunking on RAG performance"
-    results = retriever.search(query, top_k=3)
-    logger.info(f"\n[OK] Top Results for: {query}")
-    for r in results:
-        logger.info(f"[{r['retrieval_rank']}] Score: {r['retrieval_score']:.4f} | {r['doc_id']}")
-        logger.info(f"Text: {r['text'][:150]}...\n")
+
+    test_queries = [
+        "What is Retrieval-Augmented Generation?",
+        "How does semantic chunking work?",
+        "What are attention mechanisms?",
+    ]
+
+    logger.info("\n" + "=" * 80)
+    logger.info("[PRODUCTION TEST] Running with TIERED SECTION BOOST + HARD REFERENCE FILTERING")
+    logger.info("Target: references=0 in top results | methods/experiments ranked highest")
+    logger.info("=" * 80)
+
+    results_all = []
+
+    for query in test_queries:
+        t_start = time.time()
+        results = retriever.search(query, top_k=10)
+        latency_ms = round((time.time() - t_start) * 1000, 2)
+
+        ref_in_top = sum(1 for r in results[:3] if retriever._is_reference_chunk(r))
+
+        logger.info(f"\n[QUERY] {query}")
+        logger.info(f"[TOTAL_LATENCY] {latency_ms}ms")
+        logger.info(f"[REF_CHECK] references in top-3: {ref_in_top} (target: 0)")
+
+        for r in results[:3]:
+            section = (r.get("metadata") or {}).get("section", "unknown")
+            boost   = MasterHybridRetriever._section_boost(r.get("metadata") or {})
+            logger.info(
+                f"  Rank {r['retrieval_rank']}: score={r['retrieval_score']:.4f} | "
+                f"section={section} | boost={boost} | doc={r['doc_id']}"
+            )
+            logger.info(f"    Text: {r['text'][:100]}...")
+
+        results_all.append({
+            "query":       query,
+            "latency_ms":  latency_ms,
+            "top_chunks":  results[:3],
+            "num_results": len(results),
+            "refs_in_top3": ref_in_top,
+        })
+    logger.info("\n" + "=" * 80)
+    avg_latency  = sum(r["latency_ms"] for r in results_all) / len(results_all)
+    total_refs   = sum(r["refs_in_top3"] for r in results_all)
+    logger.info(f"[SUMMARY] queries={len(results_all)} | avg_latency={avg_latency:.1f}ms | refs_in_top3={total_refs}")
+    logger.info("=" * 80 + "\n")
+    store.close()

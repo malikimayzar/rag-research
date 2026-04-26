@@ -1,12 +1,11 @@
 [
   {
     "query": "What percentage of generated instructions are accounted for by the verb-noun structure shown in Figure 3?",
+    "mode": "baseline",
     "expanded_queries": [
-      "What percentage of generated instructions are accounted for by the verb-noun structure shown in Figure 3?",
-      "What proportion of generated instructions are based on verb-noun structures similar to Figure 3?",
-      "What percentage of the instructions in the figure are verb-noun structures?"
+      "What percentage of generated instructions are accounted for by the verb-noun structure shown in Figure 3?"
     ],
-    "hyde_doc": "According to our empirical analysis, the verb-noun structure depicted in Figure 3, comprising the phrase \"perform task,\" accounted for approximately 32.17% of the total generated instructions in the simulated environment. This finding is consistent with our hypothesis that task-oriented language patterns would dominate the instruction set generation process. Specifically, the frequency of \"perform task\" instances was significantly higher than other verb-noun combinations, at a rate of 3.21 instances per 10,000 generated instructions.",
+    "hyde_doc": null,
     "pre_rerank_chunks": [
       {
         "rank": 1,
@@ -42,41 +41,6 @@
         "doc_id": "tier2_2212_10560",
         "text": "Overall, we see quite diverse intents and textual formats in these instructions. We further study how the generated instructions differ from the seed instructions used to prompt the generation. For ea...",
         "score": 0.5262
-      },
-      {
-        "rank": 6,
-        "chunk_id": "tier2_2212_10560_rs_0029",
-        "doc_id": "tier2_2212_10560",
-        "text": "Figure 4: Distribution of the ROUGE-L scores between generated instructions and their most similar seed instructions. Instruction Length # Instructions Input Length Onput Length Figure 5: Length distr...",
-        "score": 0.4896
-      },
-      {
-        "rank": 7,
-        "chunk_id": "tier2_2212_10560_rs_0026",
-        "doc_id": "tier2_2212_10560",
-        "text": "compute its highest ROUGE-L overlap with the 175 seed instructions. We plot the distribution of these ROUGE-L scores in Figure 4. The results indicate a decent number of new instructions were generate...",
-        "score": 0.4891
-      },
-      {
-        "rank": 8,
-        "chunk_id": "tier2_2212_10560_rs_0055",
-        "doc_id": "tier2_2212_10560",
-        "text": "InstructGPT002 for generating the data, in which sense they are distilling knowledge from an already instruction-tuned model, while we solely rely on the vanilla LM; 3) the detailed generation pipelin...",
-        "score": 0.4809
-      },
-      {
-        "rank": 9,
-        "chunk_id": "tier2_2212_10560_rs_0009",
-        "doc_id": "tier2_2212_10560",
-        "text": "We observe that the resulting data provides a diverse range of creative tasks, as is demonstrated by examples in Figure 1. generated tasks deviate from the distribution of typical NLP tasks, and also ...",
-        "score": 0.4638
-      },
-      {
-        "rank": 10,
-        "chunk_id": "tier2_2212_10560_rs_0014",
-        "doc_id": "tier2_2212_10560",
-        "text": "output-first approach, and 4) filtering low-quality Instruction Generation. At the first step, SELFINSTRUCT generates new instructions from a small set of seed human-written instructions in a bootstra...",
-        "score": 0.4629
       }
     ],
     "reranked_chunks": [
@@ -85,50 +49,56 @@
         "chunk_id": "tier2_2212_10560_rs_0028",
         "doc_id": "tier2_2212_10560",
         "text": "7https://parser.kitaev.io/ Figure 3: The top 20 most common root verbs (inner circle) and their top 4 direct noun objects (outer circle) in the generated instructions. Despite their diversity, the ins...",
-        "score": 7.7511
+        "score": 0.712
       },
       {
         "rank": 2,
         "chunk_id": "tier2_2212_10560_rs_0024",
         "doc_id": "tier2_2212_10560",
         "text": "instructions usually contain more complex clauses (e.g., Classify whether this tweet contains political content or not.) or are framed as questions (e.g., Which of these statements are true?). the top...",
-        "score": 3.5735
+        "score": 0.6964
       },
       {
         "rank": 3,
         "chunk_id": "tier2_2212_10560_rs_0023",
         "doc_id": "tier2_2212_10560",
         "text": "6https://openai.com/api/ To study what types of instructions are generated and how diverse they are, we identify the verb-noun structure in the generated instructions. Berkeley Neural Parser7 (Kitaev ...",
-        "score": 2.1197
+        "score": 0.68
       },
       {
         "rank": 4,
         "chunk_id": "tier2_2212_10560_rs_0022",
         "doc_id": "tier2_2212_10560",
         "text": "We generate a total of over 52K instructions and more than 82K instances corresponding to these instructions after filtering. # of instructions - # of classification instructions - # of non-classifica...",
-        "score": -4.5795
+        "score": 0.5326
       },
       {
         "rank": 5,
         "chunk_id": "tier2_2212_10560_rs_0025",
         "doc_id": "tier2_2212_10560",
         "text": "Overall, we see quite diverse intents and textual formats in these instructions. We further study how the generated instructions differ from the seed instructions used to prompt the generation. For ea...",
-        "score": -5.6224
+        "score": 0.5262
       }
     ],
     "final_context": "[Source 1 | tier2_2212_10560 | tier2_2212_10560_rs_0028 | Section: 1 INSTANCE PER TASK]\n7https://parser.kitaev.io/ Figure 3: The top 20 most common root verbs (inner circle) and their top 4 direct noun objects (outer circle) in the generated instructions. Despite their diversity, the instructions shown here only account for 14% of all the generated instructions because many instructions (e.g., Classify whether the user is satisfied with the service.) do not contain such a verb-noun structure.\n\n[...",
     "answer": "14%",
+    "status": "ANSWERED",
+    "confidence_score": 1.0,
+    "supporting_sources": [
+      "[Source 1]",
+      "[Source 2]"
+    ],
     "ground_truth": "14%",
     "latency_breakdown": {
-      "query_expansion_ms": 1069.36,
-      "hyde_ms": 1069.36,
-      "embedding_ms": 496.65,
-      "bm25_ms": 24.5,
-      "qdrant_search_ms": 118.84,
-      "rrf_ms": 0.0,
-      "rerank_ms": 521.45,
-      "generation_ms": 1388.17,
-      "total_ms": 3500.13
+      "embedding_ms": 77.06,
+      "query_expansion_ms": 0,
+      "hyde_ms": 0,
+      "bm25_ms": 0,
+      "rrf_ms": 0,
+      "qdrant_search_ms": 77.06,
+      "rerank_ms": 0,
+      "generation_ms": 4321.98,
+      "total_ms": 4399.04
     },
     "confidence_v1": 1.0,
     "error_decomposition": {
@@ -137,10 +107,11 @@
       "retrieval_hit": true,
       "ranking_hit": true
     },
-    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "retrieval_method": "dense_only",
     "config": {
+      "mode": "baseline",
       "top_k": 5,
-      "use_reranker": true,
+      "use_reranker": false,
       "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
       "generator": "llama-3.3-70b-versatile",
       "embedding": "all-MiniLM-L6-v2",
@@ -149,12 +120,11 @@
   },
   {
     "query": "What is the name of the quality-related question answering dataset mentioned in the provided research papers?",
+    "mode": "baseline",
     "expanded_queries": [
-      "What is the name of the quality-related question answering dataset mentioned in the provided research papers?",
-      "What is the name of the quality-focused question answering dataset mentioned in recent research papers?",
-      "What is the QA dataset referenced in papers discussing quality metrics?"
+      "What is the name of the quality-related question answering dataset mentioned in the provided research papers?"
     ],
-    "hyde_doc": "Our study utilized the QQP (Question Pair) dataset, a widely-used resource for evaluating the performance of question answering models on quality-related tasks, specifically designed to assess the ability of AI systems to accurately identify the most relevant and informative answers to a given question. The QQP dataset consists of over 400 million question pairs, annotated with relevance scores indicating the similarity or dissimilarity between the two questions. By leveraging the QQP dataset, we were able to rigorously evaluate the quality of our proposed question answering model.",
+    "hyde_doc": null,
     "pre_rerank_chunks": [
       {
         "rank": 1,
@@ -190,93 +160,63 @@
         "doc_id": "tier1_2005_11401",
         "text": "49.8* 49.9* to more effective marginalization over documents. Furthermore, RAG can generate correct answers even when the correct answer is not in any retrieved document, achieving 11.8% accuracy in s...",
         "score": 0.5286
-      },
-      {
-        "rank": 6,
-        "chunk_id": "tier1_2005_11401_rs_0026",
-        "doc_id": "tier1_2005_11401",
-        "text": "What is the weather in Volcano, CA? so performance will be lower without using gold passages. We also note that some MSMARCO questions cannot be answered using Wikipedia alone. RAG can rely on paramet...",
-        "score": 0.507
-      },
-      {
-        "rank": 7,
-        "chunk_id": "tier1_2312_10997_rs_0151",
-        "doc_id": "tier1_2312_10997",
-        "text": "A question answering challenge targeting commonsense knowledge, arXiv preprint arXiv:1811.00937, 2018. Shuster, A. Auli, and J. Wizard of wikipedia: Knowledge-powered conversational agents, arXiv prep...",
-        "score": 0.5023
-      },
-      {
-        "rank": 8,
-        "chunk_id": "tier1_2312_10997_rs_0042",
-        "doc_id": "tier1_2312_10997",
-        "text": "progresses, Modular RAG has become more integrated with fine-tuning techniques. Unstructured Data, such as text, is the most widely used retrieval source, which are mainly gathered from corpus. open-d...",
-        "score": 0.4964
-      },
-      {
-        "rank": 9,
-        "chunk_id": "tier1_2312_10997_rs_0014",
-        "doc_id": "tier1_2312_10997",
-        "text": "These articles, combined with the original question, form a comprehensive prompt that empowers LLMs to generate a well-informed answer. The RAG research paradigm is continuously evolving, and we categ...",
-        "score": 0.4903
-      },
-      {
-        "rank": 10,
-        "chunk_id": "tier3_2307_09288_rs_0258",
-        "doc_id": "tier3_2307_09288",
-        "text": "Alon Talmor, Jonathan Herzig, Nicholas Lourie, and Jonathan Berant. Commonsenseqa: A question answering challenge targeting commonsense knowledge. arXiv preprint arXiv:1811.00937, 2018. Rohan Taori, I...",
-        "score": 0.4842
       }
     ],
     "reranked_chunks": [
       {
         "rank": 1,
-        "chunk_id": "tier1_2312_10997_rs_0150",
-        "doc_id": "tier1_2312_10997",
-        "text": "Smith, and M. A dataset of information-seeking questions and answers anchored in research papers, arXiv preprint arXiv:2105.03011, 2021. Jayakumar, and M. Pietsch, Covid-qa: A question answering datas...",
-        "score": 5.0906
+        "chunk_id": "tier3_2307_09288_rs_0236",
+        "doc_id": "tier3_2307_09288",
+        "text": "Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, et al. Natural questions: a benchmark for question answering research. Transactions of the Association for Computational Linguistics, 7:45...",
+        "score": 0.5786
       },
       {
         "rank": 2,
         "chunk_id": "tier1_2005_11401_rs_0081",
         "doc_id": "tier1_2005_11401",
         "text": "Uszkoreit, Quoc Le, and Slav Petrov. Natural Questions: a Benchmark for Question Answering Research. Transactions of the Association of Computational Linguistics, 2019. URL https://tomkwiat.users.x20w...",
-        "score": -0.6289
+        "score": 0.5712
       },
       {
         "rank": 3,
-        "chunk_id": "tier3_2307_09288_rs_0236",
-        "doc_id": "tier3_2307_09288",
-        "text": "Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, et al. Natural questions: a benchmark for question answering research. Transactions of the Association for Computational Linguistics, 7:45...",
-        "score": -1.5443
+        "chunk_id": "tier1_2312_10997_rs_0150",
+        "doc_id": "tier1_2312_10997",
+        "text": "Smith, and M. A dataset of information-seeking questions and answers anchored in research papers, arXiv preprint arXiv:2105.03011, 2021. Jayakumar, and M. Pietsch, Covid-qa: A question answering datas...",
+        "score": 0.5334
       },
       {
         "rank": 4,
-        "chunk_id": "tier1_2005_11401_rs_0031",
-        "doc_id": "tier1_2005_11401",
-        "text": "49.8* 49.9* to more effective marginalization over documents. Furthermore, RAG can generate correct answers even when the correct answer is not in any retrieved document, achieving 11.8% accuracy in s...",
-        "score": -7.0828
-      },
-      {
-        "rank": 5,
         "chunk_id": "tier1_2005_11401_rs_0068",
         "doc_id": "tier1_2005_11401",
         "text": "id=r1l73iRqKm. [10] Matthew Dunn, Levent Sagun, Mike Higgins, V. Ugur Guney, Volkan Cirik, and Kyunghyun SearchQA: A New Q&A Dataset Augmented with Context from a Search Engine. arXiv:1704.05179 [cs],...",
-        "score": -8.5552
+        "score": 0.5322
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0031",
+        "doc_id": "tier1_2005_11401",
+        "text": "49.8* 49.9* to more effective marginalization over documents. Furthermore, RAG can generate correct answers even when the correct answer is not in any retrieved document, achieving 11.8% accuracy in s...",
+        "score": 0.5286
       }
     ],
-    "final_context": "[Source 1 | tier1_2312_10997 | tier1_2312_10997_rs_0150 | Section: REFERENCES]\nSmith, and M. A dataset of information-seeking questions and answers anchored in research papers, arXiv preprint arXiv:2105.03011, 2021. Jayakumar, and M. Pietsch, Covid-qa: A question answering dataset for covid-19, in ACL 2020 Workshop on Natural Language Processing for COVID-19 (NLP-COVID), 2020. Wang et al., Cmb: A comprehensive medical benchmark in chinese, arXiv preprint arXiv:2308.08833, 2023. Zeng, Measuring m...",
+    "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0236 | Section: REFERENCES]\nDanielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, et al. Natural questions: a benchmark for question answering research. Transactions of the Association for Computational Linguistics, 7:453466, 2019.\n\n[Source 2 | tier1_2005_11401 | tier1_2005_11401_rs_0081 | Section: REFERENCES]\nUszkoreit, Quoc Le, and Slav Petrov. Natural Questions: a Benchmark for Question Answering Research. Transactions of the Associat...",
     "answer": "Quality: Question answering with long input texts",
+    "status": "ANSWERED",
+    "confidence_score": 1.0,
+    "supporting_sources": [
+      "[Source 3 | tier1_2312_10997 | tier1_2312_10997_rs_0150 | Section: REFERENCES]"
+    ],
     "ground_truth": "Quality: Question answering with long input texts",
     "latency_breakdown": {
-      "query_expansion_ms": 1061.17,
-      "hyde_ms": 1061.17,
-      "embedding_ms": 331.55,
-      "bm25_ms": 41.71,
-      "qdrant_search_ms": 91.96,
-      "rrf_ms": 0.0,
-      "rerank_ms": 692.5,
-      "generation_ms": 916.75,
-      "total_ms": 3043.68
+      "embedding_ms": 49.59,
+      "query_expansion_ms": 0,
+      "hyde_ms": 0,
+      "bm25_ms": 0,
+      "rrf_ms": 0,
+      "qdrant_search_ms": 49.59,
+      "rerank_ms": 0,
+      "generation_ms": 1632.02,
+      "total_ms": 1681.61
     },
     "confidence_v1": 1.0,
     "error_decomposition": {
@@ -285,10 +225,11 @@
       "retrieval_hit": true,
       "ranking_hit": true
     },
-    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "retrieval_method": "dense_only",
     "config": {
+      "mode": "baseline",
       "top_k": 5,
-      "use_reranker": true,
+      "use_reranker": false,
       "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
       "generator": "llama-3.3-70b-versatile",
       "embedding": "all-MiniLM-L6-v2",
@@ -297,12 +238,11 @@
   },
   {
     "query": "Who are the authors of the paper 'Residual energy-based models for text generation'?",
+    "mode": "baseline",
     "expanded_queries": [
-      "Who are the authors of the paper 'Residual energy-based models for text generation'?",
-      "Authors of 'Residual energy-based models for text generation' research paper",
-      "Co-authors of 'Residual energy-based models for text generation' research article"
+      "Who are the authors of the paper 'Residual energy-based models for text generation'?"
     ],
-    "hyde_doc": "Our research paper, \"Residual energy-based models for text generation,\" was authored by Dr. Emiel van den Berg, a postdoctoral researcher in the Department of Computer Science at the University of California, Berkeley, and Dr. Jascha Sohl-Dickstein, an associate professor in the Department of Electrical Engineering and Computer Sciences at the same institution.",
+    "hyde_doc": null,
     "pre_rerank_chunks": [
       {
         "rank": 1,
@@ -338,41 +278,6 @@
         "doc_id": "tier1_2005_11401",
         "text": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Kttler, Mike Lewis, Wen-tau Yih...",
         "score": 0.4502
-      },
-      {
-        "rank": 6,
-        "chunk_id": "tier3_2307_09288_rs_0231",
-        "doc_id": "tier3_2307_09288",
-        "text": "Ari Holtzman, Jan Buys, Li Du, Maxwell Forbes, and Yejin Choi. The curious case of neural text degeneration. In International Conference on Learning Representations, 2020. URL https://openreview.net/f...",
-        "score": 0.4462
-      },
-      {
-        "rank": 7,
-        "chunk_id": "tier1_2005_11401_rs_0035",
-        "doc_id": "tier1_2005_11401",
-        "text": "an example. When generating Sun, the posterior is high for document 2 which mentions The Sun Also Rises. Similarly, document 1 dominates the posterior when A Farewell to Arms is Intriguingly, after th...",
-        "score": 0.436
-      },
-      {
-        "rank": 8,
-        "chunk_id": "tier1_2005_11401_rs_0063",
-        "doc_id": "tier1_2005_11401",
-        "text": "Palm: Pre-training an autoencoding&autoregressive language model for context-conditioned generation. ArXiv, abs/2004.07159, URL https://arxiv.org/abs/2004.07159. [5] Danqi Chen, Adam Fisch, Jason West...",
-        "score": 0.43
-      },
-      {
-        "rank": 9,
-        "chunk_id": "tier1_2005_11401_rs_0019",
-        "doc_id": "tier1_2005_11401",
-        "text": "It has obtained state-of-the-art results on a diverse set of generation tasks and outperforms comparably-sized T5 models [32]. We refer to the BART generator parameters as the parametric memory hencef...",
-        "score": 0.4283
-      },
-      {
-        "rank": 10,
-        "chunk_id": "tier1_2312_10997_rs_0152",
-        "doc_id": "tier1_2312_10997",
-        "text": "arXiv preprint arXiv:1811.01241, 2018. King, and K.-F. Wong, Large language models as source planner for personalized knowledge-grounded dialogue, arXiv preprint arXiv:2310.08840, 2023. [135] , Large ...",
-        "score": 0.4257
       }
     ],
     "reranked_chunks": [
@@ -381,50 +286,55 @@
         "chunk_id": "tier3_2307_09288_rs_0216",
         "doc_id": "tier3_2307_09288",
         "text": "Yuntian Deng, Anton Bakhtin, Myle Ott, Arthur Szlam, and MarcAurelio Ranzato. Residual energy-based models for text generation. In International Conference on Learning Representations, 2019. Jwala Dha...",
-        "score": 7.2361
+        "score": 0.6114
       },
       {
         "rank": 2,
-        "chunk_id": "tier1_2005_11401_rs_0089",
-        "doc_id": "tier1_2005_11401",
-        "text": "Plachouras, Fabrizio Silvestri, and Sebastian Riedel. How decoding strategies affect the veriability of generated text. arXiv preprint arXiv:1911.03587, 2019. //arxiv.org/abs/1911.03587. [40] Paulius ...",
-        "score": -4.9122
-      },
-      {
-        "rank": 3,
         "chunk_id": "tier2_2210_11610_rs_0065",
         "doc_id": "tier2_2210_11610",
         "text": "training text-to-text models to explain their predictions, 2020. URL https://arxiv. org/abs/2004.14546. Long Ouyang, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L Wainwright, Pamela Mishkin, Chong Zhang...",
-        "score": -6.2451
+        "score": 0.522
+      },
+      {
+        "rank": 3,
+        "chunk_id": "tier1_2005_11401_rs_0089",
+        "doc_id": "tier1_2005_11401",
+        "text": "Plachouras, Fabrizio Silvestri, and Sebastian Riedel. How decoding strategies affect the veriability of generated text. arXiv preprint arXiv:1911.03587, 2019. //arxiv.org/abs/1911.03587. [40] Paulius ...",
+        "score": 0.5181
       },
       {
         "rank": 4,
-        "chunk_id": "tier1_2005_11401_rs_0000",
-        "doc_id": "tier1_2005_11401",
-        "text": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Kttler, Mike Lewis, Wen-tau Yih...",
-        "score": -6.9322
-      },
-      {
-        "rank": 5,
         "chunk_id": "tier3_2307_09288_rs_0225",
         "doc_id": "tier3_2307_09288",
         "text": "Repairing the cracked foundation: A survey of obstacles in evaluation practices for generated text. Journal of Artificial Intelligence Research, 77:103166, Fabrizio Gilardi, Meysam Alizadeh, and Mal K...",
-        "score": -7.0489
+        "score": 0.4566
+      },
+      {
+        "rank": 5,
+        "chunk_id": "tier1_2005_11401_rs_0000",
+        "doc_id": "tier1_2005_11401",
+        "text": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Kttler, Mike Lewis, Wen-tau Yih...",
+        "score": 0.4502
       }
     ],
     "final_context": "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0216 | Section: REFERENCES]\nYuntian Deng, Anton Bakhtin, Myle Ott, Arthur Szlam, and MarcAurelio Ranzato. Residual energy-based models for text generation. In International Conference on Learning Representations, 2019. Jwala Dhamala, Tony Sun, Varun Kumar, Satyapriya Krishna, Yada Pruksachatkun, Kai-Wei Chang, and Rahul Gupta. BOLD: Dataset and metrics for measuring biases in open-ended language generation. Proceedings of the 2021 ACM conference...",
     "answer": "Yuntian Deng, Anton Bakhtin, Myle Ott, Arthur Szlam, and MarcAurelio Ranzato",
+    "status": "ANSWERED",
+    "confidence_score": 1.0,
+    "supporting_sources": [
+      "[Source 1 | tier3_2307_09288 | tier3_2307_09288_rs_0216 | Section: REFERENCES]"
+    ],
     "ground_truth": "Yuntian Deng, Anton Bakhtin, Myle Ott, Arthur Szlam, and MarcAurelio Ranzato",
     "latency_breakdown": {
-      "query_expansion_ms": 726.85,
-      "hyde_ms": 726.85,
-      "embedding_ms": 533.32,
-      "bm25_ms": 23.13,
-      "qdrant_search_ms": 111.28,
-      "rrf_ms": 0.0,
-      "rerank_ms": 799.24,
-      "generation_ms": 4047.11,
-      "total_ms": 6129.65
+      "embedding_ms": 44.33,
+      "query_expansion_ms": 0,
+      "hyde_ms": 0,
+      "bm25_ms": 0,
+      "rrf_ms": 0,
+      "qdrant_search_ms": 44.33,
+      "rerank_ms": 0,
+      "generation_ms": 2973.38,
+      "total_ms": 3017.71
     },
     "confidence_v1": 1.0,
     "error_decomposition": {
@@ -433,10 +343,11 @@
       "retrieval_hit": true,
       "ranking_hit": true
     },
-    "retrieval_method": "hybrid_multiquery_hyde_rerank",
+    "retrieval_method": "dense_only",
     "config": {
+      "mode": "baseline",
       "top_k": 5,
-      "use_reranker": true,
+      "use_reranker": false,
       "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
       "generator": "llama-3.3-70b-versatile",
       "embedding": "all-MiniLM-L6-v2",

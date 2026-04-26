@@ -1,0 +1,345 @@
+[
+  {
+    "query": "who wrote the paper?",
+    "query_type": "factual",
+    "top_k": 5,
+    "allow_ref": true,
+    "max_ref_ratio": 0.4,
+    "final_ref_ratio": 0.0,
+    "retries": 3,
+    "error": {
+      "failure_type": "generation_fail",
+      "reason": "Context overlap rendah (0.0) — answer tidak grounded di context",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "INSUFFICIENT_CONTEXT",
+    "exact_match": null,
+    "confidence_v1": 0.0,
+    "final_chunks": [],
+    "timings": {
+      "embedding_ms": 0.01,
+      "query_expansion_ms": 0.0,
+      "hyde_ms": 0.0,
+      "bm25_ms": 0.0,
+      "rrf_ms": 0.0,
+      "qdrant_search_ms": 0.01,
+      "rerank_ms": 0.0,
+      "generation_ms": 0.56,
+      "total_ms": 0.57
+    }
+  },
+  {
+    "query": "who wrote the paper?",
+    "query_type": "factual",
+    "top_k": 5,
+    "allow_ref": true,
+    "max_ref_ratio": 0.4,
+    "final_ref_ratio": 0.5,
+    "retries": 0,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 1.0,
+    "final_chunks": [
+      {
+        "chunk_id": "c1",
+        "doc_id": "doc1",
+        "section": "body",
+        "score": 0,
+        "length": 160,
+        "text": "dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text "
+      },
+      {
+        "chunk_id": "c2",
+        "doc_id": "doc1",
+        "section": "references",
+        "score": 0,
+        "length": 210,
+        "text": "dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text "
+      }
+    ],
+    "timings": {
+      "embedding_ms": 0.01,
+      "query_expansion_ms": 0.0,
+      "hyde_ms": 0.0,
+      "bm25_ms": 0.0,
+      "rrf_ms": 0.0,
+      "qdrant_search_ms": 0.01,
+      "rerank_ms": 0.0,
+      "generation_ms": 0.43,
+      "total_ms": 0.44
+    }
+  },
+  {
+    "query": "who wrote the paper?",
+    "query_type": "factual",
+    "top_k": 5,
+    "allow_ref": true,
+    "max_ref_ratio": 0.4,
+    "final_ref_ratio": 0.5,
+    "retries": 0,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 1.0,
+    "final_chunks": [
+      {
+        "chunk_id": "c1",
+        "doc_id": "doc1",
+        "section": "body",
+        "score": 0,
+        "length": 160,
+        "text": "dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text "
+      },
+      {
+        "chunk_id": "c2",
+        "doc_id": "doc1",
+        "section": "references",
+        "score": 0,
+        "length": 210,
+        "text": "dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text "
+      }
+    ],
+    "timings": {
+      "embedding_ms": 0.01,
+      "query_expansion_ms": 0.0,
+      "hyde_ms": 0.0,
+      "bm25_ms": 0.0,
+      "rrf_ms": 0.0,
+      "qdrant_search_ms": 0.01,
+      "rerank_ms": 0.0,
+      "generation_ms": 0.41,
+      "total_ms": 0.42
+    }
+  },
+  {
+    "query": "who wrote the paper?",
+    "query_type": "factual",
+    "top_k": 5,
+    "allow_ref": true,
+    "max_ref_ratio": 0.4,
+    "final_ref_ratio": 0.5,
+    "retries": 0,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 1.0,
+    "final_chunks": [
+      {
+        "chunk_id": "c1",
+        "doc_id": "doc1",
+        "section": "body",
+        "score": 0,
+        "length": 160,
+        "text": "dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text "
+      },
+      {
+        "chunk_id": "c2",
+        "doc_id": "doc1",
+        "section": "references",
+        "score": 0,
+        "length": 210,
+        "text": "dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text "
+      }
+    ],
+    "timings": {
+      "embedding_ms": 0.01,
+      "query_expansion_ms": 0.0,
+      "hyde_ms": 0.0,
+      "bm25_ms": 0.0,
+      "rrf_ms": 0.0,
+      "qdrant_search_ms": 0.01,
+      "rerank_ms": 0.0,
+      "generation_ms": 0.35,
+      "total_ms": 0.36
+    }
+  },
+  {
+    "query": "who wrote the paper?",
+    "query_type": "factual",
+    "top_k": 5,
+    "allow_ref": true,
+    "max_ref_ratio": 0.4,
+    "final_ref_ratio": 0.5,
+    "retries": 0,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 1.0,
+    "final_chunks": [
+      {
+        "chunk_id": "c1",
+        "doc_id": "doc1",
+        "section": "body",
+        "score": 0,
+        "length": 160,
+        "text": "dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text dummy body text "
+      },
+      {
+        "chunk_id": "c2",
+        "doc_id": "doc1",
+        "section": "references",
+        "score": 0,
+        "length": 210,
+        "text": "dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text dummy reference text "
+      }
+    ],
+    "timings": {
+      "embedding_ms": 0.01,
+      "query_expansion_ms": 0.0,
+      "hyde_ms": 0.0,
+      "bm25_ms": 0.0,
+      "rrf_ms": 0.0,
+      "qdrant_search_ms": 0.01,
+      "rerank_ms": 0.0,
+      "generation_ms": 0.56,
+      "total_ms": 0.57
+    }
+  },
+  {
+    "query": "What is RAG?",
+    "query_type": "general",
+    "top_k": 5,
+    "allow_ref": false,
+    "max_ref_ratio": 0.0,
+    "final_ref_ratio": 0.0,
+    "retries": 1,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 1.0,
+    "final_chunks": [
+      {
+        "chunk_id": "tier1_2005_11401_rs_0058",
+        "doc_id": "tier1_2005_11401",
+        "section": "methods",
+        "score": 0,
+        "length": 745,
+        "text": "RAG could be employed in a wide variety of scenarios with direct benet to society, for example by endowing it with a medical index and asking it open-domain questions on that topic, or by helping people be more effective at their jobs. With these advantages also come potential downsides: Wikipedia, "
+      },
+      {
+        "chunk_id": "tier1_2312_10997_rs_0011",
+        "doc_id": "tier1_2312_10997",
+        "section": "i. introduction",
+        "score": 0,
+        "length": 806,
+        "text": "This review contextualizes the broader scope of RAG research within the landscape of LLMs. We identify and discuss the central technologies integral to the RAG process, specifically focusing on the aspects of Retrieval, Generation and Augmentation, and delve into their synergies, elucidating how the"
+      }
+    ],
+    "timings": {
+      "query_expansion_ms": 670.33,
+      "hyde_ms": 670.33,
+      "embedding_ms": 85.77,
+      "bm25_ms": 10.07,
+      "qdrant_search_ms": 65.16,
+      "rrf_ms": 0.34,
+      "rerank_ms": 1011.2,
+      "generation_ms": 2055.87,
+      "total_ms": 3833.24
+    }
+  },
+  {
+    "query": "What is attention mechanism in transformer models?",
+    "query_type": "general",
+    "top_k": 5,
+    "allow_ref": false,
+    "max_ref_ratio": 0.0,
+    "final_ref_ratio": 0.0,
+    "retries": 0,
+    "error": {
+      "failure_type": "ok",
+      "reason": "Pipeline berjalan normal",
+      "retrieval_hit": null,
+      "ranking_hit": null,
+      "source_was_blocked": null
+    },
+    "status": "ANSWERED",
+    "exact_match": null,
+    "confidence_v1": 0.96,
+    "final_chunks": [
+      {
+        "chunk_id": "tier3_1706_03762_rs_0008",
+        "doc_id": "tier3_1706_03762",
+        "section": "abstract",
+        "score": 7.7563,
+        "length": 610,
+        "text": "The fundamental constraint of sequential computation, however, remains. Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2, "
+      },
+      {
+        "chunk_id": "tier3_1706_03762_s0012",
+        "doc_id": "tier3_1706_03762",
+        "section": "body",
+        "score": 7.5023,
+        "length": 1200,
+        "text": "3.2.3\nApplications of Attention in our Model\nThe Transformer uses multi-head attention in three different ways:\n• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer,\nand the memory keys and values come from the output of the encoder. This allows every\nposition in"
+      },
+      {
+        "chunk_id": "tier3_1706_03762_s0005",
+        "doc_id": "tier3_1706_03762",
+        "section": "body",
+        "score": 7.4177,
+        "length": 1086,
+        "text": "In all but a few cases [27], however, such attention mechanisms\nare used in conjunction with a recurrent network. In this work we propose the Transformer, a model architecture eschewing recurrence and instead\nrelying entirely on an attention mechanism to draw global dependencies between input and ou"
+      },
+      {
+        "chunk_id": "tier3_1706_03762_s0006",
+        "doc_id": "tier3_1706_03762",
+        "section": "body",
+        "score": 7.4049,
+        "length": 1083,
+        "text": "In the Transformer this is\nreduced to a constant number of operations, albeit at the cost of reduced effective resolution due\nto averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as\ndescribed in section 3.2. Self-attention, sometimes called intra-attention is "
+      },
+      {
+        "chunk_id": "tier3_1706_03762_s0028",
+        "doc_id": "tier3_1706_03762",
+        "section": "body",
+        "score": 6.5921,
+        "length": 403,
+        "text": "We are excited about the future of attention-based models and plan to apply them to other tasks. We\nplan to extend the Transformer to problems involving input and output modalities other than text and\nto investigate local, restricted attention mechanisms to efficiently handle large inputs and output"
+      }
+    ],
+    "timings": {
+      "query_expansion_ms": 845.52,
+      "hyde_ms": 845.52,
+      "embedding_ms": 988.16,
+      "bm25_ms": 24.46,
+      "qdrant_search_ms": 182.01,
+      "rrf_ms": 0.26,
+      "rerank_ms": 3048.06,
+      "generation_ms": 991.97,
+      "total_ms": 5898.17
+    }
+  }
+]
