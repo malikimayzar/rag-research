@@ -131,7 +131,8 @@ class Agent:
             await self._execute_retrieval(state, params)
             print(f"[DEBUG] chunks going to confidence: {len(state.retrieved_chunks)}")
             for c in state.retrieved_chunks[:3]:
-                print(f"  chunk_id={c.get('chunk_id')} retrieval_score={c.get("retrieval_score")}")
+                print(f"  chunk_id={c.get('chunk_id')} retrieval_score={c.get('retrieval_score')}")
+
 
             # 3. Confidence
             quality = await self.tools.assess_retrieval_quality(

@@ -15,7 +15,7 @@ class ConfidenceEngine:
             return 1 / (1 + np.exp(-arr))
         elif score_type == "rrf":
             return np.clip(arr / (arr.max() + 1e-9), 0.0, 1.0)
-        else:  # cosine / dot
+        else:  
             return np.clip(arr, 0.0, 1.0)
     
     def _sigmoid(self, x: float) -> float:
@@ -30,20 +30,23 @@ class ConfidenceEngine:
         probs = exp_scores / exp_scores.sum()
         entropy = -np.sum(probs * np.log(probs + 1e-9))
         return float(entropy / np.log(len(probs)))
-
+    
     def _get_chunk_score(self, chunk: Any) -> float:
         if isinstance(chunk, dict):
-            score = chunk.get("retrieval_score")
+            score = chunk.get("rerank_score")
             if score is None:
-                score = chunk.get("rerank_score")
+                score = chunk.get("retrieval_score")
+            if score is None:
+                score = chunk.get("score")
             if score is None:
                 return None
         else:
-            score = getattr(chunk, "retrieval_score", None)
+            score = getattr(chunk, "rerank_score", None)
             if score is None:
-                score = getattr(chunk, "rerank_score", 0.0)
-        return float(score)
-
+                score = getattr(chunk, "retrieval_score", None)
+            if score is None:
+                score = getattr(chunk, "score", None)
+        return float(score) if score is not None else None
     def _source_agreement(self, chunks) -> float:
         doc_ids = []
         for c in chunks[:5]:
@@ -88,8 +91,8 @@ class ConfidenceEngine:
                 "decision": "REJECT",
                 "signals": {"reason": "no_valid_scores"}
             }
-        
-        normalized_scores = list(self._normalize_scores(raw_scores, score_type="cosine"))  # sesuaikan
+
+        normalized_scores = list(self._normalize_scores(raw_scores, score_type="cross_encoder"))
         top_score = raw_scores[0]
         mean_top3 = float(np.mean(raw_scores[:3])) if len(raw_scores) >= 3 else top_score
         top_score_norm = normalized_scores[0]
@@ -98,7 +101,7 @@ class ConfidenceEngine:
         if len(normalized_scores) > 1:
             gap = normalized_scores[0] - normalized_scores[1]
         else:
-            gap = max(0.0, min(gap, 1.0))
+            gap = 0.0
         score_level = float(np.mean(normalized_scores[:3])) if len(normalized_scores) >= 3 else normalized_scores[0]
         entropy = self._calculate_entropy(normalized_scores)
         agreement = self._source_agreement(chunks)

@@ -134,15 +134,15 @@ class PolicyEngine:
             },
             "general": {
                 "use_hyde":        False,
-                "use_multi_query": True,
-                "top_k":           5,
+                "use_multi_query": False,
+                "top_k":           8,
                 # General butuh coverage lebih luas → multi_query ON.
                 # HyDE tidak perlu karena query definitional sudah cukup eksplisit.
             },
             "reasoning": {
-                "use_hyde":        True,
-                "use_multi_query": True,
-                "top_k":           5,
+                "use_hyde":        False,
+                "use_multi_query": False,
+                "top_k":           10,
                 # Reasoning butuh maksimal coverage dan depth.
                 # HyDE + multi_query = dua mekanisme ekspansi berbeda yang saling melengkapi.
             },
@@ -151,8 +151,7 @@ class PolicyEngine:
         strategy = _STRATEGIES.get(query_type)
         if strategy is None:
             # Unknown query_type → safe default (sama dengan "general")
-            return {"use_hyde": False, "use_multi_query": True, "top_k": 5}
-
+            return {"use_hyde": False, "use_multi_query": False, "top_k": 8}
         return strategy
 
     # -----------------------------------------------------------------------

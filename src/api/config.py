@@ -28,7 +28,9 @@ class Settings(BaseSettings):
     bm25_chunks_path: str = "data/processed/chunks_semantic.json"
 
     # ── Retrieval ──────────────────────────────────────────
-    default_top_k: int = 5
+    default_top_k: int = 10
+    candidate_k: int = 50
+
     hybrid_rrf_k: int = 60
     reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
     embed_model: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -46,7 +48,7 @@ class Settings(BaseSettings):
     generation_max_chars: int = 3000
 
     # ── Multi-query ────────────────────────────────────────
-    use_multi_query: bool = True
+    use_multi_query: bool = False
     use_hyde: bool = False
 
     model_config = {

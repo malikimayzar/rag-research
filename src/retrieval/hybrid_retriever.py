@@ -1,4 +1,6 @@
 from __future__ import annotations
+from src.api.config import settings
+
 import logging
 import json
 import os
@@ -249,12 +251,6 @@ class MasterHybridRetriever:
 
         try:
             scores = self.reranker.predict(pairs)
-            
-            # STEP 1: Print raw rerank scores for debugging
-            print("=== RERANK RAW SCORES ===")
-            for i, s in enumerate(scores):
-                print(f"  candidate_{i}: {float(s)}")
-            
             # STEP 2: Attach rerank_score to each chunk
             for chunk, score in zip(candidates, scores):
                 rerank_score = float(score)
@@ -342,7 +338,7 @@ class MasterHybridRetriever:
             f"[POLICY] query_type={plan.query_type} | "
             f"multi_query={self.use_multi_query} | hyde={self.use_hyde}"
         )
-        candidate_k = max(60, top_k * 8)  # 40–50 candidates for reranker
+        candidate_k = max(top_k, settings.candidate_k)  # 40–50 candidates for reranker
 
         all_dense_hits = []
         all_bm25_hits = []
@@ -367,24 +363,10 @@ class MasterHybridRetriever:
                 return True
             return False
         candidates = [c for c in fused_results if not is_low_quality(c)]
-
-        # STEP 2: Logging BEFORE rerank
-        print("=== BEFORE RERANK ===")
-        for c in candidates:
-            cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
-            score = c["score"] if isinstance(c, dict) else getattr(c, "score", None)
-            print(cid, score)
-
         # STEP 1: Always rerank
         reranked = self._rerank(query, candidates)
 
         # STEP 2: Logging AFTER rerank
-        print("=== AFTER RERANK ===")
-        for c in reranked:
-            cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
-            # Use rerank_score (should exist after _rerank)
-            rerank_score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
-            print(cid, rerank_score)
 
         # STEP 5: QUALITY-BASED SELECTION (relevance + informativeness)
         # Filter 1: rerank_score threshold
@@ -395,13 +377,10 @@ class MasterHybridRetriever:
             ]
             scores_sorted = sorted(scores, reverse=True)
             gaps = [scores_sorted[i] - scores_sorted[i+1] for i in range(min(9, len(scores_sorted)-1))]
-            print(f"[GAPS] {[round(g, 2) for g in gaps]}")
             dynamic_threshold = scores_sorted[min(top_k, len(scores_sorted) - 1)]
         else:
             dynamic_threshold = 0.0
-        
-        print(f"[THRESHOLD] top_k={top_k} | threshold={dynamic_threshold:.3f} | scores_top10={[round(s,2) for s in scores_sorted[:10]]}")
-        
+    
         # Filter 2: text informativeness (must be substantial)
         def is_informative(chunk):
             text = chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")

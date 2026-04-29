@@ -1,12 +1,13 @@
 import json
 import time
-from dotenv import load_dotenv
-load_dotenv()
 
 from src.evaluation.ragas_evaluator import RAGASEvaluator, RAGSample
-from src.retrieval.qdrant_store import QdrantVectorStore, HybridRetriever
+from src.retrieval.qdrant_store import QdrantVectorStore
+from src.retrieval.hybrid_retriever import MasterHybridRetriever
 from src.generation.generator import GroqGenerator
 
+from dotenv import load_dotenv
+load_dotenv()
 
 def run_full_pipeline(limit=55):
     print(f"[Started] Full Pipeline Evaluation ({limit} samples)...")
@@ -16,7 +17,7 @@ def run_full_pipeline(limit=55):
     print(f"  Chunks    : Rust Semantic (982 chunks)")
 
     store = QdrantVectorStore()
-    retriever = HybridRetriever(vector_store=store)
+    retriever = MasterHybridRetriever(vector_store=store)
     generator = GroqGenerator(model="llama-3.3-70b-versatile")
     evaluator = RAGASEvaluator(
         llm_model="llama-3.1-8b-instant",
@@ -32,13 +33,16 @@ def run_full_pipeline(limit=55):
     for i, item in enumerate(test_data):
         print(f"[{i+1}/{limit}] {item['question'][:60]}...")
         try:
-            chunks = retriever.search(item['question'], k=5)
+            chunks = retriever.search(item['question'], top_k=10)
             resp = generator.generate(item['question'], chunks)
             samples.append(RAGSample(
                 question=item['question'],
                 answer=resp.answer,
-                contexts=[c.text for c in chunks],
-                ground_truth=item['ground_truth']
+                contexts=[
+                    c.get("text", "") if isinstance(c, dict) else c.text
+                    for c in chunks
+                ],
+                ground_truth=item.get("ground_truth", item.get("gold_answer"))
             ))
             time.sleep(0.5)
         except Exception as e:
@@ -61,7 +65,6 @@ def run_full_pipeline(limit=55):
         )
         evaluator.save_result(result, 'results/metrics/ragas_results.json')
         print("[OK] Done! Results saved.")
-
 
 if __name__ == "__main__":
     run_full_pipeline(limit=55)

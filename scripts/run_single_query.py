@@ -20,31 +20,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ---------------------------------------------------------------------------
 # Constants
-# ---------------------------------------------------------------------------
 SECTION_SCORE_DELTA: dict[str, float] = {
     "abstract":     +0.1,
     "introduction": +0.1,
     "conclusion":   +0.05,
     "body":         +0.2,
-    # TASK 1: Perkuat penalti section — dari -0.5 ke -2.0
-    # Sebelumnya reference terlalu mudah naik ke top-k.
-    # Dengan -2.0, reference hanya menang kalau score aslinya jauh lebih tinggi.
     "references":   -2.0,
     "bibliography": -2.0,
 }
 
-BLOCKED_SECTIONS = {"references", "bibliography"}  # kept for logging only — NOT used as hard gate
-
-# TASK 1: Soft penalty applied at reranker scoring (see SECTION_SCORE_DELTA)
-# Hard blocking removed — references can contain factual answers (authors, datasets, citations)
-# Instead: limit how many reference chunks reach context (TASK 2)
-MAX_REF_IN_CONTEXT = 2   # max reference chunks allowed into final context window
-
-# TASK 2: Evidence-driven retrieval confidence threshold
+BLOCKED_SECTIONS = {"references", "bibliography"} 
+MAX_REF_IN_CONTEXT = 1  
 SCORE_DISTRIBUTION_PATH = "data/debug/score_distribution.json"
-
 
 def load_retrieval_confidence_threshold(path: str = SCORE_DISTRIBUTION_PATH) -> float:
     try:
@@ -64,18 +52,10 @@ def load_retrieval_confidence_threshold(path: str = SCORE_DISTRIBUTION_PATH) -> 
 
 
 RETRIEVAL_MIN_TOP1_SCORE = load_retrieval_confidence_threshold()
-
-# TASK 5: Hard minimum — chunks below this are noise for embedding + BM25
 MIN_CHUNK_LENGTH = 80
 MAX_RETRIES = 2
 RETRIEVAL_CONF_THRESHOLD = 0.3
 
-# Query type classification dan reference policy dipindah ke PolicyEngine.
-# Lihat: src/controller/policy_engine.py
-
-# ---------------------------------------------------------------------------
-# TASK 3 (NEW): Domain filter — drop off-topic expanded queries
-# ---------------------------------------------------------------------------
 _DOMAIN_KEYWORDS = [
     "attention", "transformer", "model", "neural", "learning",
     "retrieval", "embedding", "language", "training", "inference",
@@ -84,26 +64,10 @@ _DOMAIN_KEYWORDS = [
 ]
 
 def is_valid_query(q: str) -> bool:
-    """
-    Hard domain filter on expanded queries.
-    Drops queries that drift too far from AI/ML research topics.
-    Prevents query expansion from polluting the candidate pool.
-    """
     q_lower = q.lower()
     return any(kw in q_lower for kw in _DOMAIN_KEYWORDS)
 
-# ---------------------------------------------------------------------------
-# TASK 3 (ORIGINAL): Real Reciprocal Rank Fusion
-# ---------------------------------------------------------------------------
 def reciprocal_rank_fusion(results_lists: list[list], k: int = 60) -> list:
-    """
-    True RRF across any number of ranked lists (dense, BM25, HyDE, multi-query).
-    Each item earns 1/(k + rank) from every list it appears in.
-    Items appearing in multiple lists accumulate score — this is the core
-    multi-signal fusion mechanism.
-
-    k=60 is the standard value from the original RRF paper (Cormack 2009).
-    """
     rrf_scores: dict[str, float] = {}
     id_to_item:  dict[str, object] = {}
 
@@ -113,7 +77,7 @@ def reciprocal_rank_fusion(results_lists: list[list], k: int = 60) -> list:
             if not cid:
                 continue
             rrf_scores[cid]  = rrf_scores.get(cid, 0.0) + 1.0 / (k + rank + 1)
-            id_to_item[cid]  = item   # last write wins (same item, different list)
+            id_to_item[cid]  = item  
 
     fused = sorted(
         id_to_item.values(),
