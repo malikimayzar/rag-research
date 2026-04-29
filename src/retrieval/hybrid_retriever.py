@@ -119,14 +119,6 @@ class MasterHybridRetriever:
         section = str(metadata.get("section", "")).lower()
         return section not in ["references", "bibliography"]
     def _is_reference_chunk(self, chunk) -> bool:
-        """
-        Content-aware reference detection — catches reference chunks that
-        slipped through with wrong/missing section metadata.
-
-        Layer 1: section name
-        Layer 2: citation bracket pattern [1], [23], etc.
-        Layer 3: comma density (citation lists like "Smith, J., Jones, K., ...")
-        """
         if isinstance(chunk, dict):
             meta = chunk.get("metadata", {})
             text = chunk.get("text", "")
@@ -376,7 +368,6 @@ class MasterHybridRetriever:
                 for c in reranked
             ]
             scores_sorted = sorted(scores, reverse=True)
-            gaps = [scores_sorted[i] - scores_sorted[i+1] for i in range(min(9, len(scores_sorted)-1))]
             dynamic_threshold = scores_sorted[min(top_k, len(scores_sorted) - 1)]
         else:
             dynamic_threshold = 0.0
@@ -396,21 +387,12 @@ class MasterHybridRetriever:
             if safe_score(c) > dynamic_threshold
             and is_informative(c)
         ]
-        
-        # Selection logic: prefer quality over quantity
+
         if filtered_chunks:
-            final_chunks = filtered_chunks[:top_k]  # Take top-k from quality-filtered results
+            final_chunks = filtered_chunks[:top_k]  
         else:
             final_chunks = []
-        
-        layer1 = [c for c in reranked if safe_score(c) > dynamic_threshold]
-        layer2 = filtered_chunks  
 
-        print("\n=== QUALITY-BASED SELECTION (3-LAYER FILTERING) ===")
-        print(f"After rerank: {len(reranked)} chunks")
-        print(f"Layer 1 (relevance > 0.0): {len(layer1)} chunks")
-        print(f"Layer 2 (+ informative):   {len(layer2)} chunks ✓ FINAL")
-        print(f"Selected: {len(final_chunks)} chunks")
         for c in final_chunks:
             cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
             rerank_score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
@@ -425,7 +407,6 @@ class MasterHybridRetriever:
         t_fuse = time.time() - t_fuse_start
         t_search_total = time.time() - t_search_start
 
-        # Observability: reference contamination check on raw hits
         raw_hits = (all_dense_hits[0] if all_dense_hits else []) + (all_bm25_hits[0] if all_bm25_hits else [])
         ref_count = sum(1 for hit in raw_hits if self._is_reference_chunk(hit))
 
@@ -435,7 +416,6 @@ class MasterHybridRetriever:
             f"fuse_ms={t_fuse*1000:.1f} | total_ms={t_search_total*1000:.1f} | "
             f"raw_refs={ref_count} | final={len(formatted)}"
         )
-
         return formatted
 
     def _format_output(self, results: list, method: str) -> List[Dict[str, Any]]:
