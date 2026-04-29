@@ -146,7 +146,7 @@ class ConfidenceEngine:
                 decision = "GENERATE"
 
         logger.info(f"[CONFIDENCE_RESULT] confidence_score={confidence_score:.4f} | decision={decision}")
-
+        assert 0.0 <= confidence_score <= 1.0, f"Confidence out of range: {confidence_score}"
         return {
             "confidence_score": round(float(confidence_score), 4),
             "decision": decision,

@@ -6,6 +6,7 @@ import os
 import time
 import re
 import numpy as np
+import uuid
 
 from src.retrieval.qdrant_store import QdrantVectorStore
 from src.retrieval.hybrid_retriever import MasterHybridRetriever, MULTI_QUERY_PROMPT, HYDE_PROMPT
@@ -866,12 +867,14 @@ def run_single_query(
     # ---------------------------------------------------------------------------
     output = {
         "query":                query,
+        "query_id":             str(uuid.uuid4()),
         "mode":                 mode,
         "query_type":           q_type,
         "expanded_queries":     expanded_queries if mode == "full" else [query],
         "hyde_doc":             hyde_doc,
         "pre_rerank_chunks":    pre_rerank_chunks,
         "reranked_chunks":      post_rerank_chunks,
+        "retrieval_scores":     [c.get("score") if isinstance(c, dict) else getattr(c, "score", None) for c in (post_rerank_chunks or [])],
         "final_context":        final_context[:500] + "..." if len(final_context) > 500 else final_context,
         "answer":               response.answer,
         "status":               final_status,
@@ -882,6 +885,8 @@ def run_single_query(
         "latency_breakdown":    timings,
         "confidence_v1":        confidence_v1,
         "error_decomposition":  error_info,
+        "failure_type":         error_info.get("failure_type", "none") if isinstance(error_info, dict) else "none",
+        "retry_triggered":      retry_count > 0,
         # TASK 4: exact_match di output dict — metric real vs confidence ilusi
         "exact_match":          exact_match,
         # TASK 3: ref_ratio di output dict — monitor reference leakage per query
