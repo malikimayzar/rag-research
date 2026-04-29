@@ -54,3 +54,7 @@ temp/
 nohup.out
 data/processed/
 !data/processed/*.json
+data/qdrant_storage/
+results/debug/
+results/logs/
+tmp_*.py

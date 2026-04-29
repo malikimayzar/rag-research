@@ -15,20 +15,6 @@ from groq import Groq
 from dotenv import load_dotenv
 
 logger = logging.getLogger("rag.retriever")
-
-def _best_window(query: str, text: str, window: int = 600, step: int = 200) -> str:
-    """Ambil window 600-char yang paling banyak overlap keyword dengan query."""
-    if len(text) <= window:
-        return text
-    q_words = set(query.lower().split())
-    best_score, best_start = -1, 0
-    for start in range(0, len(text) - window, step):
-        snippet = text[start:start + window]
-        score = sum(1 for w in q_words if w in snippet.lower())
-        if score > best_score:
-            best_score, best_start = score, start
-    return text[best_start:best_start + window]
-
 load_dotenv()
 
 def rrf_fuse(
@@ -37,19 +23,6 @@ def rrf_fuse(
     weights: Optional[List[float]] = None,
     section_boost_fn=None,
 ) -> List:
-    """
-    Standalone RRF — single source of truth untuk seluruh pipeline.
-
-    Args:
-        all_hits:         List of ranked lists (dict atau object).
-        k:                RRF constant (default 60, Cormack 2009).
-        weights:          Optional per-list weight. None = semua bobot 1.0.
-        section_boost_fn: Optional callable(metadata) -> float untuk section boost.
-
-    Returns:
-        List chunk sorted by RRF score descending.
-        Setiap item dapat field retrieval_score berisi skor RRF final.
-    """
     if weights is not None and len(weights) != len(all_hits):
         raise ValueError(f"weights length ({len(weights)}) != all_hits length ({len(all_hits)})")
 
@@ -357,8 +330,8 @@ class MasterHybridRetriever:
         self,
         query: str,
         top_k: int = 5,
-        dense_weight: float = 0.7,
-        bm25_weight: float = 0.3,
+        dense_weight: float = 0.5,
+        bm25_weight: float = 0.5,
     ) -> List[Dict[str, Any]]:
         t_search_start = time.time()
         top_k = self._resolve_top_k(query, top_k)
@@ -369,7 +342,7 @@ class MasterHybridRetriever:
             f"[POLICY] query_type={plan.query_type} | "
             f"multi_query={self.use_multi_query} | hyde={self.use_hyde}"
         )
-        candidate_k = max(40, top_k * 6)  # 40–50 candidates for reranker
+        candidate_k = max(60, top_k * 8)  # 40–50 candidates for reranker
 
         all_dense_hits = []
         all_bm25_hits = []
@@ -388,25 +361,12 @@ class MasterHybridRetriever:
         # STEP 3: Filter low-quality chunks
         def is_low_quality(chunk):
             text = chunk["text"].strip() if isinstance(chunk, dict) else getattr(chunk, "text", "").strip()
-            if len(text) < 50:
+            if len(text) < 20:
                 return True
-            if text.count(",") > 5 and len(text.split()) < 30:
+            if text.count(",") > 10 and len(text.split()) < 15:
                 return True
             return False
         candidates = [c for c in fused_results if not is_low_quality(c)]
-
-        # STEP 4: Limit per doc (diversity) BEFORE rerank
-        def limit_per_doc(chunks, max_per_doc=2):
-            result = []
-            counter = {}
-            for c in chunks:
-                doc = c["doc_id"] if isinstance(c, dict) else getattr(c, "doc_id", None)
-                counter[doc] = counter.get(doc, 0)
-                if counter[doc] < max_per_doc:
-                    result.append(c)
-                    counter[doc] += 1
-            return result
-        candidates = limit_per_doc(candidates, max_per_doc=2)
 
         # STEP 2: Logging BEFORE rerank
         print("=== BEFORE RERANK ===")
@@ -429,41 +389,33 @@ class MasterHybridRetriever:
         # STEP 5: QUALITY-BASED SELECTION (relevance + informativeness)
         # Filter 1: rerank_score threshold
         if reranked:
-            top_rerank_score = reranked[0].get("rerank_score") if isinstance(reranked[0], dict) else getattr(reranked[0], "rerank_score", 0)
-            dynamic_threshold = max(top_rerank_score - 4.0, -8.0)
+            scores = [
+                c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", 0)
+                for c in reranked
+            ]
+            scores_sorted = sorted(scores, reverse=True)
+            gaps = [scores_sorted[i] - scores_sorted[i+1] for i in range(min(9, len(scores_sorted)-1))]
+            print(f"[GAPS] {[round(g, 2) for g in gaps]}")
+            dynamic_threshold = scores_sorted[min(top_k, len(scores_sorted) - 1)]
         else:
             dynamic_threshold = 0.0
+        
+        print(f"[THRESHOLD] top_k={top_k} | threshold={dynamic_threshold:.3f} | scores_top10={[round(s,2) for s in scores_sorted[:10]]}")
         
         # Filter 2: text informativeness (must be substantial)
         def is_informative(chunk):
             text = chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")
             word_count = len(text.strip().split())
             return word_count > 20  # Substantial content (not just titles/headers)
-        
-        # Filter 3: text completeness (no sentence fragments)
-        def is_complete_text(chunk):
-            text = (chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")).strip()
-            
-            # Too short to be meaningful (likely fragment)
-            if len(text.split()) < 40:
-                return False
-            
-            # Starts with conjunction (sign of fragment)
-            if text.lower().startswith(("and ", "or ", "but ", "however ", "thus ", "therefore ")):
-                return False
-            
-            # Doesn't end with sentence ending punctuation
-            if not text.endswith((".", ":", ";", "?", ")")):
-                return False
-            
-            return True
-        
-        # Apply all three filters: relevance + informativeness + completeness
+    
+        def safe_score(c):
+            score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
+            return score if score is not None else float('-inf')
+
         filtered_chunks = [
-            c for c in reranked 
-            if (c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None) or 0) > dynamic_threshold 
+            c for c in reranked
+            if safe_score(c) > dynamic_threshold
             and is_informative(c)
-            and is_complete_text(c)
         ]
         
         # Selection logic: prefer quality over quantity
@@ -472,15 +424,13 @@ class MasterHybridRetriever:
         else:
             final_chunks = []
         
-        layer1 = [c for c in reranked if (c.get('rerank_score') if isinstance(c, dict) else getattr(c, 'rerank_score', None) or 0) > dynamic_threshold]
-        layer2 = [c for c in layer1 if is_informative(c)]
-        layer3 = filtered_chunks  
+        layer1 = [c for c in reranked if safe_score(c) > dynamic_threshold]
+        layer2 = filtered_chunks  
 
         print("\n=== QUALITY-BASED SELECTION (3-LAYER FILTERING) ===")
         print(f"After rerank: {len(reranked)} chunks")
         print(f"Layer 1 (relevance > 0.0): {len(layer1)} chunks")
-        print(f"Layer 2 (+ informative):   {len(layer2)} chunks")
-        print(f"Layer 3 (+ complete):      {len(layer3)} chunks ✓ FINAL")
+        print(f"Layer 2 (+ informative):   {len(layer2)} chunks ✓ FINAL")
         print(f"Selected: {len(final_chunks)} chunks")
         for c in final_chunks:
             cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
@@ -516,22 +466,23 @@ class MasterHybridRetriever:
                 cid  = r.get("chunk_id")
                 txt  = r.get("text")
                 did  = r.get("doc_id")
-                # Prefer rerank_score over RRF score
-                scr  = r.get("rerank_score") if "rerank_score" in r else r.get("score", 0)
+                rerank_score = r.get("rerank_score") if isinstance(r, dict) else getattr(r, "rerank_score", None)
+                rrf_score    = r.get("score", 0) if isinstance(r, dict) else getattr(r, "score", 0)
                 meta = r.get("metadata", {})
             else:
                 cid  = getattr(r, "chunk_id", "unknown")
                 txt  = getattr(r, "text", "")
                 did  = getattr(r, "doc_id", "unknown")
-                # Prefer rerank_score over RRF score
-                scr  = getattr(r, "rerank_score", None) or getattr(r, "score", 0)
+                rerank_score = getattr(r, "rerank_score", None)
+                rrf_score    = getattr(r, "score", 0)
                 meta = getattr(r, "metadata", {})
 
             formatted.append({
                 "chunk_id":         cid,
                 "text":             txt,
                 "doc_id":           did,
-                "retrieval_score":  round(float(scr), 4),
+                "rerank_score":     float(rerank_score) if rerank_score is not None else None,
+                "retrieval_score":  float(rrf_score),
                 "retrieval_rank":   i + 1,
                 "retrieval_method": method,
                 "metadata":         meta,

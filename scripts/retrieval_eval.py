@@ -8,19 +8,36 @@ from pathlib import Path
 def normalize(text: str) -> str:
     return text.lower().strip()
 
-def recall_at_k(retrieved_chunks: List[Dict[str, Any]], ground_truth: str, k: int = 5) -> int:
-    gt = normalize(ground_truth)
-    for chunk in retrieved_chunks[:k]:
-        text = normalize(chunk.get("text", ""))
-        if gt in text:
-            return 1
-    return 0
+def recall_at_k(retrieved_chunks, gold_chunk_id, k=5):
+    ids = [get_chunk_id(c) for c in retrieved_chunks[:k]]
+    return 1 if gold_chunk_id in ids else 0
 
-def mrr(retrieved_chunks: List[Dict[str, Any]], ground_truth: str) -> float:
-    gt = normalize(ground_truth)
+def get_chunk_id(chunk):
+    if isinstance(chunk, dict):
+        return chunk.get("chunk_id") or chunk.get("id")
+
+    if hasattr(chunk, "chunk_id"):
+        return chunk.chunk_id
+
+    if hasattr(chunk, "metadata"):
+        return chunk.metadata.get("chunk_id")
+
+    raise ValueError(f"Unknown chunk format: {type(chunk)}")
+
+def get_score(chunk):
+    if isinstance(chunk, dict):
+        return chunk.get("rerank_score") or chunk.get("score")
+    if hasattr(chunk, "rerank_score"):
+        return chunk.rerank_score
+    if hasattr(chunk, "score"):
+        return chunk.score
+    if hasattr(chunk, "metadata"):
+        return chunk.metadata.get("rerank_score") or chunk.metadata.get("score")
+    return None
+
+def mrr(retrieved_chunks, gold_chunk_id):
     for i, chunk in enumerate(retrieved_chunks):
-        text = normalize(chunk.get("text", ""))
-        if gt in text:
+        if get_chunk_id(chunk) == gold_chunk_id:
             return 1.0 / (i + 1)
     return 0.0
 
@@ -32,50 +49,88 @@ def evaluate_retrieval(
     output_path: str = "results/retrieval_eval.json"
 ):
     results = []
-    recall_scores = []
+    recall1_scores = []
+    recall5_scores = []
+    recall10_scores = []
     mrr_scores = []
     failures = []
 
     for i, item in enumerate(dataset):
         query = item["question"]
-        ground_truth = item["ground_truth"]
-        print(f"[{i+1}/{len(dataset)}] {query[:60]}...")
+        gold_chunk_id = item["gold_chunk_id"]
+
         chunks = retriever.search(query, top_k=top_k)
-        r_at_k = recall_at_k(chunks, ground_truth, k=top_k)
-        mrr_score = mrr(chunks, ground_truth)
-        recall_scores.append(r_at_k)
+
+        r1  = recall_at_k(chunks, gold_chunk_id, k=1)
+        r5  = recall_at_k(chunks, gold_chunk_id, k=5)
+        r10 = recall_at_k(chunks, gold_chunk_id, k=10)
+        mrr_score = mrr(chunks, gold_chunk_id)
+
+        recall1_scores.append(r1)
+        recall5_scores.append(r5)
+        recall10_scores.append(r10)
         mrr_scores.append(mrr_score)
+
+        retrieved_ids = [get_chunk_id(c) for c in chunks]  # keep for backward compat
+        retrieved_chunks = [
+            {
+                "chunk_id": get_chunk_id(c),
+                "rerank_score": float(get_score(c)) if get_score(c) is not None else None
+            }
+            for c in chunks
+        ]
+
+        rank = next(
+            (i+1 for i, c in enumerate(chunks) if get_chunk_id(c) == gold_chunk_id),
+            None
+        )
+
+        if rank is None:
+            failure_type = "retrieval_miss"
+        elif rank > 5:
+            failure_type = "ranking_failure"
+        else:
+            failure_type = "success"
 
         result = {
             "question": query,
-            "ground_truth": ground_truth,
-            "recall@{}".format(top_k): r_at_k,
+            "gold_chunk_id": gold_chunk_id,
+            "recall@1": r1,
+            "recall@5": r5,
+            "recall@10": r10,
+            "rank": rank,
             "mrr": mrr_score,
-            "retrieved_chunks": chunks
+            "failure_type": failure_type,
+            "retrieved_ids": retrieved_ids,
+            "retrieved_chunks": retrieved_chunks
         }
 
-        if r_at_k == 0:
-            failures.append(result)
         results.append(result)
 
+        if failure_type != "success":
+            failures.append(result)
+
     # SUMMARY
-    avg_recall = sum(recall_scores) / len(recall_scores) if recall_scores else 0.0
     avg_mrr = sum(mrr_scores) / len(mrr_scores) if mrr_scores else 0.0
 
     summary = {
         "total_samples": len(dataset),
-        "recall@{}".format(top_k): avg_recall,
+        "recall@1": sum(recall1_scores)/len(dataset),
+        "recall@5": sum(recall5_scores)/len(dataset),
+        "recall@10": sum(recall10_scores)/len(dataset),
         "mrr": avg_mrr,
         "failure_count": len(failures),
-        "failure_rate": len(failures) / len(dataset) if dataset else 0.0
+        "failure_rate": len(failures) / len(dataset)
     }
 
     print("\n" + "="*50)
     print("[RETRIEVAL EVAL RESULT]")
     print("="*50)
-    print(f"Recall@{top_k} : {avg_recall:.4f}")
-    print(f"MRR            : {avg_mrr:.4f}")
-    print(f"Failures       : {len(failures)}/{len(dataset)}")
+    print(f"Recall@1  : {summary['recall@1']:.4f}")
+    print(f"Recall@5  : {summary['recall@5']:.4f}")
+    print(f"Recall@10 : {summary['recall@10']:.4f}")
+    print(f"MRR       : {avg_mrr:.4f}")
+    print(f"Failures  : {len(failures)}/{len(dataset)}")
     print("="*50 + "\n")
 
     # SAVE
@@ -95,15 +150,11 @@ if __name__ == "__main__":
     from src.retrieval.hybrid_retriever import MasterHybridRetriever
     store = QdrantVectorStore()
     retriever = MasterHybridRetriever(store)
-    dataset_path = "data/processed/ground_truth_qa.json"
+    dataset_path = "data/processed/holdout_eval.json"
     with open(dataset_path, "r", encoding="utf-8") as f:
         dataset = json.load(f)
     dataset = [
-        {
-            "question": d["question"],
-            "ground_truth": d["ground_truth"]
-        }
-        for d in dataset
-        if d.get("ground_truth")
+        {"question": d["question"], "gold_chunk_id": d["gold_chunk_id"]}
+        for d in dataset if d.get("gold_chunk_id")
     ]
-    evaluate_retrieval(dataset, retriever, top_k=5)
+    evaluate_retrieval(dataset, retriever, top_k=10)

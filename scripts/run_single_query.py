@@ -412,6 +412,10 @@ def run_single_query(
     groq       = Groq(api_key=os.getenv("GROQ_API_KEY"))
     confidence_engine = ConfidenceEngine()
 
+    retrieval_confidence = {
+        "confidence_score": 0.0,
+        "decision": "REJECT"
+    }
     # ---------------------------------------------------------------------------
     # PolicyEngine — single source of truth untuk semua keputusan pipeline
     # Gantikan: classify_query_type() + scattered if/elif generation config
@@ -711,10 +715,11 @@ def run_single_query(
 
         print(f"  [GEN CONFIG] max_tokens={gen_max_tokens} | temperature={gen_temperature} | context_len={len(final_context)}")
         pre_gen_confidence = confidence_engine.calculate_confidence(final_chunks_full)
+        retrieval_confidence = pre_gen_confidence
         if pre_gen_confidence["decision"] == "REJECT":
             print(f" [PRE_GEN_GATE] Confidence REJECT ({pre_gen_confidence['confidence_score']:.3f}) skip LLM call")
-            from src.generation.generator import RAGResponse
-            response = generator._make_abstain_response(
+            from src.generation.generator import _make_abstain_response
+            response = _make_abstain_response(
                 query=query,
                 chunks=final_chunks_full,
                 model="llama-3.3-70b-versatile",
@@ -980,11 +985,20 @@ def run_single_query(
         print(f"    {k:<25} {v:>8.1f}ms  {bar}")
     print(f"{'='*60}\n")
 
+    def to_serializable(obj):
+        import numpy as np
+        if isinstance(obj, (np.bool_,)):
+            return bool(obj)
+        if isinstance(obj, (np.integer,)):
+            return int(obj)
+        if isinstance(obj, (np.floating,)):
+            return float(obj)
+        return str(obj)  # fallback
     if save_output:
         out_path = Path(f"results/logs/single_query_{mode}.json")
         out_path.parent.mkdir(parents=True, exist_ok=True)
         existing = []
-        if out_path.exists():
+        if out_path.exists(): 
             with open(out_path) as f:
                 try:
                     existing = json.load(f)
@@ -992,7 +1006,7 @@ def run_single_query(
                     existing = []
         existing.append(output)
         with open(out_path, "w") as f:
-            json.dump(existing, f, indent=2, ensure_ascii=False)
+            json.dump(existing, f, indent=2, ensure_ascii=False, default=to_serializable)
         print(f"[Saved] → {out_path}")
 
     # TASK 4: dump trace for query-level debugging and audit

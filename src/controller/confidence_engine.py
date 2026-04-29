@@ -9,13 +9,14 @@ class ConfidenceEngine:
         self.reject_threshold = 0.25
         self.partial_threshold = 0.45
 
-    def _normalize_scores(self, scores) -> np.ndarray:
-        arr = np.array(scores)
-        min_v = arr.min()
-        max_v = arr.max()
-        if max_v == min_v:
-            return np.ones_like(arr)
-        return (arr - min_v) / (max_v - min_v)
+    def _normalize_scores(self, scores: List[float], score_type: str = "cosine") -> np.ndarray:
+        arr = np.array(scores, dtype=float)
+        if score_type == "cross_encoder":
+            return 1 / (1 + np.exp(-arr))
+        elif score_type == "rrf":
+            return np.clip(arr / (arr.max() + 1e-9), 0.0, 1.0)
+        else:  # cosine / dot
+            return np.clip(arr, 0.0, 1.0)
     
     def _sigmoid(self, x: float) -> float:
         import math
@@ -34,7 +35,9 @@ class ConfidenceEngine:
         if isinstance(chunk, dict):
             score = chunk.get("retrieval_score")
             if score is None:
-                score = chunk.get("rerank_score", 0.0)
+                score = chunk.get("rerank_score")
+            if score is None:
+                return None
         else:
             score = getattr(chunk, "retrieval_score", None)
             if score is None:
@@ -42,20 +45,20 @@ class ConfidenceEngine:
         return float(score)
 
     def _source_agreement(self, chunks) -> float:
-        sources = []
+        doc_ids = []
         for c in chunks[:5]:
             meta = c.get("metadata", {}) if isinstance(c, dict) else getattr(c, "metadata", {})
-            sources.append(meta.get("retrieval_method", "unknown"))
-        if not sources:
-            return 0.0
-        unique = len(set(sources))
-        total = len(sources)
-        return 1.0 - ((unique - 1) / total)
+            doc_id = meta.get("doc_id") or meta.get("source") or meta.get("file_name")
+            if doc_id:
+                doc_ids.append(doc_id)
+        if not doc_ids:
+            return 0.5
+        return min(len(set(doc_ids)) / 3.0, 1.0)
     
-    def _detect_patterns(self, top_score: float, mean_top3: float, gap: float) -> dict:
+    def _detect_patterns(self, top_norm: float, mean_top3_norm: float, gap: float) -> dict:
         return {
-            "spurious_match": top_score > 0.8 and mean_top3 < 0.5,
-            "unstable_retrieval": gap > 0.8 and mean_top3 < 0.5,
+            "spurious_match": bool(top_norm > 0.85 and mean_top3_norm < 0.45),
+            "unstable_retrieval": bool(gap < 0.05 and mean_top3_norm < 0.4),
         }
     
     def calculate_confidence(self, chunks: list[Any]) -> Dict[str, Any]:
@@ -86,25 +89,33 @@ class ConfidenceEngine:
                 "signals": {"reason": "no_valid_scores"}
             }
         
-        normalized_scores = list(self._normalize_scores(raw_scores))
-
+        normalized_scores = list(self._normalize_scores(raw_scores, score_type="cosine"))  # sesuaikan
         top_score = raw_scores[0]
         mean_top3 = float(np.mean(raw_scores[:3])) if len(raw_scores) >= 3 else top_score
-        top_score_norm = self._sigmoid(top_score)
-        mean_top3_norm = self._sigmoid(mean_top3)
-        gap = (normalized_scores[0] - normalized_scores[1]) / (abs(normalized_scores[0]) + 1e-6) if len(normalized_scores) > 1 else 0.0
-        gap = max(0.0, min(gap, 1.0))
-        score_level = min(self._sigmoid(mean_top3) / 0.8, 1.0)
+        top_score_norm = normalized_scores[0]
+
+        mean_top3_norm = float(np.mean(normalized_scores[:3])) if len(normalized_scores) >= 3 else normalized_scores[0]
+        if len(normalized_scores) > 1:
+            gap = normalized_scores[0] - normalized_scores[1]
+        else:
+            gap = max(0.0, min(gap, 1.0))
+        score_level = float(np.mean(normalized_scores[:3])) if len(normalized_scores) >= 3 else normalized_scores[0]
         entropy = self._calculate_entropy(normalized_scores)
         agreement = self._source_agreement(chunks)
 
-        confidence_score = (
-            0.35 * top_score_norm +
-            0.25 * mean_top3_norm +
-            0.15 * gap +
-            0.10 * agreement +
-            0.15 * score_level
+        base_confidence = (
+            0.40 * top_score_norm +
+            0.35 * mean_top3_norm +
+            0.15 * agreement +
+            0.10 * score_level
         )
+
+        if gap > 0.5:
+            gap_modifier = +0.10 if mean_top3_norm > 0.6 else -0.15
+        else:
+            gap_modifier = 0.0
+
+        confidence_score = max(0.0, min(1.0, base_confidence + gap_modifier))
 
         logger.info(
             f"[CONFIDENCE_BREAKDOWN] top_score={top_score:.4f} | mean_top3={mean_top3:.4f} | "
@@ -117,7 +128,7 @@ class ConfidenceEngine:
         logger.info(
             f"[DEBUG_NORM] top_norm={top_score_norm:.4f} | mean_norm={mean_top3_norm:.4f}"
         )
-        patterns = self._detect_patterns(top_score, mean_top3, gap)
+        patterns = self._detect_patterns(top_score_norm, mean_top3_norm, gap)
 
         if patterns["spurious_match"] and patterns["unstable_retrieval"]:
             decision = "REJECT"

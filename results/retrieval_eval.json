@@ -1,0 +1,4845 @@
+{
+  "summary": {
+    "total_samples": 74,
+    "recall@1": 0.6756756756756757,
+    "recall@5": 0.918918918918919,
+    "recall@10": 0.9324324324324325,
+    "mrr": 0.7800836550836551,
+    "failure_count": 6,
+    "failure_rate": 0.08108108108108109
+  },
+  "results": [
+    {
+      "question": "What can be a drawback of coarse-grained retrieval units?",
+      "gold_chunk_id": "tier1_2312_10997_s0032",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0032",
+        "tier1_2312_10997_s0012",
+        "tier1_2312_10997_s0011",
+        "tier1_2312_10997_s0042",
+        "tier1_2312_10997_s0034",
+        "tier1_2005_11401_s0322",
+        "tier1_test_intro_s0000",
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0068"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0032",
+          "rerank_score": 5.1823930740356445
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0012",
+          "rerank_score": -2.758430242538452
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0011",
+          "rerank_score": -3.0711450576782227
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": -5.333572864532471
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0034",
+          "rerank_score": -6.308066368103027
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0322",
+          "rerank_score": -6.76559591293335
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": -7.135808944702148
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": -7.517351150512695
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0068",
+          "rerank_score": -7.561160087585449
+        }
+      ]
+    },
+    {
+      "question": "What is the RAG research paradigm's primary function?",
+      "gold_chunk_id": "tier1_2312_10997_s0009",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0055",
+        "tier1_2312_10997_s0013",
+        "tier1_2312_10997_s0009",
+        "tier1_2312_10997_s0005",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0002"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0055",
+          "rerank_score": 3.7280845642089844
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": 3.625596761703491
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0009",
+          "rerank_score": 3.568666458129883
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": 3.3874478340148926
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 2.3872032165527344
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 2.3086023330688477
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 1.6408754587173462
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 1.0781348943710327
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 0.8651896715164185
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0002",
+          "rerank_score": 0.6475957632064819
+        }
+      ]
+    },
+    {
+      "question": "What are the three stages of the RAG research paradigm?",
+      "gold_chunk_id": "tier1_2312_10997_s0009",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0009",
+        "tier1_2312_10997_s0005",
+        "tier1_2312_10997_s0013",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0003",
+        "tier1_2312_10997_s0050"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0009",
+          "rerank_score": 8.581428527832031
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": 7.021570682525635
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": 6.125511169433594
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 5.439347743988037
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 5.183548450469971
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 4.808191299438477
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 4.24685001373291
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 1.0134668350219727
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0003",
+          "rerank_score": 0.8582303524017334
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0050",
+          "rerank_score": 0.09528643637895584
+        }
+      ]
+    },
+    {
+      "question": "What is the strategy employed by RAGFusion to address traditional search limitations?",
+      "gold_chunk_id": "tier1_2312_10997_s0017",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0017",
+        "tier1_2312_10997_s0010",
+        "tier1_2312_10997_s0012",
+        "tier1_2312_10997_s0019",
+        "tier1_2312_10997_s0053",
+        "tier1_2312_10997_s0016",
+        "tier1_2312_10997_s0058",
+        "tier1_2312_10997_s0013",
+        "tier1_2312_10997_s0069",
+        "tier1_2005_11401_s0037"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0017",
+          "rerank_score": 9.157384872436523
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": 1.2755351066589355
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0012",
+          "rerank_score": 0.2158217579126358
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0019",
+          "rerank_score": -0.7062469124794006
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0053",
+          "rerank_score": -2.6097331047058105
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0016",
+          "rerank_score": -2.78135347366333
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -3.2391858100891113
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": -3.282517433166504
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0069",
+          "rerank_score": -3.7336220741271973
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0037",
+          "rerank_score": -3.9099409580230713
+        }
+      ]
+    },
+    {
+      "question": "How does the Memory module in RAGFusion leverage the LLM's memory?",
+      "gold_chunk_id": "tier1_2312_10997_s0017",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0017",
+        "tier1_2312_10997_s0031",
+        "tier1_2312_10997_s0018",
+        "tier1_2312_10997_s0002",
+        "tier1_2312_10997_s0020",
+        "tier1_2312_10997_s0045",
+        "tier1_2005_11401_s0009",
+        "tier1_2312_10997_s0068",
+        "tier1_2312_10997_s0067"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0017",
+          "rerank_score": 8.419916152954102
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0031",
+          "rerank_score": -0.19031894207000732
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0018",
+          "rerank_score": -0.5855967998504639
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0002",
+          "rerank_score": -1.5945239067077637
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0020",
+          "rerank_score": -2.680821180343628
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0045",
+          "rerank_score": -4.321357727050781
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0009",
+          "rerank_score": -4.5406341552734375
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0068",
+          "rerank_score": -4.839296817779541
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0067",
+          "rerank_score": -5.216556549072266
+        }
+      ]
+    },
+    {
+      "question": "What are some challenges faced by Large Language Models?",
+      "gold_chunk_id": "tier1_2312_10997_s0000",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0000",
+        "tier1_2312_10997_s0001",
+        "tier3_2307_09288_s0110",
+        "tier1_2312_10997_s0036",
+        "tier3_2307_09288_s0254",
+        "tier1_2312_10997_s0303",
+        "tier2_2212_10560_s0032",
+        "tier3_2307_09288_s0355",
+        "tier3_2307_09288_s0262",
+        "tier3_2307_09288_s0366"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0000",
+          "rerank_score": 5.929995536804199
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": 5.694498538970947
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0110",
+          "rerank_score": 5.455753326416016
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0036",
+          "rerank_score": 3.2640061378479004
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0254",
+          "rerank_score": 2.9918618202209473
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0303",
+          "rerank_score": 2.6906259059906006
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0032",
+          "rerank_score": 2.3878488540649414
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0355",
+          "rerank_score": 2.077601909637451
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0262",
+          "rerank_score": 2.073356866836548
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0366",
+          "rerank_score": 2.073356866836548
+        }
+      ]
+    },
+    {
+      "question": "How does Retrieval-Augmented Generation enhance the accuracy and credibility of the generation?",
+      "gold_chunk_id": "tier1_2312_10997_s0000",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0000",
+        "tier1_test_intro_s0000",
+        "tier1_2312_10997_s0051",
+        "tier1_2005_11401_s0000",
+        "tier1_2312_10997_s0001",
+        "tier1_2312_10997_s0059"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0000",
+          "rerank_score": 7.703481674194336
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 4.00406551361084
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0051",
+          "rerank_score": 3.441059112548828
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0000",
+          "rerank_score": 3.4159696102142334
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": 2.1019911766052246
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0059",
+          "rerank_score": 1.8048335313796997
+        }
+      ]
+    },
+    {
+      "question": "What are the specific needs that RAG and FT depend on?",
+      "gold_chunk_id": "tier1_2312_10997_s0022",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0021",
+        "tier1_2312_10997_s0020",
+        "tier1_2312_10997_s0074",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0071",
+        "tier1_2005_11401_s0036",
+        "tier1_2312_10997_s0018",
+        "tier1_2312_10997_s0002",
+        "tier1_2312_10997_s0017"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": 7.62662935256958
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0021",
+          "rerank_score": 2.5841779708862305
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0020",
+          "rerank_score": 0.15786242485046387
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0074",
+          "rerank_score": -0.38819995522499084
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": -3.2085108757019043
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0071",
+          "rerank_score": -3.7374508380889893
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": -4.390551567077637
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0018",
+          "rerank_score": -4.42591667175293
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0002",
+          "rerank_score": -4.619024276733398
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0017",
+          "rerank_score": -4.818459510803223
+        }
+      ]
+    },
+    {
+      "question": "What is initially the mainstream source of text for RAG?",
+      "gold_chunk_id": "tier1_2312_10997_s0022",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0076",
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0010",
+        "tier1_2005_11401_s0009",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0024",
+        "tier1_2005_11401_s0037",
+        "tier1_2312_10997_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": 4.0372114181518555
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 1.3728060722351074
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0076",
+          "rerank_score": 1.0031284093856812
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": -0.116124227643013
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": -1.9106926918029785
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0009",
+          "rerank_score": -2.068114757537842
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": -2.2716400623321533
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0024",
+          "rerank_score": -2.360185146331787
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0037",
+          "rerank_score": -2.5209693908691406
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -3.272881507873535
+        }
+      ]
+    },
+    {
+      "question": "What is the first step in extracting keywords from a query?",
+      "gold_chunk_id": "tier1_2312_10997_s0039",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0039",
+        "tier1_2312_10997_s0010",
+        "tier1_2005_11401_s0309",
+        "tier3_2307_09288_s0456",
+        "tier1_2005_11401_s0187",
+        "tier1_2312_10997_s0014",
+        "tier1_2312_10997_s0038",
+        "tier1_2312_10997_s0037",
+        "tier2_2212_10560_s0013",
+        "tier1_2005_11401_s0315"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0039",
+          "rerank_score": 6.722535610198975
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": -1.5475646257400513
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0309",
+          "rerank_score": -1.8706659078598022
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0456",
+          "rerank_score": -2.014458417892456
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0187",
+          "rerank_score": -2.5566930770874023
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0014",
+          "rerank_score": -2.8468565940856934
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0038",
+          "rerank_score": -4.182461261749268
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0037",
+          "rerank_score": -4.392007827758789
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0013",
+          "rerank_score": -4.791415691375732
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0315",
+          "rerank_score": -6.022357940673828
+        }
+      ]
+    },
+    {
+      "question": "What is an example of a dense retriever architecture used in RAG?",
+      "gold_chunk_id": "tier1_2312_10997_s0039",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 1,
+      "rank": 7,
+      "mrr": 0.14285714285714285,
+      "failure_type": "ranking_failure",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0020",
+        "tier1_2005_11401_s0005",
+        "tier1_test_intro_s0000",
+        "tier1_2005_11401_s0029",
+        "tier1_2005_11401_s0009",
+        "tier1_2312_10997_s0016",
+        "tier1_2312_10997_s0039",
+        "tier1_2312_10997_s0071",
+        "tier1_2005_11401_s0021",
+        "tier1_2312_10997_s0058"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0020",
+          "rerank_score": 3.351785659790039
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0005",
+          "rerank_score": 2.961883068084717
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 2.1612534523010254
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0029",
+          "rerank_score": 0.7149587869644165
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0009",
+          "rerank_score": 0.6816415786743164
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0016",
+          "rerank_score": 0.37371981143951416
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0039",
+          "rerank_score": -0.43749910593032837
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0071",
+          "rerank_score": -0.5378656387329102
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0021",
+          "rerank_score": -0.7422757744789124
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -0.7878669500350952
+        }
+      ]
+    },
+    {
+      "question": "What is the benefit of recursive retrieval in search scenarios?",
+      "gold_chunk_id": "tier1_2312_10997_s0052",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0052",
+        "tier1_2312_10997_s0051",
+        "tier1_2312_10997_s0019",
+        "tier1_2312_10997_s0050",
+        "tier1_2312_10997_s0053",
+        "tier1_2005_11401_s0034",
+        "tier1_2312_10997_s0033",
+        "tier1_2312_10997_s0014",
+        "tier1_2312_10997_s0038"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0052",
+          "rerank_score": 7.180167198181152
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0051",
+          "rerank_score": 4.699892044067383
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0019",
+          "rerank_score": 1.934360146522522
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0050",
+          "rerank_score": 1.0359115600585938
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0053",
+          "rerank_score": -1.4503599405288696
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0034",
+          "rerank_score": -1.840562105178833
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0033",
+          "rerank_score": -1.9354188442230225
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0014",
+          "rerank_score": -2.14132022857666
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0038",
+          "rerank_score": -2.41318416595459
+        }
+      ]
+    },
+    {
+      "question": "How does recursive retrieval process and retrieve data?",
+      "gold_chunk_id": "tier1_2312_10997_s0052",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0052",
+        "tier1_2312_10997_s0051",
+        "tier1_2312_10997_s0050",
+        "tier1_2312_10997_s0033",
+        "tier1_2312_10997_s0014",
+        "tier1_2312_10997_s0010",
+        "tier1_test_intro_s0000",
+        "tier1_2312_10997_s0019",
+        "tier1_2312_10997_s0053"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0052",
+          "rerank_score": 7.654580116271973
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0051",
+          "rerank_score": 5.679187774658203
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0050",
+          "rerank_score": 4.778810501098633
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0033",
+          "rerank_score": 2.0337893962860107
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0014",
+          "rerank_score": 2.028064489364624
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": 1.2714180946350098
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 0.8523472547531128
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0019",
+          "rerank_score": 0.845499575138092
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0053",
+          "rerank_score": 0.6837144494056702
+        }
+      ]
+    },
+    {
+      "question": "What are the stages of involving RAG?",
+      "gold_chunk_id": "tier1_2312_10997_s0007",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0005",
+        "tier1_2312_10997_s0003",
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0074",
+        "tier1_2312_10997_s0055",
+        "tier1_2005_11401_s0322"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 8.191082000732422
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 2.4238243103027344
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 1.754225730895996
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": 1.3466477394104004
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0003",
+          "rerank_score": 0.6683069467544556
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": -0.08419721573591232
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -1.1699339151382446
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0074",
+          "rerank_score": -1.5535767078399658
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0055",
+          "rerank_score": -3.4360804557800293
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0322",
+          "rerank_score": -3.862180471420288
+        }
+      ]
+    },
+    {
+      "question": "What type of review does this survey present?",
+      "gold_chunk_id": "tier1_2312_10997_s0006",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0006",
+        "tier1_2312_10997_s0000",
+        "tier3_2307_09288_s0005",
+        "tier3_2307_09288_s0395",
+        "tier3_2307_09288_s0284",
+        "tier3_2307_09288_s0158",
+        "tier1_2312_10997_s0078",
+        "tier3_2307_09288_s0054",
+        "tier3_2307_09288_s0340",
+        "tier3_2307_09288_s0464"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0006",
+          "rerank_score": 2.4926953315734863
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0000",
+          "rerank_score": -3.250936508178711
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0005",
+          "rerank_score": -5.497392654418945
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0395",
+          "rerank_score": -6.592670917510986
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0284",
+          "rerank_score": -6.592670917510986
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0158",
+          "rerank_score": -6.6899333000183105
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": -6.69706916809082
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0054",
+          "rerank_score": -7.375975608825684
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0340",
+          "rerank_score": -7.39794921875
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0464",
+          "rerank_score": -7.39794921875
+        }
+      ]
+    },
+    {
+      "question": "How does this survey present the evolution of RAG methods?",
+      "gold_chunk_id": "tier1_2312_10997_s0006",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0006",
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0005",
+        "tier1_2312_10997_s0009",
+        "tier1_2312_10997_s0079",
+        "tier1_2312_10997_s0003",
+        "tier1_2312_10997_s0007",
+        "tier1_2005_11401_s0036",
+        "tier1_2312_10997_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0006",
+          "rerank_score": 7.432612419128418
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 6.461831569671631
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 4.342742919921875
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": 3.959045886993408
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0009",
+          "rerank_score": 3.0112476348876953
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0079",
+          "rerank_score": 2.9850645065307617
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0003",
+          "rerank_score": 1.7121009826660156
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 1.6841634511947632
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": 1.2861371040344238
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 1.058810830116272
+        }
+      ]
+    },
+    {
+      "question": "What is exploited by extractive models during training?",
+      "gold_chunk_id": "tier1_2005_11401_s0187",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0307",
+        "tier1_2005_11401_s0187",
+        "tier1_2005_11401_s0017",
+        "tier1_2005_11401_s0000",
+        "tier3_2307_09288_s0347",
+        "tier1_2005_11401_s0008",
+        "tier1_2312_10997_s0031",
+        "tier3_2307_09288_s0057",
+        "tier1_2005_11401_s0014",
+        "tier1_2312_10997_s0042"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0307",
+          "rerank_score": 7.771140098571777
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0187",
+          "rerank_score": 7.63886833190918
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0017",
+          "rerank_score": -0.0250137560069561
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0000",
+          "rerank_score": -0.2809014916419983
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0347",
+          "rerank_score": -2.243450880050659
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0008",
+          "rerank_score": -3.029500961303711
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0031",
+          "rerank_score": -3.1180343627929688
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0057",
+          "rerank_score": -3.219411849975586
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0014",
+          "rerank_score": -3.4884824752807617
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": -3.9497628211975098
+        }
+      ]
+    },
+    {
+      "question": "How do we filter out answer candidates for TriviaQA?",
+      "gold_chunk_id": "tier1_2005_11401_s0187",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0187",
+        "tier1_2005_11401_s0307",
+        "tier1_2005_11401_s0309",
+        "tier1_2005_11401_s0313",
+        "tier1_2005_11401_s0017",
+        "tier1_2005_11401_s0021",
+        "tier2_2210_11610_s0015",
+        "tier1_2312_10997_s0047",
+        "tier1_2005_11401_s0019",
+        "tier3_2307_09288_s0242"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0187",
+          "rerank_score": 7.171091079711914
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0307",
+          "rerank_score": 6.608301162719727
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0309",
+          "rerank_score": 0.5864720940589905
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0313",
+          "rerank_score": 0.14822442829608917
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0017",
+          "rerank_score": -1.520439624786377
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0021",
+          "rerank_score": -4.4565558433532715
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0015",
+          "rerank_score": -4.7694411277771
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0047",
+          "rerank_score": -5.710373878479004
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0019",
+          "rerank_score": -6.231669902801514
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0242",
+          "rerank_score": -7.164079666137695
+        }
+      ]
+    },
+    {
+      "question": "What makes our memory human-readable?",
+      "gold_chunk_id": "tier1_2005_11401_s0035",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0035",
+        "tier1_2005_11401_s0006",
+        "tier1_2312_10997_s0217",
+        "tier1_2312_10997_s0341",
+        "tier1_2005_11401_s0002",
+        "tier1_2005_11401_s0320",
+        "tier1_2005_11401_s0222",
+        "tier1_2005_11401_s0191"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0035",
+          "rerank_score": 7.02490234375
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0006",
+          "rerank_score": -4.148237228393555
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0217",
+          "rerank_score": -6.260847091674805
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0341",
+          "rerank_score": -6.35129451751709
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0002",
+          "rerank_score": -6.823720455169678
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0320",
+          "rerank_score": -7.108765602111816
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0222",
+          "rerank_score": -7.602603912353516
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0191",
+          "rerank_score": -7.654860496520996
+        }
+      ]
+    },
+    {
+      "question": "How is our model's memory dynamically updated?",
+      "gold_chunk_id": "tier1_2005_11401_s0035",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0035",
+        "tier1_2005_11401_s0008",
+        "tier1_2005_11401_s0002",
+        "tier1_2005_11401_s0036",
+        "tier3_2307_09288_s0039",
+        "tier1_2005_11401_s0191",
+        "tier3_2307_09288_s0393",
+        "tier3_2307_09288_s0282",
+        "tier3_1706_03762_s0012"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0035",
+          "rerank_score": 6.452638149261475
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0008",
+          "rerank_score": 0.0576886311173439
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0002",
+          "rerank_score": -0.8572679162025452
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": -1.0636394023895264
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0039",
+          "rerank_score": -2.1143922805786133
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0191",
+          "rerank_score": -2.881443500518799
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0393",
+          "rerank_score": -2.8985331058502197
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0282",
+          "rerank_score": -2.8985331058502197
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0012",
+          "rerank_score": -3.3118438720703125
+        }
+      ]
+    },
+    {
+      "question": "Who are the authors of the paper 'Mixed precision training'?",
+      "gold_chunk_id": "tier1_2005_11401_s0122",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0122",
+        "tier1_2005_11401_s0211",
+        "tier1_2005_11401_s0303",
+        "tier2_2210_11610_s0096",
+        "tier3_2307_09288_s0140",
+        "tier1_2005_11401_s0038",
+        "tier2_2210_11610_s0051",
+        "tier2_2212_10560_s0055",
+        "tier3_2307_09288_s0168",
+        "tier3_2307_09288_s0211"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0122",
+          "rerank_score": 6.204323768615723
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0211",
+          "rerank_score": -0.47473570704460144
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0303",
+          "rerank_score": -3.9591121673583984
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0096",
+          "rerank_score": -3.9977645874023438
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0140",
+          "rerank_score": -4.277011871337891
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0038",
+          "rerank_score": -5.187906265258789
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0051",
+          "rerank_score": -5.513648986816406
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0055",
+          "rerank_score": -6.8935346603393555
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0168",
+          "rerank_score": -7.124973297119141
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0211",
+          "rerank_score": -7.415122985839844
+        }
+      ]
+    },
+    {
+      "question": "What is the title of the paper mentioned in the text?",
+      "gold_chunk_id": "tier1_2005_11401_s0122",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0001",
+        "tier1_2312_10997_s0005",
+        "tier1_2005_11401_s0026",
+        "tier1_2312_10997_s0008",
+        "tier3_2307_09288_s0403"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": -5.6759233474731445
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": -6.102100372314453
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0026",
+          "rerank_score": -6.530360698699951
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -7.222744941711426
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0403",
+          "rerank_score": -7.717743873596191
+        }
+      ]
+    },
+    {
+      "question": "What is the current capability of LLMs in terms of context management?",
+      "gold_chunk_id": "tier1_2312_10997_s0066",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0066",
+        "tier3_2307_09288_s0080",
+        "tier3_2307_09288_s0006",
+        "tier3_2307_09288_s0083",
+        "tier1_2312_10997_s0044",
+        "tier3_2307_09288_s0096",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0042"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0066",
+          "rerank_score": 5.795661449432373
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0080",
+          "rerank_score": 1.7994632720947266
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0006",
+          "rerank_score": 1.0641090869903564
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0083",
+          "rerank_score": 0.7703976631164551
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0044",
+          "rerank_score": 0.42740315198898315
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0096",
+          "rerank_score": 0.12766088545322418
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": -0.24834829568862915
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": -0.25939470529556274
+        }
+      ]
+    },
+    {
+      "question": "What is one of the previous applications of RAG technology that can now be handled differently?",
+      "gold_chunk_id": "tier1_2312_10997_s0066",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0074",
+        "tier1_2312_10997_s0066",
+        "tier1_2312_10997_s0073",
+        "tier1_2005_11401_s0037",
+        "tier1_2312_10997_s0002",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0068",
+        "tier1_2312_10997_s0029"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 1.9219368696212769
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0074",
+          "rerank_score": 0.8200831413269043
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0066",
+          "rerank_score": 0.5957193374633789
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0073",
+          "rerank_score": 0.4929198920726776
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0037",
+          "rerank_score": 0.07982642203569412
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0002",
+          "rerank_score": 0.05073980242013931
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 0.045025698840618134
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": -0.2741931676864624
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0068",
+          "rerank_score": -0.3171495795249939
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0029",
+          "rerank_score": -0.7112694382667542
+        }
+      ]
+    },
+    {
+      "question": "What are some scenarios where FT is suitable?",
+      "gold_chunk_id": "tier1_2312_10997_s0021",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0021",
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0055",
+        "tier1_2312_10997_s0052",
+        "tier1_2005_11401_s0187",
+        "tier1_2005_11401_s0037",
+        "tier3_2307_09288_s0332",
+        "tier3_2307_09288_s0352",
+        "tier3_2307_09288_s0482",
+        "tier3_2307_09288_s0004"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0021",
+          "rerank_score": 3.879453420639038
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": -2.8304519653320312
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0055",
+          "rerank_score": -8.403704643249512
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0052",
+          "rerank_score": -8.507770538330078
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0187",
+          "rerank_score": -9.639688491821289
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0037",
+          "rerank_score": -9.764720916748047
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0332",
+          "rerank_score": -9.772645950317383
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0352",
+          "rerank_score": -10.045914649963379
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0482",
+          "rerank_score": -10.045914649963379
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0004",
+          "rerank_score": -10.258174896240234
+        }
+      ]
+    },
+    {
+      "question": "How does RAG handle updates in dynamic environments?",
+      "gold_chunk_id": "tier1_2312_10997_s0021",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0021",
+        "tier1_2312_10997_s0078",
+        "tier1_2005_11401_s0031",
+        "tier1_2312_10997_s0076",
+        "tier1_2312_10997_s0022",
+        "tier1_2005_11401_s0036",
+        "tier1_2312_10997_s0000",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0068",
+        "tier1_2312_10997_s0019"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0021",
+          "rerank_score": 5.672606468200684
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": -1.7810766696929932
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0031",
+          "rerank_score": -2.2041187286376953
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0076",
+          "rerank_score": -2.276656150817871
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": -2.458801746368408
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": -3.011183738708496
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0000",
+          "rerank_score": -3.2435412406921387
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -3.4716811180114746
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0068",
+          "rerank_score": -3.6255626678466797
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0019",
+          "rerank_score": -3.8684253692626953
+        }
+      ]
+    },
+    {
+      "question": "What does the CoK method first extract from a knowledge graph?",
+      "gold_chunk_id": "tier1_2312_10997_s0078",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0035",
+        "tier1_2312_10997_s0039",
+        "tier3_2307_09288_s0456",
+        "tier1_2312_10997_s0029",
+        "tier2_2212_10560_s0017"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 7.266871929168701
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0035",
+          "rerank_score": -2.0475075244903564
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0039",
+          "rerank_score": -5.11627197265625
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0456",
+          "rerank_score": -6.2613935470581055
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0029",
+          "rerank_score": -6.484214782714844
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0017",
+          "rerank_score": -7.22009801864624
+        }
+      ]
+    },
+    {
+      "question": "What does the RAG framework's Modular RAG paradigm represent?",
+      "gold_chunk_id": "tier1_2312_10997_s0078",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0016",
+        "tier1_2312_10997_s0078",
+        "tier1_2312_10997_s0009",
+        "tier1_2312_10997_s0013",
+        "tier1_2312_10997_s0018",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0005",
+        "tier1_2312_10997_s0028",
+        "tier1_test_intro_s0000"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0016",
+          "rerank_score": 6.160892009735107
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": 5.709892749786377
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0009",
+          "rerank_score": 5.630865573883057
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": 3.6679248809814453
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0018",
+          "rerank_score": 2.4395365715026855
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 2.432598114013672
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 1.7462437152862549
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": 1.09498929977417
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 1.0456011295318604
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 0.7527010440826416
+        }
+      ]
+    },
+    {
+      "question": "What are the optimization methods used in the retrieval process?",
+      "gold_chunk_id": "tier1_2312_10997_s0013",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0014",
+        "tier1_2312_10997_s0033",
+        "tier1_2312_10997_s0013",
+        "tier1_2005_11401_s0034",
+        "tier1_2312_10997_s0053",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0052",
+        "tier1_2312_10997_s0022",
+        "tier1_2312_10997_s0051",
+        "tier1_test_intro_s0000"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0014",
+          "rerank_score": 7.010993480682373
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0033",
+          "rerank_score": 6.094318389892578
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": 5.033367156982422
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0034",
+          "rerank_score": 3.469839096069336
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0053",
+          "rerank_score": 3.457981586456299
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": 2.6976377964019775
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0052",
+          "rerank_score": 2.229800224304199
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0022",
+          "rerank_score": 2.012793779373169
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0051",
+          "rerank_score": 1.7457661628723145
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 1.5109639167785645
+        }
+      ]
+    },
+    {
+      "question": "How does the pre-retrieval process focus on optimizing the indexing structure?",
+      "gold_chunk_id": "tier1_2312_10997_s0013",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0013",
+        "tier1_2312_10997_s0033",
+        "tier1_2312_10997_s0012",
+        "tier1_2312_10997_s0014",
+        "tier1_2312_10997_s0054",
+        "tier1_2312_10997_s0010",
+        "tier1_2312_10997_s0035",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0036",
+        "tier1_2312_10997_s0052"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0013",
+          "rerank_score": 5.87753438949585
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0033",
+          "rerank_score": 1.6270215511322021
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0012",
+          "rerank_score": 0.8758676052093506
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0014",
+          "rerank_score": 0.23588354885578156
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0054",
+          "rerank_score": 0.0015376545488834381
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": -0.07581283897161484
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0035",
+          "rerank_score": -0.6527493000030518
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -0.8818539381027222
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0036",
+          "rerank_score": -1.743996024131775
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0052",
+          "rerank_score": -2.4162020683288574
+        }
+      ]
+    },
+    {
+      "question": "What models does RAG outperform?",
+      "gold_chunk_id": "tier1_2005_11401_s0014",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0001",
+        "tier1_2005_11401_s0007",
+        "tier1_2312_10997_s0071",
+        "tier1_2005_11401_s0025",
+        "tier1_2005_11401_s0191",
+        "tier1_2005_11401_s0036",
+        "tier1_2005_11401_s0010",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0076",
+        "tier1_2005_11401_s0322"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0001",
+          "rerank_score": 5.836741924285889
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0007",
+          "rerank_score": 5.705512046813965
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0071",
+          "rerank_score": 5.039578437805176
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0025",
+          "rerank_score": 4.914703845977783
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0191",
+          "rerank_score": 2.5861830711364746
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": 2.513002872467041
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0010",
+          "rerank_score": 2.4597361087799072
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 2.3752055168151855
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0076",
+          "rerank_score": 2.3630871772766113
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0322",
+          "rerank_score": 2.283586025238037
+        }
+      ]
+    },
+    {
+      "question": "Why is updating the document encoder BERTd not necessary for strong performance?",
+      "gold_chunk_id": "tier1_2005_11401_s0014",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0014",
+        "tier1_2005_11401_s0190",
+        "tier1_2005_11401_s0033",
+        "tier1_2005_11401_s0318",
+        "tier1_2005_11401_s0013",
+        "tier1_2312_10997_s0046",
+        "tier3_2307_09288_s0268",
+        "tier1_2005_11401_s0034",
+        "tier1_2005_11401_s0191",
+        "tier1_2005_11401_s0021"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0014",
+          "rerank_score": 5.342620372772217
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0190",
+          "rerank_score": 0.8914569616317749
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0033",
+          "rerank_score": -2.6157662868499756
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0318",
+          "rerank_score": -2.734724521636963
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0013",
+          "rerank_score": -3.1526970863342285
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0046",
+          "rerank_score": -4.1685075759887695
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0268",
+          "rerank_score": -4.731143474578857
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0034",
+          "rerank_score": -4.943793296813965
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0191",
+          "rerank_score": -6.498223781585693
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0021",
+          "rerank_score": -6.628062725067139
+        }
+      ]
+    },
+    {
+      "question": "What was the early stage of RAG's development characterized by?",
+      "gold_chunk_id": "tier1_2312_10997_s0004",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0004",
+        "tier1_2312_10997_s0003",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0074",
+        "tier1_2312_10997_s0079",
+        "tier1_2312_10997_s0076",
+        "tier1_2312_10997_s0008",
+        "tier1_2312_10997_s0010",
+        "tier1_2312_10997_s0078"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 7.621702194213867
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0003",
+          "rerank_score": 1.3589630126953125
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 1.207081913948059
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 0.5960153341293335
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0074",
+          "rerank_score": -0.6208916902542114
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0079",
+          "rerank_score": -0.9593806266784668
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0076",
+          "rerank_score": -1.2221014499664307
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -1.373944640159607
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0010",
+          "rerank_score": -1.6804412603378296
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0078",
+          "rerank_score": -1.719698429107666
+        }
+      ]
+    },
+    {
+      "question": "What are some critical engineering challenges that remain to be addressed?",
+      "gold_chunk_id": "tier1_2312_10997_s0072",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0072",
+        "tier1_2312_10997_s0001",
+        "tier1_2312_10997_s0066",
+        "tier1_2312_10997_s0060",
+        "tier3_2307_09288_s0111",
+        "tier1_2312_10997_s0029",
+        "tier3_2307_09288_s0110",
+        "tier3_2307_09288_s0254",
+        "tier2_2212_10560_s0038",
+        "tier3_2307_09288_s0457"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0072",
+          "rerank_score": 8.304403305053711
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": -3.7957987785339355
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0066",
+          "rerank_score": -5.830971717834473
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0060",
+          "rerank_score": -6.841719150543213
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0111",
+          "rerank_score": -8.938720703125
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0029",
+          "rerank_score": -9.191694259643555
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0110",
+          "rerank_score": -9.260205268859863
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0254",
+          "rerank_score": -9.476545333862305
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0038",
+          "rerank_score": -9.49616813659668
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0457",
+          "rerank_score": -9.609729766845703
+        }
+      ]
+    },
+    {
+      "question": "What are some challenges that LLMs face in terms of data security?",
+      "gold_chunk_id": "tier1_2312_10997_s0072",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0072",
+        "tier3_2307_09288_s0111",
+        "tier1_2312_10997_s0001",
+        "tier1_2312_10997_s0029",
+        "tier3_2307_09288_s0110",
+        "tier1_2312_10997_s0066",
+        "tier1_2312_10997_s0021",
+        "tier3_2307_09288_s0083",
+        "tier1_2312_10997_s0047",
+        "tier1_2312_10997_s0031"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0072",
+          "rerank_score": 6.3205952644348145
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0111",
+          "rerank_score": 2.920527219772339
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": 2.5647826194763184
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0029",
+          "rerank_score": 2.5014195442199707
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0110",
+          "rerank_score": 2.079564094543457
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0066",
+          "rerank_score": 1.6976003646850586
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0021",
+          "rerank_score": 0.5324966907501221
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0083",
+          "rerank_score": -1.089363932609558
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0047",
+          "rerank_score": -1.3838913440704346
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0031",
+          "rerank_score": -2.4636621475219727
+        }
+      ]
+    },
+    {
+      "question": "What is the name of the workshop where the authors presented their work?",
+      "gold_chunk_id": "tier2_2212_10560_s0045",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0222",
+        "tier1_2005_11401_s0176",
+        "tier2_2212_10560_s0045",
+        "tier1_2005_11401_s0130",
+        "tier1_2005_11401_s0289",
+        "tier1_2005_11401_s0165",
+        "tier1_2005_11401_s0274",
+        "tier1_2312_10997_s0382",
+        "tier1_2005_11401_s0038",
+        "tier3_2307_09288_s0238"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0222",
+          "rerank_score": -3.9994473457336426
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0176",
+          "rerank_score": -4.1340789794921875
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0045",
+          "rerank_score": -4.841894149780273
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0130",
+          "rerank_score": -4.905607223510742
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0289",
+          "rerank_score": -5.285553932189941
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0165",
+          "rerank_score": -5.527124404907227
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0274",
+          "rerank_score": -7.087576866149902
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0382",
+          "rerank_score": -7.106703281402588
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0038",
+          "rerank_score": -7.431836128234863
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0238",
+          "rerank_score": -7.664481163024902
+        }
+      ]
+    },
+    {
+      "question": "What is the title of the paper by Or Honovich, Thomas Scialom, Omer Levy, and Timo Schick?",
+      "gold_chunk_id": "tier2_2212_10560_s0045",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0175",
+        "tier2_2212_10560_s0045",
+        "tier3_2307_09288_s0224",
+        "tier2_2212_10560_s0048",
+        "tier3_2307_09288_s0229",
+        "tier1_2005_11401_s0165",
+        "tier3_2307_09288_s0227",
+        "tier3_2307_09288_s0244",
+        "tier1_2005_11401_s0094"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0175",
+          "rerank_score": 4.804022312164307
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0045",
+          "rerank_score": 4.667311668395996
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0224",
+          "rerank_score": 0.7365186810493469
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0048",
+          "rerank_score": -1.1052300930023193
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0229",
+          "rerank_score": -1.6261916160583496
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0165",
+          "rerank_score": -3.710696220397949
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0227",
+          "rerank_score": -3.9578781127929688
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0244",
+          "rerank_score": -4.239851951599121
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0094",
+          "rerank_score": -4.4297380447387695
+        }
+      ]
+    },
+    {
+      "question": "What is used to measure inter-rater agreement for categorical items?",
+      "gold_chunk_id": "tier2_2212_10560_s0088",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2212_10560_s0088",
+        "tier2_2212_10560_s0129",
+        "tier3_2307_09288_s0089",
+        "tier2_2212_10560_s0028",
+        "tier3_2307_09288_s0054",
+        "tier3_2307_09288_s0162",
+        "tier3_2307_09288_s0289",
+        "tier3_2307_09288_s0400",
+        "tier3_2307_09288_s0036"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2212_10560_s0088",
+          "rerank_score": 7.854281902313232
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0129",
+          "rerank_score": 7.854281902313232
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0089",
+          "rerank_score": 1.5056970119476318
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0028",
+          "rerank_score": 0.652686357498169
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0054",
+          "rerank_score": -0.7545071244239807
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0162",
+          "rerank_score": -1.4410624504089355
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0289",
+          "rerank_score": -5.866684913635254
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0400",
+          "rerank_score": -5.866684913635254
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0036",
+          "rerank_score": -9.21563720703125
+        }
+      ]
+    },
+    {
+      "question": "What is the agreement of our evaluators on classifying acceptable responses?",
+      "gold_chunk_id": "tier2_2212_10560_s0088",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2212_10560_s0129",
+        "tier2_2212_10560_s0088",
+        "tier2_2212_10560_s0128",
+        "tier2_2212_10560_s0087",
+        "tier2_2212_10560_s0027",
+        "tier2_2212_10560_s0026",
+        "tier2_2212_10560_s0020",
+        "tier3_2307_09288_s0036",
+        "tier1_2005_11401_s0025",
+        "tier2_2212_10560_s0028"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2212_10560_s0129",
+          "rerank_score": 6.213356018066406
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0088",
+          "rerank_score": 6.213356018066406
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0128",
+          "rerank_score": -2.227325201034546
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0087",
+          "rerank_score": -2.227325201034546
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0027",
+          "rerank_score": -5.2600603103637695
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0026",
+          "rerank_score": -5.594231605529785
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0020",
+          "rerank_score": -5.850750923156738
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0036",
+          "rerank_score": -6.197964668273926
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0025",
+          "rerank_score": -6.338281631469727
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0028",
+          "rerank_score": -6.402981758117676
+        }
+      ]
+    },
+    {
+      "question": "How does a human brain sometimes learn?",
+      "gold_chunk_id": "tier2_2210_11610_s0006",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0006",
+        "tier3_2307_09288_s0093",
+        "tier2_2212_10560_s0045",
+        "tier3_2307_09288_s0024",
+        "tier2_2210_11610_s0002",
+        "tier3_1706_03762_s0039",
+        "tier3_2307_09288_s0434",
+        "tier2_2210_11610_s0100",
+        "tier2_2210_11610_s0038",
+        "tier3_1706_03762_s0095"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0006",
+          "rerank_score": 6.823468208312988
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0093",
+          "rerank_score": -6.914112091064453
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0045",
+          "rerank_score": -6.917855262756348
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0024",
+          "rerank_score": -7.2145891189575195
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0002",
+          "rerank_score": -7.62082052230835
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0039",
+          "rerank_score": -9.232107162475586
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0434",
+          "rerank_score": -9.537813186645508
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0100",
+          "rerank_score": -9.72881031036377
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0038",
+          "rerank_score": -9.72881031036377
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0095",
+          "rerank_score": -9.79446029663086
+        }
+      ]
+    },
+    {
+      "question": "What is the name of the pre-trained LLM used in the study?",
+      "gold_chunk_id": "tier2_2210_11610_s0006",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0006",
+        "tier1_2312_10997_s0042",
+        "tier2_2210_11610_s0000",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0004",
+        "tier3_2307_09288_s0451",
+        "tier3_2307_09288_s0352",
+        "tier3_2307_09288_s0482",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0006",
+          "rerank_score": 2.508151054382324
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": 1.5779328346252441
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0000",
+          "rerank_score": 1.451918125152588
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 1.367204189300537
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 1.160963773727417
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0451",
+          "rerank_score": 0.720045268535614
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0352",
+          "rerank_score": -1.3158020973205566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0482",
+          "rerank_score": -1.3158020973205566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": -1.4802182912826538
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0008",
+          "rerank_score": -1.8566738367080688
+        }
+      ]
+    },
+    {
+      "question": "Who co-authored 'The unreliability of explanations in few-shot in-context learning' in 2022?",
+      "gold_chunk_id": "tier2_2210_11610_s0064",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0064",
+        "tier2_2210_11610_s0136",
+        "tier2_2210_11610_s0106",
+        "tier2_2210_11610_s0043",
+        "tier2_2210_11610_s0008",
+        "tier2_2212_10560_s0055",
+        "tier1_2312_10997_s0416",
+        "tier2_2210_11610_s0001",
+        "tier2_2210_11610_s0041",
+        "tier2_2210_11610_s0009"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0064",
+          "rerank_score": 8.037591934204102
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0136",
+          "rerank_score": 8.037591934204102
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0106",
+          "rerank_score": 2.8292016983032227
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0043",
+          "rerank_score": 2.8292016983032227
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0008",
+          "rerank_score": 2.485619306564331
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0055",
+          "rerank_score": 1.4352014064788818
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0416",
+          "rerank_score": 1.2908885478973389
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0001",
+          "rerank_score": 0.1938481479883194
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0041",
+          "rerank_score": 0.08699864149093628
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0009",
+          "rerank_score": -0.07418696582317352
+        }
+      ]
+    },
+    {
+      "question": "What is the title of the 2021 paper by Kang Min Yoo, Dongju Park, Jaewook Kang, Sang-Woo Lee, and Woomyeong Park?",
+      "gold_chunk_id": "tier2_2210_11610_s0064",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0064",
+        "tier2_2210_11610_s0136",
+        "tier1_2312_10997_s0177",
+        "tier1_2312_10997_s0296",
+        "tier3_2307_09288_s0143",
+        "tier1_2005_11401_s0038",
+        "tier3_2307_09288_s0145",
+        "tier1_2312_10997_s0168"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0064",
+          "rerank_score": 4.8883161544799805
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0136",
+          "rerank_score": 4.8883161544799805
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0177",
+          "rerank_score": -6.358426094055176
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0296",
+          "rerank_score": -6.708580493927002
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0143",
+          "rerank_score": -6.878818511962891
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0038",
+          "rerank_score": -7.8034443855285645
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0145",
+          "rerank_score": -7.897102355957031
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0168",
+          "rerank_score": -8.209239959716797
+        }
+      ]
+    },
+    {
+      "question": "What can you see when you look deeper into a Marbel?",
+      "gold_chunk_id": "tier2_2210_11610_s0069",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0069",
+        "tier2_2210_11610_s0146",
+        "tier3_2307_09288_s0056",
+        "tier3_2307_09288_s0452",
+        "tier3_2307_09288_s0329",
+        "tier2_2212_10560_s0093",
+        "tier2_2212_10560_s0134",
+        "tier3_2307_09288_s0292",
+        "tier3_2307_09288_s0295",
+        "tier3_2307_09288_s0296"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0069",
+          "rerank_score": 7.061524391174316
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0146",
+          "rerank_score": 7.061524391174316
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0056",
+          "rerank_score": -10.97519302368164
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0452",
+          "rerank_score": -10.999216079711914
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0329",
+          "rerank_score": -10.999216079711914
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0093",
+          "rerank_score": -11.047689437866211
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0134",
+          "rerank_score": -11.047689437866211
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0292",
+          "rerank_score": -11.049919128417969
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0295",
+          "rerank_score": -11.069366455078125
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0296",
+          "rerank_score": -11.107538223266602
+        }
+      ]
+    },
+    {
+      "question": "What is the sun responsible for?",
+      "gold_chunk_id": "tier2_2210_11610_s0069",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0146",
+        "tier2_2210_11610_s0069",
+        "tier1_2005_11401_s0027",
+        "tier1_2005_11401_s0026",
+        "tier1_2312_10997_s0104",
+        "tier3_2307_09288_s0104",
+        "tier1_2005_11401_s0025",
+        "tier3_2307_09288_s0434"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0146",
+          "rerank_score": -2.6769933700561523
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0069",
+          "rerank_score": -2.6769933700561523
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0027",
+          "rerank_score": -7.03001594543457
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0026",
+          "rerank_score": -7.232088088989258
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0104",
+          "rerank_score": -9.189369201660156
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0104",
+          "rerank_score": -9.400293350219727
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0025",
+          "rerank_score": -9.740078926086426
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0434",
+          "rerank_score": -9.762031555175781
+        }
+      ]
+    },
+    {
+      "question": "What happens to food in the stomach during digestion?",
+      "gold_chunk_id": "tier2_2210_11610_s0069",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0069",
+        "tier2_2210_11610_s0146",
+        "tier2_2210_11610_s0079",
+        "tier2_2210_11610_s0156"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0069",
+          "rerank_score": -1.5167577266693115
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0146",
+          "rerank_score": -1.5167577266693115
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0079",
+          "rerank_score": -5.612920761108398
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0156",
+          "rerank_score": -5.612920761108398
+        }
+      ]
+    },
+    {
+      "question": "What can harm living things?",
+      "gold_chunk_id": "tier2_2210_11610_s0069",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0146",
+        "tier2_2210_11610_s0069",
+        "tier3_2307_09288_s0318",
+        "tier2_2212_10560_s0143",
+        "tier2_2212_10560_s0102",
+        "tier3_2307_09288_s0187",
+        "tier3_2307_09288_s0432",
+        "tier3_2307_09288_s0319",
+        "tier3_2307_09288_s0021",
+        "tier3_2307_09288_s0048"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0146",
+          "rerank_score": 2.990746021270752
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0069",
+          "rerank_score": 2.990746021270752
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0318",
+          "rerank_score": -6.479128837585449
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0143",
+          "rerank_score": -7.178705215454102
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0102",
+          "rerank_score": -7.178705215454102
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0187",
+          "rerank_score": -7.878107070922852
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0432",
+          "rerank_score": -8.319644927978516
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0319",
+          "rerank_score": -8.686776161193848
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0021",
+          "rerank_score": -9.301725387573242
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0048",
+          "rerank_score": -9.458948135375977
+        }
+      ]
+    },
+    {
+      "question": "What can you see through a Marbel?",
+      "gold_chunk_id": "tier2_2210_11610_s0069",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0146",
+        "tier2_2210_11610_s0069",
+        "tier2_2210_11610_s0155",
+        "tier2_2210_11610_s0078",
+        "tier2_2212_10560_s0134",
+        "tier2_2212_10560_s0093",
+        "tier3_2307_09288_s0452",
+        "tier3_2307_09288_s0329",
+        "tier3_2307_09288_s0294",
+        "tier3_2307_09288_s0458"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0146",
+          "rerank_score": 4.300137996673584
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0069",
+          "rerank_score": 4.300137996673584
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0155",
+          "rerank_score": -9.614506721496582
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0078",
+          "rerank_score": -9.614506721496582
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0134",
+          "rerank_score": -10.050722122192383
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0093",
+          "rerank_score": -10.050722122192383
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0452",
+          "rerank_score": -10.739705085754395
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0329",
+          "rerank_score": -10.739705085754395
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0294",
+          "rerank_score": -10.919991493225098
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0458",
+          "rerank_score": -10.926506042480469
+        }
+      ]
+    },
+    {
+      "question": "If a / b = 3/4, then b = 4a / 3. So 8a + 5(4a / 3) = 22. This simplifies to 8a + 20a / 3 = 22, which means 44a / 3 = 22. So a is equal to 3/2. The answer is (b).",
+      "gold_chunk_id": "tier2_2210_11610_s0080",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0080",
+        "tier2_2210_11610_s0157",
+        "tier2_2210_11610_s0079",
+        "tier2_2210_11610_s0156",
+        "tier3_2307_09288_s0273",
+        "tier3_2307_09288_s0384",
+        "tier3_2307_09288_s0276",
+        "tier3_2307_09288_s0387"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0080",
+          "rerank_score": 6.343798637390137
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0157",
+          "rerank_score": 6.343798637390137
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0079",
+          "rerank_score": -0.5617895126342773
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0156",
+          "rerank_score": -0.5617895126342773
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0273",
+          "rerank_score": -2.892218589782715
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0384",
+          "rerank_score": -2.892218589782715
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0276",
+          "rerank_score": -3.71590518951416
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0387",
+          "rerank_score": -3.71590518951416
+        }
+      ]
+    },
+    {
+      "question": "The distance that the person traveled would have been 20 km/hr * 2.5 hrs = 50 km. The answer is (e).",
+      "gold_chunk_id": "tier2_2210_11610_s0080",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0157",
+        "tier2_2210_11610_s0080",
+        "tier3_2307_09288_s0439",
+        "tier1_2312_10997_s0232",
+        "tier2_2210_11610_s0094",
+        "tier3_2307_09288_s0138",
+        "tier2_2210_11610_s0096",
+        "tier3_2307_09288_s0148",
+        "tier1_2005_11401_s0074"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0157",
+          "rerank_score": 7.216419219970703
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0080",
+          "rerank_score": 7.216419219970703
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0439",
+          "rerank_score": -6.760170936584473
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0232",
+          "rerank_score": -7.062046051025391
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0094",
+          "rerank_score": -7.716552734375
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0138",
+          "rerank_score": -7.716552734375
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0096",
+          "rerank_score": -8.536968231201172
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0148",
+          "rerank_score": -8.578845977783203
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0074",
+          "rerank_score": -8.73723030090332
+        }
+      ]
+    },
+    {
+      "question": "What are the two basic dimensions of cream skimming?",
+      "gold_chunk_id": "tier2_2210_11610_s0076",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 4,
+      "mrr": 0.25,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0077",
+        "tier2_2210_11610_s0154",
+        "tier2_2210_11610_s0153",
+        "tier2_2210_11610_s0076",
+        "tier3_2307_09288_s0063",
+        "tier3_1706_03762_s0014",
+        "tier3_1706_03762_s0015",
+        "tier3_1706_03762_s0008",
+        "tier3_1706_03762_s0010",
+        "tier3_1706_03762_s0009"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0077",
+          "rerank_score": 5.7393879890441895
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0154",
+          "rerank_score": 5.7393879890441895
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0153",
+          "rerank_score": 1.5435316562652588
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0076",
+          "rerank_score": 1.5435316562652588
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0063",
+          "rerank_score": -10.841434478759766
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0014",
+          "rerank_score": -10.870219230651855
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0015",
+          "rerank_score": -10.934606552124023
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0008",
+          "rerank_score": -10.991497993469238
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0010",
+          "rerank_score": -11.087017059326172
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0009",
+          "rerank_score": -11.17902946472168
+        }
+      ]
+    },
+    {
+      "question": "What are the two main aspects of cream skimming?",
+      "gold_chunk_id": "tier2_2210_11610_s0076",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0154",
+        "tier2_2210_11610_s0077",
+        "tier2_2210_11610_s0076",
+        "tier2_2210_11610_s0153",
+        "tier3_2307_09288_s0310",
+        "tier3_2307_09288_s0422",
+        "tier1_2312_10997_s0059",
+        "tier1_2312_10997_s0029",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0058"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0154",
+          "rerank_score": 1.131282091140747
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0077",
+          "rerank_score": 1.131282091140747
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0076",
+          "rerank_score": -2.7816476821899414
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0153",
+          "rerank_score": -2.7816476821899414
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0310",
+          "rerank_score": -8.95834732055664
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0422",
+          "rerank_score": -8.95834732055664
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0059",
+          "rerank_score": -10.111414909362793
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0029",
+          "rerank_score": -10.417091369628906
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": -10.435964584350586
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -10.553437232971191
+        }
+      ]
+    },
+    {
+      "question": "What is the density of a pear?",
+      "gold_chunk_id": "tier2_2210_11610_s0081",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0081",
+        "tier2_2210_11610_s0158",
+        "tier3_2307_09288_s0394",
+        "tier3_2307_09288_s0283",
+        "tier3_2307_09288_s0383",
+        "tier3_2307_09288_s0272"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0081",
+          "rerank_score": 0.6894985437393188
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0158",
+          "rerank_score": 0.6894985437393188
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0394",
+          "rerank_score": -10.011792182922363
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0283",
+          "rerank_score": -10.011792182922363
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0383",
+          "rerank_score": -10.788328170776367
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0272",
+          "rerank_score": -10.788328170776367
+        }
+      ]
+    },
+    {
+      "question": "When does the War in Vietnam occur?",
+      "gold_chunk_id": "tier2_2210_11610_s0081",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier2_2210_11610_s0081",
+        "tier2_2210_11610_s0158"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier2_2210_11610_s0081",
+          "rerank_score": 0.5928465127944946
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0158",
+          "rerank_score": 0.5928465127944946
+        }
+      ]
+    },
+    {
+      "question": "What is the name of the two subgroups removed from the analysis?",
+      "gold_chunk_id": "tier3_2307_09288_s0326",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0326",
+        "tier1_2005_11401_s0302",
+        "tier3_2307_09288_s0059",
+        "tier3_2307_09288_s0448",
+        "tier3_2307_09288_s0288",
+        "tier3_2307_09288_s0399",
+        "tier1_2005_11401_s0185",
+        "tier1_2005_11401_s0315",
+        "tier3_2307_09288_s0091",
+        "tier3_2307_09288_s0025"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0326",
+          "rerank_score": -1.8799504041671753
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0302",
+          "rerank_score": -4.2048444747924805
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0059",
+          "rerank_score": -6.137085914611816
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0448",
+          "rerank_score": -6.189892768859863
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0288",
+          "rerank_score": -6.88970422744751
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0399",
+          "rerank_score": -6.88970422744751
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0185",
+          "rerank_score": -7.437816619873047
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0315",
+          "rerank_score": -8.605733871459961
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0091",
+          "rerank_score": -9.176058769226074
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0025",
+          "rerank_score": -9.693799018859863
+        }
+      ]
+    },
+    {
+      "question": "What is observed in the sentiment scores of Llama 2-Chat compared to pretrained versions?",
+      "gold_chunk_id": "tier3_2307_09288_s0326",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0449",
+        "tier3_2307_09288_s0448",
+        "tier3_2307_09288_s0326",
+        "tier3_2307_09288_s0325",
+        "tier3_2307_09288_s0091",
+        "tier3_2307_09288_s0327",
+        "tier3_2307_09288_s0098",
+        "tier3_2307_09288_s0028",
+        "tier3_2307_09288_s0008",
+        "tier3_2307_09288_s0092"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0449",
+          "rerank_score": 7.954266548156738
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0448",
+          "rerank_score": 7.909704685211182
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0326",
+          "rerank_score": 7.474163055419922
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0325",
+          "rerank_score": 6.357666969299316
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0091",
+          "rerank_score": 5.8389434814453125
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0327",
+          "rerank_score": 4.299273490905762
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0098",
+          "rerank_score": 3.541602849960327
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0028",
+          "rerank_score": 3.4156112670898438
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0008",
+          "rerank_score": 3.391180992126465
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0092",
+          "rerank_score": 2.9035611152648926
+        }
+      ]
+    },
+    {
+      "question": "What happens when there are no longer enough new investors to provide the funds needed to pay the promised returns?",
+      "gold_chunk_id": "tier3_2307_09288_s0298",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0410",
+        "tier3_2307_09288_s0298",
+        "tier3_2307_09288_s0297",
+        "tier3_2307_09288_s0409",
+        "tier2_2212_10560_s0144",
+        "tier2_2212_10560_s0103",
+        "tier3_2307_09288_s0160",
+        "tier1_2312_10997_s0335",
+        "tier1_2312_10997_s0327"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0410",
+          "rerank_score": 7.869282245635986
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0298",
+          "rerank_score": 7.869282245635986
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0297",
+          "rerank_score": 1.8134361505508423
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0409",
+          "rerank_score": 0.5719063878059387
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0144",
+          "rerank_score": -8.42869758605957
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0103",
+          "rerank_score": -8.42869758605957
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0160",
+          "rerank_score": -10.267267227172852
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0335",
+          "rerank_score": -10.346309661865234
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0327",
+          "rerank_score": -10.353479385375977
+        }
+      ]
+    },
+    {
+      "question": "What are the consequences for individuals involved in Ponzi schemes?",
+      "gold_chunk_id": "tier3_2307_09288_s0298",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 2,
+      "mrr": 0.5,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0410",
+        "tier3_2307_09288_s0298",
+        "tier3_2307_09288_s0297",
+        "tier3_2307_09288_s0409",
+        "tier3_2307_09288_s0408",
+        "tier3_2307_09288_s0084",
+        "tier2_2212_10560_s0039",
+        "tier3_2307_09288_s0430",
+        "tier3_2307_09288_s0433",
+        "tier3_2307_09288_s0319"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0410",
+          "rerank_score": 7.091333389282227
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0298",
+          "rerank_score": 7.091333389282227
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0297",
+          "rerank_score": 1.998782753944397
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0409",
+          "rerank_score": 0.6937041282653809
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0408",
+          "rerank_score": -7.22642707824707
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0084",
+          "rerank_score": -9.244062423706055
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0039",
+          "rerank_score": -9.43197250366211
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0430",
+          "rerank_score": -9.720599174499512
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0433",
+          "rerank_score": -10.423606872558594
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0319",
+          "rerank_score": -10.54437255859375
+        }
+      ]
+    },
+    {
+      "question": "What is important when evaluating historical events?",
+      "gold_chunk_id": "tier3_2307_09288_s0079",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0079",
+        "tier1_2312_10997_s0061",
+        "tier3_2307_09288_s0328",
+        "tier3_2307_09288_s0054",
+        "tier1_2312_10997_s0005",
+        "tier3_2307_09288_s0450",
+        "tier3_2307_09288_s0135",
+        "tier1_2312_10997_s0058",
+        "tier3_2307_09288_s0056",
+        "tier1_2312_10997_s0060"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0079",
+          "rerank_score": 6.740094184875488
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0061",
+          "rerank_score": -2.829375982284546
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0328",
+          "rerank_score": -5.291245460510254
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0054",
+          "rerank_score": -6.592992782592773
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": -7.398412227630615
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0450",
+          "rerank_score": -7.4434051513671875
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0135",
+          "rerank_score": -8.086823463439941
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -8.409470558166504
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0056",
+          "rerank_score": -8.443329811096191
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0060",
+          "rerank_score": -8.7597074508667
+        }
+      ]
+    },
+    {
+      "question": "Why is it not appropriate to spread misinformation?",
+      "gold_chunk_id": "tier3_2307_09288_s0079",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0079",
+        "tier3_2307_09288_s0078",
+        "tier3_2307_09288_s0427",
+        "tier3_2307_09288_s0086",
+        "tier3_2307_09288_s0099",
+        "tier3_2307_09288_s0313",
+        "tier1_2005_11401_s0187",
+        "tier3_2307_09288_s0315",
+        "tier3_2307_09288_s0420",
+        "tier3_2307_09288_s0308"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0079",
+          "rerank_score": 7.074972152709961
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0078",
+          "rerank_score": -1.5118783712387085
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0427",
+          "rerank_score": -4.625396728515625
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0086",
+          "rerank_score": -5.1214118003845215
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0099",
+          "rerank_score": -5.479129791259766
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0313",
+          "rerank_score": -6.0332441329956055
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0187",
+          "rerank_score": -7.44891881942749
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0315",
+          "rerank_score": -7.479559898376465
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0420",
+          "rerank_score": -7.495939254760742
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0308",
+          "rerank_score": -7.495939254760742
+        }
+      ]
+    },
+    {
+      "question": "What is the margin component in the loss function?",
+      "gold_chunk_id": "tier3_2307_09288_s0031",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0031",
+        "tier3_2307_09288_s0280",
+        "tier3_2307_09288_s0391",
+        "tier3_2307_09288_s0279",
+        "tier3_2307_09288_s0390",
+        "tier3_2307_09288_s0389",
+        "tier3_2307_09288_s0278",
+        "tier3_2307_09288_s0283",
+        "tier3_2307_09288_s0394",
+        "tier1_2005_11401_s0321"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0031",
+          "rerank_score": 6.5010666847229
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0280",
+          "rerank_score": 1.4698419570922852
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0391",
+          "rerank_score": 1.4698419570922852
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0279",
+          "rerank_score": -2.5796566009521484
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0390",
+          "rerank_score": -2.5796566009521484
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0389",
+          "rerank_score": -6.127145290374756
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0278",
+          "rerank_score": -6.127145290374756
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0283",
+          "rerank_score": -6.791880130767822
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0394",
+          "rerank_score": -6.791880130767822
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0321",
+          "rerank_score": -7.6011152267456055
+        }
+      ]
+    },
+    {
+      "question": "How does the margin component improve the Helpfulness reward model accuracy?",
+      "gold_chunk_id": "tier3_2307_09288_s0031",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0031",
+        "tier3_2307_09288_s0280",
+        "tier3_2307_09288_s0391",
+        "tier3_2307_09288_s0036",
+        "tier3_2307_09288_s0032",
+        "tier3_2307_09288_s0034",
+        "tier3_2307_09288_s0278",
+        "tier3_2307_09288_s0389",
+        "tier3_2307_09288_s0395",
+        "tier3_2307_09288_s0284"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0031",
+          "rerank_score": 8.528854370117188
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0280",
+          "rerank_score": 6.847255706787109
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0391",
+          "rerank_score": 6.847255706787109
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0036",
+          "rerank_score": 2.778205394744873
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0032",
+          "rerank_score": 2.3319501876831055
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0034",
+          "rerank_score": 2.279186487197876
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0278",
+          "rerank_score": 2.0272278785705566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0389",
+          "rerank_score": 2.0272278785705566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0395",
+          "rerank_score": 1.7818684577941895
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0284",
+          "rerank_score": 1.7818684577941895
+        }
+      ]
+    },
+    {
+      "question": "What type of objective is utilized in the model?",
+      "gold_chunk_id": "tier3_2307_09288_s0024",
+      "recall@1": 0,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 3,
+      "mrr": 0.3333333333333333,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0106",
+        "tier1_2312_10997_s0058",
+        "tier3_2307_09288_s0024",
+        "tier1_2312_10997_s0055",
+        "tier1_2312_10997_s0042",
+        "tier3_2307_09288_s0054",
+        "tier3_2307_09288_s0042",
+        "tier3_2307_09288_s0424",
+        "tier3_2307_09288_s0351",
+        "tier3_2307_09288_s0481"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0106",
+          "rerank_score": 0.7860159873962402
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -0.25092047452926636
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0024",
+          "rerank_score": -0.5567405223846436
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0055",
+          "rerank_score": -2.3127408027648926
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": -3.618229389190674
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0054",
+          "rerank_score": -3.9828853607177734
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0042",
+          "rerank_score": -4.033299922943115
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0424",
+          "rerank_score": -4.371866226196289
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0351",
+          "rerank_score": -4.607436180114746
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0481",
+          "rerank_score": -4.607436180114746
+        }
+      ]
+    },
+    {
+      "question": "How many epochs is the model fine-tuned for?",
+      "gold_chunk_id": "tier3_2307_09288_s0024",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0024",
+        "tier2_2212_10560_s0021",
+        "tier3_2307_09288_s0073",
+        "tier2_2212_10560_s0119",
+        "tier2_2212_10560_s0078",
+        "tier2_2212_10560_s0022",
+        "tier3_2307_09288_s0394",
+        "tier3_2307_09288_s0283",
+        "tier3_2307_09288_s0352",
+        "tier3_2307_09288_s0482"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0024",
+          "rerank_score": 4.356743812561035
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0021",
+          "rerank_score": 3.626826286315918
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0073",
+          "rerank_score": 3.057244300842285
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0119",
+          "rerank_score": 1.5040078163146973
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0078",
+          "rerank_score": 1.5040078163146973
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0022",
+          "rerank_score": 0.04344068467617035
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0394",
+          "rerank_score": -0.19754357635974884
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0283",
+          "rerank_score": -0.19754357635974884
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0352",
+          "rerank_score": -0.37936481833457947
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0482",
+          "rerank_score": -0.37936481833457947
+        }
+      ]
+    },
+    {
+      "question": "What are the two linear transformations in the feed-forward network?",
+      "gold_chunk_id": "tier3_1706_03762_s0013",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0013",
+        "tier3_1706_03762_s0010",
+        "tier3_1706_03762_s0007",
+        "tier3_2307_09288_s0377",
+        "tier3_1706_03762_s0005",
+        "tier3_1706_03762_s0100",
+        "tier3_1706_03762_s0017",
+        "tier3_1706_03762_s0016",
+        "tier3_1706_03762_s0006",
+        "tier3_1706_03762_s0027"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0013",
+          "rerank_score": 6.556344032287598
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0010",
+          "rerank_score": -1.459376335144043
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0007",
+          "rerank_score": -3.5618033409118652
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0377",
+          "rerank_score": -5.222309589385986
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0005",
+          "rerank_score": -6.871664524078369
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0100",
+          "rerank_score": -8.453746795654297
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0017",
+          "rerank_score": -8.580129623413086
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0016",
+          "rerank_score": -8.723344802856445
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0006",
+          "rerank_score": -8.976898193359375
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0027",
+          "rerank_score": -9.58881950378418
+        }
+      ]
+    },
+    {
+      "question": "How can the linear transformations be described in another way?",
+      "gold_chunk_id": "tier3_1706_03762_s0013",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0013",
+        "tier3_1706_03762_s0005",
+        "tier3_1706_03762_s0006",
+        "tier3_1706_03762_s0007",
+        "tier3_1706_03762_s0065",
+        "tier3_1706_03762_s0015",
+        "tier3_1706_03762_s0024",
+        "tier3_1706_03762_s0012",
+        "tier3_1706_03762_s0009",
+        "tier3_1706_03762_s0100"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0013",
+          "rerank_score": 2.1178784370422363
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0005",
+          "rerank_score": -4.8796234130859375
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0006",
+          "rerank_score": -5.720148086547852
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0007",
+          "rerank_score": -6.527326583862305
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0065",
+          "rerank_score": -6.702925682067871
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0015",
+          "rerank_score": -6.831573009490967
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0024",
+          "rerank_score": -7.017729759216309
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0012",
+          "rerank_score": -7.651047229766846
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0009",
+          "rerank_score": -7.929196834564209
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0100",
+          "rerank_score": -8.627655029296875
+        }
+      ]
+    },
+    {
+      "question": "How many steps were the base models trained for?",
+      "gold_chunk_id": "tier3_1706_03762_s0019",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0019",
+        "tier3_2307_09288_s0033",
+        "tier2_2210_11610_s0021",
+        "tier3_1706_03762_s0022",
+        "tier2_2210_11610_s0026",
+        "tier3_1706_03762_s0024",
+        "tier3_2307_09288_s0372",
+        "tier3_2307_09288_s0065",
+        "tier3_1706_03762_s0023",
+        "tier3_1706_03762_s0021"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0019",
+          "rerank_score": 9.12914752960205
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0033",
+          "rerank_score": 0.799514651298523
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0021",
+          "rerank_score": 0.5958439111709595
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0022",
+          "rerank_score": 0.13505147397518158
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0026",
+          "rerank_score": -1.371972918510437
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0024",
+          "rerank_score": -1.5375421047210693
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0372",
+          "rerank_score": -1.7658357620239258
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0065",
+          "rerank_score": -2.251248836517334
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0023",
+          "rerank_score": -2.300520420074463
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0021",
+          "rerank_score": -2.358344078063965
+        }
+      ]
+    },
+    {
+      "question": "What was the step time for the big models?",
+      "gold_chunk_id": "tier3_1706_03762_s0019",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0019",
+        "tier3_1706_03762_s0022",
+        "tier3_2307_09288_s0044",
+        "tier2_2210_11610_s0142",
+        "tier3_1706_03762_s0021",
+        "tier3_2307_09288_s0047",
+        "tier2_2210_11610_s0028",
+        "tier2_2210_11610_s0027",
+        "tier3_2307_09288_s0106"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0019",
+          "rerank_score": 7.249366760253906
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0022",
+          "rerank_score": -2.232353687286377
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0044",
+          "rerank_score": -2.914139747619629
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0142",
+          "rerank_score": -6.024410247802734
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0021",
+          "rerank_score": -7.1436967849731445
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0047",
+          "rerank_score": -7.636239528656006
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0028",
+          "rerank_score": -7.799895763397217
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0027",
+          "rerank_score": -8.005805969238281
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0106",
+          "rerank_score": -8.17116928100586
+        }
+      ]
+    },
+    {
+      "question": "What is self-attention in the context of a sequence?",
+      "gold_chunk_id": "tier3_1706_03762_s0006",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0006",
+        "tier3_1706_03762_s0017",
+        "tier3_1706_03762_s0012",
+        "tier3_2307_09288_s0374",
+        "tier3_1706_03762_s0015",
+        "tier3_1706_03762_s0014",
+        "tier3_1706_03762_s0007",
+        "tier3_1706_03762_s0065",
+        "tier3_1706_03762_s0016",
+        "tier3_2307_09288_s0268"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0006",
+          "rerank_score": 6.515671253204346
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0017",
+          "rerank_score": 3.445467948913574
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0012",
+          "rerank_score": 2.7602272033691406
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0374",
+          "rerank_score": 1.6790273189544678
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0015",
+          "rerank_score": 1.071094274520874
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0014",
+          "rerank_score": 1.052731990814209
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0007",
+          "rerank_score": 0.6302163004875183
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0065",
+          "rerank_score": 0.16079843044281006
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0016",
+          "rerank_score": -1.3830606937408447
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0268",
+          "rerank_score": -1.959566593170166
+        }
+      ]
+    },
+    {
+      "question": "What are some tasks where self-attention has been used successfully?",
+      "gold_chunk_id": "tier3_1706_03762_s0006",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0006",
+        "tier3_1706_03762_s0017",
+        "tier3_1706_03762_s0065",
+        "tier3_1706_03762_s0001",
+        "tier3_1706_03762_s0028",
+        "tier3_1706_03762_s0012",
+        "tier2_2212_10560_s0034",
+        "tier2_2210_11610_s0007",
+        "tier2_2210_11610_s0024",
+        "tier2_2212_10560_s0007"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0006",
+          "rerank_score": 7.7563252449035645
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0017",
+          "rerank_score": 0.3402586877346039
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0065",
+          "rerank_score": 0.3394142985343933
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0001",
+          "rerank_score": -0.3840804100036621
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0028",
+          "rerank_score": -1.0510644912719727
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0012",
+          "rerank_score": -1.8416792154312134
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0034",
+          "rerank_score": -2.3232855796813965
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0007",
+          "rerank_score": -2.9726507663726807
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0024",
+          "rerank_score": -3.570174217224121
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0007",
+          "rerank_score": -3.570706367492676
+        }
+      ]
+    },
+    {
+      "question": "What are the research goals of the team?",
+      "gold_chunk_id": "tier3_1706_03762_s0028",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0028",
+        "tier3_2307_09288_s0084",
+        "tier1_2312_10997_s0058",
+        "tier1_2312_10997_s0069",
+        "tier3_2307_09288_s0085",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0005",
+        "tier3_2307_09288_s0191",
+        "tier1_2312_10997_s0004",
+        "tier3_2307_09288_s0111"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0028",
+          "rerank_score": 1.046488642692566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0084",
+          "rerank_score": -1.2720730304718018
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -6.232126712799072
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0069",
+          "rerank_score": -7.102571964263916
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0085",
+          "rerank_score": -7.551980495452881
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": -7.784046649932861
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": -7.829623222351074
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0191",
+          "rerank_score": -7.912371635437012
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": -8.140847206115723
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0111",
+          "rerank_score": -8.173664093017578
+        }
+      ]
+    },
+    {
+      "question": "What other tasks do they plan to apply attention-based models to?",
+      "gold_chunk_id": "tier3_1706_03762_s0028",
+      "recall@1": 1,
+      "recall@5": 1,
+      "recall@10": 1,
+      "rank": 1,
+      "mrr": 1.0,
+      "failure_type": "success",
+      "retrieved_ids": [
+        "tier3_1706_03762_s0028",
+        "tier3_1706_03762_s0065",
+        "tier3_1706_03762_s0006",
+        "tier3_1706_03762_s0001",
+        "tier3_1706_03762_s0004",
+        "tier3_1706_03762_s0018",
+        "tier3_1706_03762_s0000",
+        "tier3_1706_03762_s0012",
+        "tier2_2212_10560_s0012",
+        "tier2_2212_10560_s0027"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_1706_03762_s0028",
+          "rerank_score": 8.589426040649414
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0065",
+          "rerank_score": 4.861392974853516
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0006",
+          "rerank_score": 1.1664838790893555
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0001",
+          "rerank_score": 0.34486907720565796
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0004",
+          "rerank_score": -0.6329383850097656
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0018",
+          "rerank_score": -1.0167551040649414
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0000",
+          "rerank_score": -1.2277908325195312
+        },
+        {
+          "chunk_id": "tier3_1706_03762_s0012",
+          "rerank_score": -1.3602190017700195
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0012",
+          "rerank_score": -1.5356215238571167
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0027",
+          "rerank_score": -2.1805601119995117
+        }
+      ]
+    },
+    {
+      "question": "Who are the authors of Llama?",
+      "gold_chunk_id": "tier3_2307_09288_s0246",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0242",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0371",
+        "tier3_2307_09288_s0267",
+        "tier3_2307_09288_s0001",
+        "tier3_2307_09288_s0000",
+        "tier2_2212_10560_s0062",
+        "tier3_2307_09288_s0112",
+        "tier3_2307_09288_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0242",
+          "rerank_score": 3.324605703353882
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": 1.582510232925415
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0371",
+          "rerank_score": 1.5762507915496826
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0267",
+          "rerank_score": 1.5762507915496826
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0001",
+          "rerank_score": 1.0128912925720215
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0000",
+          "rerank_score": 0.7269076704978943
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0062",
+          "rerank_score": 0.5911915302276611
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0112",
+          "rerank_score": -0.9925548434257507
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0008",
+          "rerank_score": -2.6337509155273438
+        }
+      ]
+    },
+    {
+      "question": "What is Llama described as?",
+      "gold_chunk_id": "tier3_2307_09288_s0246",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0306",
+        "tier3_2307_09288_s0418",
+        "tier3_2307_09288_s0011",
+        "tier3_2307_09288_s0007",
+        "tier3_2307_09288_s0009",
+        "tier3_2307_09288_s0100",
+        "tier3_2307_09288_s0112",
+        "tier3_2307_09288_s0098",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0091"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0306",
+          "rerank_score": 0.8936330676078796
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0418",
+          "rerank_score": 0.8936330676078796
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0011",
+          "rerank_score": 0.2793470621109009
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0007",
+          "rerank_score": -0.14471691846847534
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0009",
+          "rerank_score": -0.34122711420059204
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0100",
+          "rerank_score": -0.4117220640182495
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0112",
+          "rerank_score": -1.0109374523162842
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0098",
+          "rerank_score": -1.1156773567199707
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": -1.1712453365325928
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0091",
+          "rerank_score": -1.2423782348632812
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "question": "What is an example of a dense retriever architecture used in RAG?",
+      "gold_chunk_id": "tier1_2312_10997_s0039",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 1,
+      "rank": 7,
+      "mrr": 0.14285714285714285,
+      "failure_type": "ranking_failure",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0020",
+        "tier1_2005_11401_s0005",
+        "tier1_test_intro_s0000",
+        "tier1_2005_11401_s0029",
+        "tier1_2005_11401_s0009",
+        "tier1_2312_10997_s0016",
+        "tier1_2312_10997_s0039",
+        "tier1_2312_10997_s0071",
+        "tier1_2005_11401_s0021",
+        "tier1_2312_10997_s0058"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0020",
+          "rerank_score": 3.351785659790039
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0005",
+          "rerank_score": 2.961883068084717
+        },
+        {
+          "chunk_id": "tier1_test_intro_s0000",
+          "rerank_score": 2.1612534523010254
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0029",
+          "rerank_score": 0.7149587869644165
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0009",
+          "rerank_score": 0.6816415786743164
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0016",
+          "rerank_score": 0.37371981143951416
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0039",
+          "rerank_score": -0.43749910593032837
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0071",
+          "rerank_score": -0.5378656387329102
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0021",
+          "rerank_score": -0.7422757744789124
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0058",
+          "rerank_score": -0.7878669500350952
+        }
+      ]
+    },
+    {
+      "question": "What is the title of the paper mentioned in the text?",
+      "gold_chunk_id": "tier1_2005_11401_s0122",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier1_2312_10997_s0001",
+        "tier1_2312_10997_s0005",
+        "tier1_2005_11401_s0026",
+        "tier1_2312_10997_s0008",
+        "tier3_2307_09288_s0403"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2312_10997_s0001",
+          "rerank_score": -5.6759233474731445
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0005",
+          "rerank_score": -6.102100372314453
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0026",
+          "rerank_score": -6.530360698699951
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0008",
+          "rerank_score": -7.222744941711426
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0403",
+          "rerank_score": -7.717743873596191
+        }
+      ]
+    },
+    {
+      "question": "What models does RAG outperform?",
+      "gold_chunk_id": "tier1_2005_11401_s0014",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier1_2005_11401_s0001",
+        "tier1_2005_11401_s0007",
+        "tier1_2312_10997_s0071",
+        "tier1_2005_11401_s0025",
+        "tier1_2005_11401_s0191",
+        "tier1_2005_11401_s0036",
+        "tier1_2005_11401_s0010",
+        "tier1_2312_10997_s0028",
+        "tier1_2312_10997_s0076",
+        "tier1_2005_11401_s0322"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier1_2005_11401_s0001",
+          "rerank_score": 5.836741924285889
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0007",
+          "rerank_score": 5.705512046813965
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0071",
+          "rerank_score": 5.039578437805176
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0025",
+          "rerank_score": 4.914703845977783
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0191",
+          "rerank_score": 2.5861830711364746
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0036",
+          "rerank_score": 2.513002872467041
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0010",
+          "rerank_score": 2.4597361087799072
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0028",
+          "rerank_score": 2.3752055168151855
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0076",
+          "rerank_score": 2.3630871772766113
+        },
+        {
+          "chunk_id": "tier1_2005_11401_s0322",
+          "rerank_score": 2.283586025238037
+        }
+      ]
+    },
+    {
+      "question": "What is the name of the pre-trained LLM used in the study?",
+      "gold_chunk_id": "tier2_2210_11610_s0006",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0006",
+        "tier1_2312_10997_s0042",
+        "tier2_2210_11610_s0000",
+        "tier1_2312_10997_s0007",
+        "tier1_2312_10997_s0004",
+        "tier3_2307_09288_s0451",
+        "tier3_2307_09288_s0352",
+        "tier3_2307_09288_s0482",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0006",
+          "rerank_score": 2.508151054382324
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0042",
+          "rerank_score": 1.5779328346252441
+        },
+        {
+          "chunk_id": "tier2_2210_11610_s0000",
+          "rerank_score": 1.451918125152588
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0007",
+          "rerank_score": 1.367204189300537
+        },
+        {
+          "chunk_id": "tier1_2312_10997_s0004",
+          "rerank_score": 1.160963773727417
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0451",
+          "rerank_score": 0.720045268535614
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0352",
+          "rerank_score": -1.3158020973205566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0482",
+          "rerank_score": -1.3158020973205566
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": -1.4802182912826538
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0008",
+          "rerank_score": -1.8566738367080688
+        }
+      ]
+    },
+    {
+      "question": "Who are the authors of Llama?",
+      "gold_chunk_id": "tier3_2307_09288_s0246",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0242",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0371",
+        "tier3_2307_09288_s0267",
+        "tier3_2307_09288_s0001",
+        "tier3_2307_09288_s0000",
+        "tier2_2212_10560_s0062",
+        "tier3_2307_09288_s0112",
+        "tier3_2307_09288_s0008"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0242",
+          "rerank_score": 3.324605703353882
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": 1.582510232925415
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0371",
+          "rerank_score": 1.5762507915496826
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0267",
+          "rerank_score": 1.5762507915496826
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0001",
+          "rerank_score": 1.0128912925720215
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0000",
+          "rerank_score": 0.7269076704978943
+        },
+        {
+          "chunk_id": "tier2_2212_10560_s0062",
+          "rerank_score": 0.5911915302276611
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0112",
+          "rerank_score": -0.9925548434257507
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0008",
+          "rerank_score": -2.6337509155273438
+        }
+      ]
+    },
+    {
+      "question": "What is Llama described as?",
+      "gold_chunk_id": "tier3_2307_09288_s0246",
+      "recall@1": 0,
+      "recall@5": 0,
+      "recall@10": 0,
+      "rank": null,
+      "mrr": 0.0,
+      "failure_type": "retrieval_miss",
+      "retrieved_ids": [
+        "tier3_2307_09288_s0306",
+        "tier3_2307_09288_s0418",
+        "tier3_2307_09288_s0011",
+        "tier3_2307_09288_s0007",
+        "tier3_2307_09288_s0009",
+        "tier3_2307_09288_s0100",
+        "tier3_2307_09288_s0112",
+        "tier3_2307_09288_s0098",
+        "tier3_2307_09288_s0107",
+        "tier3_2307_09288_s0091"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "tier3_2307_09288_s0306",
+          "rerank_score": 0.8936330676078796
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0418",
+          "rerank_score": 0.8936330676078796
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0011",
+          "rerank_score": 0.2793470621109009
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0007",
+          "rerank_score": -0.14471691846847534
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0009",
+          "rerank_score": -0.34122711420059204
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0100",
+          "rerank_score": -0.4117220640182495
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0112",
+          "rerank_score": -1.0109374523162842
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0098",
+          "rerank_score": -1.1156773567199707
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0107",
+          "rerank_score": -1.1712453365325928
+        },
+        {
+          "chunk_id": "tier3_2307_09288_s0091",
+          "rerank_score": -1.2423782348632812
+        }
+      ]
+    }
+  ]
+}
