@@ -291,11 +291,12 @@ def log_chunk_quality(chunks: list, label: str = "fused") -> None:
 def sanity_check_answer(answer: str, status: str) -> str:
     if status in ("INSUFFICIENT_CONTEXT", "PARSE_ERROR"):
         return status
-    words = answer.lower().split()
-    if len(words) > 20 and any(kw in answer.lower() for kw in ("arxiv", "et al", "doi:")):
+    answer_lower = answer.lower()
+    ref_keywords = ["arxiv", "et al", "doi:", "doi :", "bibliography", "references section", "see references"]
+    has_ref_keyword = any(kw in answer_lower for kw in ref_keywords)
+    if has_ref_keyword:
         return "INSUFFICIENT_CONTEXT"
     return status
-
 # ---------------------------------------------------------------------------
 # TASK 2: Source chunk tracker
 # ---------------------------------------------------------------------------
