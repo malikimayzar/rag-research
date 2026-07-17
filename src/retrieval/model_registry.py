@@ -1,12 +1,7 @@
-"""
-model_registry.py — Global singleton untuk semua model.
-Load SEKALI saat startup, reuse selamanya.
-"""
 from __future__ import annotations
-
 from sentence_transformers import SentenceTransformer, CrossEncoder
 
-EMBED_MODEL   = "sentence-transformers/all-MiniLM-L6-v2"
+EMBED_MODEL = "BAAI/bge-base-en-v1.5"
 RERANK_MODEL  = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 class ModelRegistry:

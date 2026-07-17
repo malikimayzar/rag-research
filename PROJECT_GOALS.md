@@ -8,6 +8,8 @@
 
 ## CORE PRINCIPLE
 
+
+
 > **If retrieval is wrong, no architecture will save generation.**  
 > Data quality supersedes model complexity. Every time.
 
@@ -37,6 +39,8 @@ Build a **reliable, failure-aware Retrieval-Augmented Generation system** for re
 - Operates within defined latency and cost envelopes per query
 
 This is not a chatbot. This is an **engineering-grade QA system** where answer reliability is the primary constraint.
+
+| Reranker latency bottleneck | High | CPU-only constraint — cannot resolve without GPU | Phase 5 |
 
 ---
 

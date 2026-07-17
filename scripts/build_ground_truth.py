@@ -21,7 +21,6 @@ MAX_DIGIT_RATIO      = 0.4
 TARGET_PER_TIER      = {1: 100, 2: 40, 3: 50}
 
 # ── Filters ──────────────────────────────────────────────────────────────────
-
 def is_low_quality(text: str) -> bool:
     if len(text.split()) < 30:
         return True
@@ -34,8 +33,6 @@ def is_low_quality(text: str) -> bool:
 
 def is_reference_like(text: str) -> bool:
     text_lower = text.lower().strip()
-
-    # Citation pattern [1], [2], dll
     if re.match(r"^\[\d+\]", text.strip()):
         return True
 
@@ -49,18 +46,14 @@ def is_reference_like(text: str) -> bool:
         "et al."          in text_lower,
     ])
 
-    # arxiv URL spesifik (bukan kata "arxiv" dalam kalimat biasa)
     if "arxiv.org" in text_lower and strong_signals >= 1:
         return True
 
-    # Butuh minimal 2 sinyal kuat
     if strong_signals >= 2:
         return True
 
-    # Author list: banyak koma + minimal 1 sinyal
     if text.count(",") > 8 and strong_signals >= 1:
         return True
-
     return False
 
 
@@ -82,7 +75,6 @@ def is_eligible_chunk(chunk: dict) -> bool:
     return True
 
 # ── Sampling ─────────────────────────────────────────────────────────────────
-
 def sample_chunks(all_chunks: list) -> list:
     sampled = []
     for tier, target in TARGET_PER_TIER.items():
@@ -115,7 +107,6 @@ def sample_chunks(all_chunks: list) -> list:
     return sampled
 
 # ── Prompt ───────────────────────────────────────────────────────────────────
-
 def build_prompt(chunk: dict) -> str:
     text = chunk["text"][:1000]
     return f"""You are a dataset builder for a RAG evaluation system.
@@ -148,7 +139,6 @@ Rules:
 - output only the JSON array, nothing else"""
 
 # ── Groq call ────────────────────────────────────────────────────────────────
-
 def call_groq_with_retry(client: Groq, prompt: str) -> str | None:
     for attempt in range(1, MAX_RETRIES + 1):
         try:
@@ -170,7 +160,6 @@ def call_groq_with_retry(client: Groq, prompt: str) -> str | None:
     return None
 
 # ── Parser ───────────────────────────────────────────────────────────────────
-
 def parse_response(response_text: str, chunk: dict) -> list[dict]:
     if not response_text:
         return []
@@ -214,7 +203,6 @@ def parse_response(response_text: str, chunk: dict) -> list[dict]:
         return []
 
 # ── Main ─────────────────────────────────────────────────────────────────────
-
 def main():
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 

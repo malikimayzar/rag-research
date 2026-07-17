@@ -1,17 +1,6 @@
-"""
-Unit tests untuk 3 fixes di hybrid_retriever.py
-Tidak butuh Qdrant atau Groq running.
-
-Jalanin:
-    python tests/test_retriever_fixes.py
-"""
-
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-
-# ── Mock supaya tidak perlu import Qdrant ─────────────────────────────────────
 
 class MockRetrievalResult:
     def __init__(self, chunk_id, text, doc_id, score):
@@ -32,36 +21,24 @@ class MockVectorStore:
             for i in range(k)
         ]
 
-# Patch imports sebelum import MasterHybridRetriever
 import unittest.mock as mock
-
-# Patch QdrantVectorStore dan RetrievalResult
 with mock.patch.dict("sys.modules", {
     "src.retrieval.qdrant_store": mock.MagicMock(
         QdrantVectorStore=MockVectorStore,
         RetrievalResult=MockRetrievalResult
     )
 }):
-    # Patch sentence_transformers dan rank_bm25
     with mock.patch.dict("sys.modules", {
         "sentence_transformers": mock.MagicMock(),
         "rank_bm25": mock.MagicMock(),
         "groq": mock.MagicMock(),
-    }):
-        # Import setelah patch
+    })
         import importlib
         import types
-
-        # Manual minimal class untuk test tanpa full import
         pass
 
-
-# ── Test langsung tanpa import penuh ─────────────────────────────────────────
-# Karena dependency berat (sentence_transformers, qdrant, dll),
-# kita test logic murni secara isolated.
-
-PASS = "✓"
-FAIL = "✗"
+PASS = "OK"
+FAIL = "FAIL"
 results_log = []
 
 def check(name, condition, detail=""):
@@ -73,13 +50,9 @@ def check(name, condition, detail=""):
     results_log.append((name, condition))
     return condition
 
-
-# ── FIX 1: Adaptive rerank_n ──────────────────────────────────────────────────
-
 def test_fix1_adaptive_rerank_n():
     print("\n[FIX 1] Adaptive rerank_n (bukan hardcoded 5)")
     
-    # Formula: rerank_n = min(top_k * 2, 10)
     cases = [
         (3,  6,  "top_k=3 → rerank 6, bukan 5"),
         (5,  10, "top_k=5 → rerank 10, bukan 5"),
@@ -101,11 +74,8 @@ def test_fix1_adaptive_rerank_n():
             f"rerank_n={rerank_n}"
         )
 
-
-# ── FIX 2: Query Classifier ───────────────────────────────────────────────────
-
+# Query Classifier 
 def _classify_query(query: str) -> int:
-    """Copy dari kode — test isolated."""
     words = query.strip().split()
     n = len(words)
     if n <= 5:
@@ -118,7 +88,6 @@ def test_fix2_query_classifier():
     print("\n[FIX 2] Adaptive top_k via query classifier")
 
     cases = [
-        # (query, expected_top_k, description)
         ("RAG", 3, "1 word → 3"),
         ("what is RAG", 3, "3 words → 3"),
         ("what is retrieval augmented generation", 3, "5 words → 3"),
@@ -136,8 +105,6 @@ def test_fix2_query_classifier():
         result = _classify_query(query)
         check(note, result == expected, f"words={len(query.split())}, got top_k={result}")
 
-    # Edge: top_k=0 trigger → harus auto-detect (simulated)
-    # Dalam kode asli: if top_k == 0: top_k = self._classify_query(query)
     query = "what is RAG"
     top_k = 0
     if top_k == 0:
@@ -145,12 +112,10 @@ def test_fix2_query_classifier():
     check("top_k=0 trigger → auto-detect", top_k == 3, f"resolved to {top_k}")
 
 
-# ── FIX 3: Consistent candidate pipeline ─────────────────────────────────────
-
+# Consistent candidate pipeline 
 def test_fix3_candidate_pipeline():
     print("\n[FIX 3] Consistent candidate_k formula")
 
-    # Formula: candidate_k = min(top_k * 3, 30), rerank_n = min(top_k * 2, 10)
     cases = [
         (3,  9,  6),
         (5,  15, 10),
@@ -167,7 +132,6 @@ def test_fix3_candidate_pipeline():
             f"got fetch={candidate_k}, rerank={rerank_n}"
         )
 
-    # Invariant: candidate_k >= rerank_n >= top_k selalu
     print("  Invariant check: candidate_k >= rerank_n >= top_k")
     for top_k in range(1, 11):
         candidate_k = min(top_k * 3, 30)
@@ -179,9 +143,7 @@ def test_fix3_candidate_pipeline():
             f"fetch={candidate_k}, rerank={rerank_n}, return={top_k}"
         )
 
-
-# ── Summary ───────────────────────────────────────────────────────────────────
-
+# Summary 
 def print_summary():
     total  = len(results_log)
     passed = sum(1 for _, ok in results_log if ok)
@@ -197,7 +159,6 @@ def print_summary():
     else:
         print(" — semua OK")
     print("=" * 50)
-
 
 if __name__ == "__main__":
     print("=" * 50)

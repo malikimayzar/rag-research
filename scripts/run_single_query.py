@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 import argparse
 import asyncio
 import json
@@ -12,6 +12,7 @@ from src.retrieval.qdrant_store import QdrantVectorStore
 from src.retrieval.hybrid_retriever import MasterHybridRetriever, MULTI_QUERY_PROMPT, HYDE_PROMPT
 from src.generation.generator import GroqGenerator, build_context
 from src.controller.policy_engine import PolicyEngine
+from src.api.config import settings
 from src.controller.confidence_engine import ConfidenceEngine
 from groq import Groq
 from concurrent.futures import ThreadPoolExecutor
@@ -34,6 +35,12 @@ SECTION_SCORE_DELTA: dict[str, float] = {
 BLOCKED_SECTIONS = {"references", "bibliography"} 
 MAX_REF_IN_CONTEXT = 1  
 SCORE_DISTRIBUTION_PATH = "data/debug/score_distribution.json"
+RRF_K = 60
+RRF_CIRCUIT_BREAKER_PERCENTILE = 0.50
+RERANK_LATENCY_BUDGET_MS = 700.0
+RERANK_GUARD_MAX_PAIRS = 6
+MIN_CANDIDATES_FOR_RERANK = 3
+RERANK_GAP_SKIP_THRESHOLD = 0.005
 
 def load_retrieval_confidence_threshold(path: str = SCORE_DISTRIBUTION_PATH) -> float:
     try:
@@ -51,11 +58,12 @@ def load_retrieval_confidence_threshold(path: str = SCORE_DISTRIBUTION_PATH) -> 
         print(f"[CALIBRATION] Could not load score distribution from {path}: {exc}")
         return 0.0
 
-
-RETRIEVAL_MIN_TOP1_SCORE = load_retrieval_confidence_threshold()
+RETRIEVAL_MIN_TOP1_SCORE = 0.0 
 MIN_CHUNK_LENGTH = 80
 MAX_RETRIES = 2
 RETRIEVAL_CONF_THRESHOLD = 0.3
+MAX_RETRY_ATTEMPTS = 2
+MAX_GENERATION_MS = 15000
 
 _DOMAIN_KEYWORDS = [
     "attention", "transformer", "model", "neural", "learning",
@@ -64,11 +72,20 @@ _DOMAIN_KEYWORDS = [
     "dataset", "evaluation", "benchmark", "fine-tuning", "pre-training",
 ]
 
+def should_skip_reranker(candidate_count: int, top_gap: float, elapsed_ms: float) -> bool:
+    if candidate_count < MIN_CANDIDATES_FOR_RERANK:
+        return True
+    if elapsed_ms > RERANK_LATENCY_BUDGET_MS:
+        return True
+    if top_gap > RERANK_GAP_SKIP_THRESHOLD:
+        return True
+    return False
+
 def is_valid_query(q: str) -> bool:
     q_lower = q.lower()
     return any(kw in q_lower for kw in _DOMAIN_KEYWORDS)
 
-def reciprocal_rank_fusion(results_lists: list[list], k: int = 60) -> list:
+def reciprocal_rank_fusion(results_lists: list[list], k: int = RRF_K) -> list:
     rrf_scores: dict[str, float] = {}
     id_to_item:  dict[str, object] = {}
 
@@ -89,7 +106,6 @@ def reciprocal_rank_fusion(results_lists: list[list], k: int = 60) -> list:
         reverse=True,
     )
 
-    # Attach RRF score back onto each item for downstream visibility
     for item in fused:
         cid   = item.get("chunk_id") if isinstance(item, dict) else getattr(item, "chunk_id", "")
         score = round(rrf_scores.get(cid, 0.0), 6)
@@ -97,12 +113,17 @@ def reciprocal_rank_fusion(results_lists: list[list], k: int = 60) -> list:
             item["score"] = score
         elif hasattr(item, "score"):
             item.score = score
-
     return fused
 
-# ---------------------------------------------------------------------------
+def rrf_circuit_breaker_threshold(num_lists: int, rank_depth: int, k: int = RRF_K) -> tuple[float, float, float]:
+    if num_lists <= 0 or rank_depth <= 0:
+        return 0.0, 0.0, 0.0
+    min_score = 1.0 / (k + rank_depth)
+    max_score = num_lists * (1.0 / (k + 1))
+    threshold = min_score + RRF_CIRCUIT_BREAKER_PERCENTILE * (max_score - min_score)
+    return threshold, min_score, max_score
+ 
 # Helpers
-# ---------------------------------------------------------------------------
 def compute_context_overlap(answer: str, contexts: list[str]) -> float:
     if not answer or not contexts:
         return 0.0
@@ -119,11 +140,9 @@ def compute_context_overlap(answer: str, contexts: list[str]) -> float:
 def classify_error(
     retrieved_chunks: list,
     reranked_chunks: list,
-    answer: str,
-    ground_truth: Optional[str],
     source_chunk_id: Optional[str],
     context_overlap: float,
-    blocked_chunk_ids: Optional[set] = None,  # TASK 3: track filtered-out chunks
+    blocked_chunk_ids: Optional[set] = None,  
 ) -> dict:
     def _get_cid(c):
         return c.get("chunk_id", "") if isinstance(c, dict) else getattr(c, "chunk_id", "")
@@ -136,12 +155,9 @@ def classify_error(
         if not source_id:
             return None
         return any(rid == source_id or rid.startswith(source_id + "_sub") for rid in id_set)
-
+    
     retrieval_hit = _is_hit(source_chunk_id, retrieved_ids)
     ranking_hit   = _is_hit(source_chunk_id, reranked_ids)
-
-    # TASK 3: filtering_error — chunk ditemukan tapi dibuang pipeline sendiri
-    # Ini beda dari retrieval_miss: retriever berhasil, tapi filter yang salah
     source_was_blocked = source_chunk_id and source_chunk_id in blocked_ids
 
     if source_chunk_id and not retrieval_hit:
@@ -151,14 +167,14 @@ def classify_error(
         failure_type = "filtering_error"
         reason = (
             f"Source chunk ditemukan di rank retrieval, tapi dibuang oleh section filter "
-            f"(section=references) — jawaban ada tapi pipeline sendiri yang block"
+            f"(section=references) ” jawaban ada tapi pipeline sendiri yang block"
         )
     elif source_chunk_id and retrieval_hit and not ranking_hit:
         failure_type = "ranking_error"
         reason = "Source chunk ditemukan tapi tidak masuk top-k setelah reranking"
     elif context_overlap < 0.3:
         failure_type = "generation_fail"
-        reason = f"Context overlap rendah ({context_overlap}) — answer tidak grounded di context"
+        reason = f"Context overlap rendah ({context_overlap}) ” answer tidak grounded di context"
     else:
         failure_type = "ok"
         reason = "Pipeline berjalan normal"
@@ -171,9 +187,7 @@ def classify_error(
         "source_was_blocked": source_was_blocked,
     }
 
-# ---------------------------------------------------------------------------
 # Object-safe accessors
-# ---------------------------------------------------------------------------
 def _get_attr(chunk, key: str, default=None):
     if isinstance(chunk, dict):
         return chunk.get(key, default)
@@ -185,40 +199,28 @@ def _get_section(chunk) -> str:
 
 def _chunk_to_summary(chunk, rank: int) -> dict:
     text = _get_attr(chunk, "text", "") or ""
+    score = _get_attr(chunk, "rerank_score", None)
+    if score is None:
+        score = _get_attr(chunk, "retrieval_score", None)
+    if score is None:
+        score = _get_attr(chunk, "score", 0.0)
+
     return {
-        "rank":     rank,
+        "rank": rank,
         "chunk_id": _get_attr(chunk, "chunk_id", ""),
-        "doc_id":   _get_attr(chunk, "doc_id", ""),
-        "section":  _get_section(chunk),
-        "score":    round(_get_attr(chunk, "score", 0) or 0, 4),
-        "length":   len(text),
-        "text":     text[:200] + "...",
+        "doc_id": _get_attr(chunk, "doc_id", ""),
+        "section": _get_section(chunk),
+        "score": round(float(score), 4),
+        "length": len(text),
+        "text": text[:200] + "...",
     }
 
-# ---------------------------------------------------------------------------
 # Reference filter
-# ---------------------------------------------------------------------------
 def is_valid_chunk(chunk) -> bool:
-    """
-    Previously blocked references/bibliography entirely.
-    REMOVED: hard section block caused filtering_error (retriever found answer, pipeline discarded it).
-    Now only used in legacy calls — actual filtering handled by limit_reference_chunks().
-    """
-    return True  # TASK 1: no longer hard-blocks any section
+    return True 
 
-# ---------------------------------------------------------------------------
-# TASK 2: Context diversity — soft reference limit
-# ---------------------------------------------------------------------------
+# Context diversity ” soft reference limit
 def limit_reference_chunks(chunks: list, max_ref: int = MAX_REF_IN_CONTEXT) -> tuple[list, set]:
-    """
-    Allow at most max_ref reference/bibliography chunks into the context window.
-    Returns (filtered_list, blocked_ids) so classify_error can see what was dropped.
-
-    Why soft limit vs hard block:
-      - Hard block: retriever finds author/citation chunk → pipeline discards → INSUFFICIENT_CONTEXT
-      - Soft limit: first N reference chunks allowed → factual answers survive
-      - Prevents reference section from dominating when corpus has many reference chunks
-    """
     result      = []
     blocked_ids = set()
     ref_count   = 0
@@ -240,14 +242,7 @@ def limit_reference_chunks(chunks: list, max_ref: int = MAX_REF_IN_CONTEXT) -> t
         )
     return result, blocked_ids
 
-
 def enforce_reference_policy(chunks: list, allow_ref: bool, max_ref_ratio: float, top_k: int) -> list:
-    """Enforce policy at the final selection stage.
-
-    This is the final line of defense before generation. If policy says
-    references are forbidden, we hard-drop them. If references are allowed,
-    we still respect the max_ref_ratio budget.
-    """
     if not allow_ref or max_ref_ratio <= 0.0:
         return [c for c in chunks if _get_section(c) not in BLOCKED_SECTIONS][:top_k]
 
@@ -259,23 +254,14 @@ def enforce_reference_policy(chunks: list, allow_ref: bool, max_ref_ratio: float
     remaining_slots = top_k - len(selected)
     if remaining_slots > 0 and max_ref_budget > 0:
         selected += ref_chunks[:min(remaining_slots, max_ref_budget)]
-
     return selected
 
-# ---------------------------------------------------------------------------
-# TASK 5: Chunk quality guard
-# ---------------------------------------------------------------------------
+# Chunk quality guard
 def is_quality_chunk(chunk) -> bool:
-    """
-    Drop chunks too short to be useful for embedding or BM25.
-    Min length mirrors chunker.py's MIN_CHUNK_LENGTH constant.
-    """
     text = _get_attr(chunk, "text", "") or ""
     return len(text) >= MIN_CHUNK_LENGTH
 
-# ---------------------------------------------------------------------------
-# TASK 4: Chunk quality logging (called on fused results before reranking)
-# ---------------------------------------------------------------------------
+# Chunk quality logging (called on fused results before reranking)
 def log_chunk_quality(chunks: list, label: str = "fused") -> None:
     bad = [c for c in chunks if not is_quality_chunk(c)]
     ref = [c for c in chunks if _get_section(c) in BLOCKED_SECTIONS]
@@ -285,26 +271,8 @@ def log_chunk_quality(chunks: list, label: str = "fused") -> None:
         f"references={len(ref)}"
     )
 
-# ---------------------------------------------------------------------------
-# TASK 4+5: Sanity check on generated answer
-# ---------------------------------------------------------------------------
-def sanity_check_answer(answer: str, status: str) -> str:
-    if status in ("INSUFFICIENT_CONTEXT", "PARSE_ERROR"):
-        return status
-    answer_lower = answer.lower()
-    ref_keywords = ["arxiv", "et al", "doi:", "doi :", "bibliography", "references section", "see references"]
-    has_ref_keyword = any(kw in answer_lower for kw in ref_keywords)
-    if has_ref_keyword:
-        return "INSUFFICIENT_CONTEXT"
-    return status
-# ---------------------------------------------------------------------------
-# TASK 2: Source chunk tracker
-# ---------------------------------------------------------------------------
+# Source chunk tracker
 def track_source_chunk(source_chunk_id: Optional[str], fused_results: list) -> None:
-    """
-    Log whether the annotated source chunk made it into fused results.
-    Distinguishes retrieval miss from ranking failure.
-    """
     if not source_chunk_id:
         return
 
@@ -320,22 +288,19 @@ def track_source_chunk(source_chunk_id: Optional[str], fused_results: list) -> N
 
     print(
         f"  [SOURCE_TRACK] [ERROR] NOT FOUND in fused results | "
-        f"source_chunk_id='{source_chunk_id}' — this is a retrieval miss"
+        f"source_chunk_id='{source_chunk_id}' ” this is a retrieval miss"
     )
 
-# ---------------------------------------------------------------------------
-# TASK 5 (OPTIONAL): Decision Step
-# ---------------------------------------------------------------------------
+# Decision Step
 def decide_action(query: str, groq_client: Groq) -> str:
-    """Agentic decision: retrieve or answer directly."""
     prompt = f"""
-Decide what to do next for this query:
-Options: "retrieve" or "answer"
+        Decide what to do next for this query:
+        Options: "retrieve" or "answer"
 
-Query: {query}
+        Query: {query}
 
-Respond with exactly one word: retrieve OR answer
-"""
+        Respond with exactly one word: retrieve OR answer
+    """
     try:
         resp = groq_client.chat.completions.create(
             model="llama-3.1-8b-instant",
@@ -346,11 +311,9 @@ Respond with exactly one word: retrieve OR answer
         decision = resp.choices[0].message.content.strip().lower()
         return "retrieve" if "retrieve" in decision else "answer"
     except Exception:
-        return "retrieve"  # fallback
+        return "retrieve"
 
-# ---------------------------------------------------------------------------
-# Main Runner (FULLY UPGRADED)
-# ---------------------------------------------------------------------------
+# Main Runner 
 def run_single_query(
     query: str,
     top_k: int = 5,
@@ -360,10 +323,6 @@ def run_single_query(
     save_output: bool = True,
     mode: Literal["baseline", "full"] = "full",
 ) -> dict:
-    """
-    mode="baseline" → dense-only, no expansion, no BM25, no reranker.
-    mode="full"     → adaptive proto-agent with query type + failure adaptation.
-    """
     timings: dict[str, float] = {}
 
     print(f"\n{'='*60}")
@@ -382,10 +341,6 @@ def run_single_query(
         "confidence_score": 0.0,
         "decision": "REJECT"
     }
-    # ---------------------------------------------------------------------------
-    # PolicyEngine — single source of truth untuk semua keputusan pipeline
-    # Gantikan: classify_query_type() + scattered if/elif generation config
-    # ---------------------------------------------------------------------------
     policy   = PolicyEngine()
     decision = policy.resolve(query)
 
@@ -401,19 +356,14 @@ def run_single_query(
     print(f"[POLICY] query_type={q_type} | hyde={use_hyde} | multi_query={use_multi_query}")
     print(f"         allow_ref={allow_ref} | max_ref_ratio={max_ref_ratio}")
     print(f"         max_tokens={gen_max_tokens} | temperature={gen_temperature}")
-
     print(f"  Strategy: multi_query={use_multi_query} | hyde={use_hyde}")
     print(f"  Gen policy: max_tokens={gen_max_tokens} | temperature={gen_temperature}")
 
-    # ---------------------------------------------------------------------------
-    # BASELINE MODE
-    # ---------------------------------------------------------------------------
+    # BASELINE MODE    
     if mode == "baseline":
         print("[Baseline] Dense-only retrieval...")
-
         expanded_queries = [query]
         hyde_doc         = None
-
         t0 = time.time()
         fused_results = list(retriever.vector_store.search(query, k=top_k))
         timings["embedding_ms"]        = round((time.time() - t0) * 1000, 2)
@@ -433,17 +383,12 @@ def run_single_query(
         track_source_chunk(source_chunk_id, fused_results)
         print()
 
-    # ---------------------------------------------------------------------------
-    # FULL MODE (Adaptive Proto-Agent)
-    # ---------------------------------------------------------------------------
+    # Adaptive Proto-Agent    
     else:
-        # Step 1+2: Adaptive Multi-Query + HyDE (parallel, type-aware)
         print("[Step 1+2] Adaptive expansion...")
         t0 = time.time()
-
         expanded_queries = [query]
         hyde_doc = None
-
         def call_groq(prompt, temperature, max_tokens):
             resp = groq.chat.completions.create(
                 model="llama-3.1-8b-instant",
@@ -474,29 +419,19 @@ def run_single_query(
         timings["query_expansion_ms"] = round((time.time() - t0) * 1000, 2)
         timings["hyde_ms"]            = timings["query_expansion_ms"]
 
-        # -----------------------------------------------------------------------
-        # TASK 3 (NEW): Domain filter on expanded queries
-        # Drop queries that drifted off-topic — prevents candidate pool pollution
-        # -----------------------------------------------------------------------
+        # Domain filter on expanded queries
         n_before = len(expanded_queries)
         expanded_queries = [q for q in expanded_queries if is_valid_query(q)]
         n_dropped = n_before - len(expanded_queries)
         if n_dropped:
             print(f"  [DOMAIN_FILTER] Dropped {n_dropped} off-topic expanded query(ies)")
         if not expanded_queries:
-            # Safety net: always keep original query
             expanded_queries = [query]
-            print("  [DOMAIN_FILTER] All expansions dropped — fallback to original query")
-
+            print("  [DOMAIN_FILTER] All expansions dropped ” fallback to original query")
         print(f"  Expanded : {expanded_queries}")
         print(f"  HyDE     : {hyde_doc[:80] if hyde_doc else 'None'}...")
         print(f"  Latency  : {timings['query_expansion_ms']}ms\n")
-
-        # Step 3: Dense retrieval per expanded query + HyDE
-        print("[Step 3] Dense retrieval...")
-
-        # TASK 2: Reduced candidate_k — less noise, faster reranking
-        candidate_k = min(top_k * 3, 15)
+        candidate_k = 30
 
         t0 = time.time()
         all_dense_hits: list[list] = []
@@ -506,8 +441,8 @@ def run_single_query(
             all_dense_hits.append(list(retriever.vector_store.search(hyde_doc, k=candidate_k)))
         timings["embedding_ms"] = round((time.time() - t0) * 1000, 2)
 
-        # Step 4: BM25 per expanded query
-        print("[Step 4] BM25 retrieval...")
+        # BM25 per expanded query
+        print("BM25 retrieval...")
         t0 = time.time()
         all_bm25_hits: list[list] = []
         for q in expanded_queries:
@@ -524,7 +459,6 @@ def run_single_query(
                 for i in top_idx if scores[i] > 0
             ])
         timings["bm25_ms"] = round((time.time() - t0) * 1000, 2)
-
         print(f"  Dense lists: {len(all_dense_hits)} | BM25 lists: {len(all_bm25_hits)}")
         print(f"  Embedding: {timings['embedding_ms']}ms | BM25: {timings['bm25_ms']}ms\n")
 
@@ -533,7 +467,7 @@ def run_single_query(
         _ = retriever.vector_store.search(query, k=1)
         timings["qdrant_search_ms"] = round((time.time() - t0) * 1000, 2)
 
-        # TASK 3: Real RRF across all dense + BM25 lists
+        # Real RRF across all dense + BM25 lists
         print("[Step 5] Real RRF fusion...")
         t0 = time.time()
         fused_results = reciprocal_rank_fusion(all_dense_hits + all_bm25_hits)
@@ -548,20 +482,20 @@ def run_single_query(
         usable_ratio = len(valid_chunks) / max(len(fused_results), 1)
         print(f"  [QUALITY] usable_chunks={len(valid_chunks)}/{len(fused_results)} ({usable_ratio:.0%})")
         if usable_ratio < 0.5:
-            print("  [QUALITY] WARNING: <50% usable — corpus dirty or retrieval broken")
+            print("  [QUALITY] WARNING: <50% usable ” corpus dirty or retrieval broken")
 
         track_source_chunk(source_chunk_id, fused_results)
         print()
 
-        # Step 6: CrossEncoder reranking + section penalty
+        # CrossEncoder reranking + section penalty
         print("[Step 6] Reranking + section penalty...")
         t0 = time.time()
-        # TASK 5: Drop quality-failing chunks before reranker sees them
+        # Drop quality-failing chunks before reranker sees them
         candidates_for_rerank = [
             c for c in fused_results[:candidate_k]
             if is_quality_chunk(c)
         ]
-        rerank_n = min(candidate_k, top_k * 3)
+        rerank_n = min(candidate_k, top_k * 2)
         rerank_candidates = candidates_for_rerank[:rerank_n]
 
         if not allow_ref:
@@ -570,31 +504,68 @@ def run_single_query(
                 if _get_section(c) not in BLOCKED_SECTIONS
             ]
 
-        if use_reranker and rerank_candidates:
-            def _best_window(q: str, text: str, window: int = 600, step: int = 200) -> str:
-                if len(text) <= window:
-                    return text
-                q_words = set(q.lower().split())
-                best_score, best_start = -1, 0
-                for start in range(0, len(text) - window, step):
-                    snippet = text[start:start + window]
-                    sc = sum(1 for w in q_words if w in snippet.lower())
-                    if sc > best_score:
-                        best_score, best_start = sc, start
-                return text[best_start:best_start + window]
+        rrf_lists_count = len(all_dense_hits) + len(all_bm25_hits)
+        rrf_threshold, rrf_min, rrf_max = rrf_circuit_breaker_threshold(
+            num_lists=rrf_lists_count,
+            rank_depth=candidate_k,
+        )
+        top_rrf_score = _get_attr(rerank_candidates[0], "score", 0) if rerank_candidates else 0
 
+        if not (use_reranker and mode == "full"):
+            skip_reranker = True 
+            skip_reason = "use_reranker=False"
+        elif len(rerank_candidates) < 2:
+            skip_reranker = True
+            skip_reason = "too few candidates to rerank"
+        elif top_rrf_score >= rrf_threshold:
+            skip_reranker = True
+            skip_reason = f"top_rrf_score={top_rrf_score:.4f} >= threshold={rrf_threshold:.4f} (confident, skip)"
+        else:
+            skip_reranker = False
+            skip_reason = f"top_rrf_score={top_rrf_score:.4f} < threshold={rrf_threshold:.4f} (ambiguous, rerank)"
+        print(f"    [CIRCUIT_BREAKER] {skip_reason} -> {'skip' if skip_reranker else 'run'} reranker")
+        
+        def _best_window(q: str, text: str, window: int = 600, step: int = 200) -> str:
+            if len(text) <= window:
+                return text
+            q_words = set(q.lower().split())
+            best_score, best_start = -1, 0
+            for start in range(0, len(text) - window, step):
+                snippet = text[start:start + window]
+                sc = sum(1 for w in q_words if w in snippet.lower())
+                if sc > best_score:
+                    best_score, best_start = sc, start
+            return text[best_start:best_start + window]
+
+        if not skip_reranker:
             pairs = [
                 [query, _best_window(query, _get_attr(r, "text", "") or "")]
                 for r in rerank_candidates
             ]
-            rerank_scores = retriever.reranker.predict(pairs)
+            if len(pairs) > RERANK_GUARD_MAX_PAIRS:
+                first_pairs = pairs[:RERANK_GUARD_MAX_PAIRS]
+                first_candidates = rerank_candidates[:RERANK_GUARD_MAX_PAIRS]
+                first_scores = list(retriever.reranker.predict(first_pairs))
+                elapsed_ms = (time.time() - t0) * 1000
+                if elapsed_ms > RERANK_LATENCY_BUDGET_MS:
+                    print(
+                        f"  [RERANK_GUARD] elapsed={elapsed_ms:.1f}ms > "
+                        f"{RERANK_LATENCY_BUDGET_MS:.0f}ms; truncating pairs "
+                        f"{len(pairs)} -> {RERANK_GUARD_MAX_PAIRS}"
+                    )
+                    rerank_candidates = first_candidates
+                    rerank_scores = first_scores
+                else:
+                    remaining_scores = list(retriever.reranker.predict(pairs[RERANK_GUARD_MAX_PAIRS:]))
+                    rerank_scores = first_scores + remaining_scores
+            else:
+                rerank_scores = list(retriever.reranker.predict(pairs))
 
             for i, hit in enumerate(rerank_candidates):
                 base_score  = float(rerank_scores[i])
                 section     = _get_section(hit)
                 delta       = SECTION_SCORE_DELTA.get(section, 0.0)
                 final_score = base_score + delta
-
                 if hasattr(hit, "score"):
                     hit.score = final_score
                 else:
@@ -605,40 +576,38 @@ def run_single_query(
                 key=lambda x: _get_attr(x, "score", 0) or 0,
                 reverse=True,
             )
+        before_score_filter = len(rerank_candidates)
+        rerank_candidates = [c for c in rerank_candidates if (_get_attr(c, "score", 0) or 0) >= 0.0]
+        removed_score_filter = before_score_filter - len(rerank_candidates)
+        if removed_score_filter:
+            print(
+                f"  [RERANK_FILTER] Dropped {removed_score_filter} chunk(s) "
+                f"with cross-encoder score < 0.0"
+            )
 
         timings["rerank_ms"] = round((time.time() - t0) * 1000, 2)
         print(f"  Reranked top-{top_k}: {timings['rerank_ms']}ms\n")
 
-    # ---------------------------------------------------------------------------
-    # SHARED: filter refs → TASK 1: SELF-REFLECTION RETRY LOOP → generate
-    # ---------------------------------------------------------------------------
+    # SELF-REFLECTION RETRY LOOP â†’ generate
     pre_rerank_chunks  = [_chunk_to_summary(c, i + 1) for i, c in enumerate(fused_results[:top_k * 2])]
     post_rerank_chunks = [_chunk_to_summary(c, i + 1) for i, c in enumerate(rerank_candidates[:top_k])]
-
-    # TASK 2 (NEW): Query-aware reference filter — dikontrol oleh PolicyEngine
-    # allow_ref berasal dari policy.resolve() di atas, bukan dari fungsi lokal lagi
     if allow_ref:
-        print(f"  [REF_POLICY] Query '{query[:50]}...' → references ALLOWED (citation query)")
+        print(f"  [REF_POLICY] Query '{query[:50]}... references ALLOWED (citation query)")
         filtered_chunks = [c for c in rerank_candidates if is_quality_chunk(c)]
         blocked_ids = set()
     else:
-        print(f"  [REF_POLICY] Query '{query[:50]}...' → references FILTERED (non-citation query)")
+        print(f"  [REF_POLICY] Query '{query[:50]}... references FILTERED (non-citation query)")
         filtered_chunks = [
             c for c in rerank_candidates
             if is_valid_chunk(c) and is_quality_chunk(c)
         ]
-        # Setelah query-aware filter, apply soft limit sebagai safety net
         filtered_chunks, blocked_ids = limit_reference_chunks(
             filtered_chunks,
                 max_ref=0,
             )
-
-    # ---------------------------------------------------------------------------
-    # TASK 6: Context Budgeting System — Hard Limit Reference Ratio
-    # max_ref_ratio dari PolicyEngine (bukan hardcoded lagi)
-    # ---------------------------------------------------------------------------
-    MAX_REF_RATIO  = max_ref_ratio   # dari policy.resolve() → decision["reference"]["max_ref_ratio"]
-
+        
+    # Context Budgeting System ” Hard Limit Reference Ratio
+    MAX_REF_RATIO  = max_ref_ratio 
     quality_filtered = [c for c in filtered_chunks if is_quality_chunk(c)]
 
     final_chunks_full = enforce_reference_policy(
@@ -648,7 +617,6 @@ def run_single_query(
         top_k=top_k,
     )
 
-    # Update blocked ids for final selection enforcement
     final_selected_ids = {_get_attr(c, "chunk_id", "") for c in final_chunks_full}
     additional_blocked = {
         _get_attr(c, "chunk_id", "")
@@ -672,10 +640,13 @@ def run_single_query(
     allow_all_refs_on_retry = False
     t0_gen = time.time()
 
-    while retry_count <= MAX_RETRIES:
+    while retry_count < MAX_RETRY_ATTEMPTS:
+        if timings.get("generation_ms", 0) >= MAX_GENERATION_MS:
+            print("  [GEN_GUARD] generation exceeded soft cap; forcing abstain")
+            break
+
         final_context = build_context(final_chunks_full, max_chars=3000)
 
-        # Hard cap context length — prevents runaway token usage
         if len(final_context) > 2500:
             final_context = final_context[:2500]
 
@@ -692,33 +663,47 @@ def run_single_query(
                 reason="pre_gen confidence REJECT", 
             )
             break 
-        
-        response = generator.generate(
-            query,
-            final_chunks_full,
-            max_tokens=gen_max_tokens,
-            temperature=gen_temperature,
-            source_chunk_id=source_chunk_id,
-            min_top1_score=RETRIEVAL_MIN_TOP1_SCORE,
-        )
 
+        try:
+            response = generator.generate(
+                query,
+                final_chunks_full,
+                max_tokens=gen_max_tokens,
+                temperature=gen_temperature,
+                source_chunk_id=source_chunk_id,
+                min_top1_score=RETRIEVAL_MIN_TOP1_SCORE,
+            )
+        except Exception as e:
+            print(f" [GENERATION_ERROR] {type(e).__name__}: {e} - aborting to abstain")
+            from src.generation.generator import _make_abstain_response
+            response = _make_abstain_response(
+                query=query,
+                chunks=final_chunks_full,
+                model="llama-3.3-70b-versatile",
+                reason=f"generation_exception: {type(e).__name__}: {e}",
+            )
+            break
         context_texts = [_get_attr(r, "text", "") or "" for r in final_chunks_full]
         confidence_v1 = compute_context_overlap(response.answer, context_texts)
         retrieval_confidence = confidence_engine.calculate_confidence(final_chunks_full)
 
-        if confidence_v1 >= RETRIEVAL_CONF_THRESHOLD:
+        if confidence_v1 >= 0.3:
             print(f"  [RETRY] Success at attempt {retry_count + 1} | overlap={confidence_v1}")
             break
 
+        if retry_count >= 1:
+            print("  [RETRY] Max retry attempts reached; stopping retry loop")
+            break
+
         if response.status == "INSUFFICIENT_CONTEXT" and q_type == "factual" and retry_count == 0:
-            print("[RETRY] Factual insufficient context → immediate reference escalation")
+            print("[RETRY] Factual insufficient context immediate reference escalation")
             allow_all_refs_on_retry = True
 
-        print(f"[RETRY] Low context overlap ({confidence_v1}) → retrying retrieval...")
+        print(f"[RETRY] Low context overlap ({confidence_v1}) â†’ retrying retrieval...")
 
         candidate_k_retry = top_k * (2 ** retry_count)
-        _use_reranker_retry = retry_count < 1          # disabled from retry 2 onward
-        _bm25_weight_retry  = 0.3 + (0.2 * retry_count)  # 0.3 → 0.5 → 0.7
+        _use_reranker_retry = retry_count < 1          
+        _bm25_weight_retry  = 0.3 + (0.2 * retry_count) 
         _bm25_weight_retry  = min(_bm25_weight_retry, 0.7)
         _dense_weight_retry = 1.0 - _bm25_weight_retry
 
@@ -741,11 +726,23 @@ def run_single_query(
                 bm25_weight=_bm25_weight_retry,
                 dense_weight=_dense_weight_retry,
             ))
-        except (AttributeError, TypeError) as e:
-            fused_results = list(retriever.vector_store.search(query, k=candidate_k_retry))
-            print(f"  [RETRY] Fallback dense-only (retriever.search() error: {e})")
+            
+        except Exception as e:
+            print(f"  [RETRY] Fallback dense-only (retriever.search() error: {type(e).__name__}: {e})")
+            try:
+                fused_results = list(retriever.vector_store.search(query, k=candidate_k_retry))
+            except Exception as e2:
+                print(f"  [RETRY] Dense-only fallback ALSO failed ({type(e2).__name__}: {e2}) — aborting to abstain")
+                from src.generation.generator import _make_abstain_response
+                response = _make_abstain_response(
+                    query=query,
+                    chunks=final_chunks_full,
+                    model="llama-3.3-70b-versatile",
+                    reason=f"retrieval_exception: {type(e2).__name__}: {e2}",
+                )
+                break
 
-        # retry 3+: allow all references (don't limit — last resort for factual QA)
+        # allow all references (don't limit ” last resort for factual QA)
         if allow_all_refs_on_retry:
             final_chunks_full = [c for c in fused_results[:top_k] if is_quality_chunk(c)]
             retry_count = MAX_RETRIES
@@ -755,17 +752,12 @@ def run_single_query(
         else:
             retry_filtered, _ = limit_reference_chunks(fused_results[:top_k], max_ref=MAX_REF_IN_CONTEXT)
             final_chunks_full = [c for c in retry_filtered if is_quality_chunk(c)]
-
         print(f"  [RETRY] usable after filter={len(final_chunks_full)}")
-
         retry_count += 1
 
     timings["generation_ms"] = round((time.time() - t0_gen) * 1000, 2)
     print(f"  Final generation: {timings['generation_ms']}ms | retries={retry_count}\n")
-
-    final_status = sanity_check_answer(response.answer, response.status)
-    if final_status != response.status:
-        print(f"  [SANITY] Status upgraded: {response.status} → {final_status}")
+    final_status = response.status
 
     # Enforce retrieval confidence safety
     if retrieval_confidence["decision"] == "REJECT" and final_status == "ANSWERED":
@@ -777,43 +769,38 @@ def run_single_query(
     context_texts = [_get_attr(r, "text", "") or "" for r in final_chunks_full]
     confidence_v1 = compute_context_overlap(response.answer, context_texts)
 
-    # ---------------------------------------------------------------------------
-    # TASK 3: FAILURE-AWARE ADAPTATION LOGIC
-    # ---------------------------------------------------------------------------
+    # FAILURE-AWARE ADAPTATION LOGIC 
     error_info = classify_error(
-        retrieved_chunks=final_chunks_full,
-        reranked_chunks=rerank_candidates[:top_k],
-        answer=response.answer,
-        ground_truth=ground_truth,
-        source_chunk_id=source_chunk_id,
-        context_overlap=confidence_v1,
-        blocked_chunk_ids=blocked_ids,   # TASK 3: enables filtering_error detection
-    )
+    retrieved_chunks=final_chunks_full,
+    reranked_chunks=rerank_candidates[:top_k],
+    source_chunk_id=source_chunk_id,
+    context_overlap=confidence_v1,
+    blocked_chunk_ids=blocked_ids,
+)
 
-    # TASK 3: Adapt based on failure type
+    # Adapt based on failure type
     if error_info["failure_type"] == "retrieval_miss":
-        print("[ADAPT] Retrieval miss → future runs shift to BM25-heavy")
+        print("[ADAPT] Retrieval miss â†’ future runs shift to BM25-heavy")
     elif error_info["failure_type"] == "filtering_error":
-        print("[ADAPT] Filtering error detected → consider increasing MAX_REF_IN_CONTEXT")
+        print("[ADAPT] Filtering error detected â†’ consider increasing MAX_REF_IN_CONTEXT")
     elif error_info["failure_type"] == "ranking_error":
-        print("[ADAPT] Ranking error → reranker mis-ordered, consider section boost tuning")
+        print("[ADAPT] Ranking error â†’ reranker mis-ordered, consider section boost tuning")
 
-    # TASK 5: Confidence calibration — penalize when pipeline has known failures
-    # confidence_v1 = 1.0 dengan retrieval_miss adalah false positive yang berbahaya
+    # Confidence calibration ” penalize when pipeline has known failures
     raw_confidence = confidence_v1
     failure_type   = error_info["failure_type"]
     if failure_type == "retrieval_miss":
-        confidence_v1 = round(confidence_v1 * 0.4, 4)   # heavy penalty — answer likely hallucinated
+        confidence_v1 = round(confidence_v1 * 0.4, 4)   
     elif failure_type == "filtering_error":
-        confidence_v1 = round(confidence_v1 * 0.6, 4)   # moderate — answer may be partial
+        confidence_v1 = round(confidence_v1 * 0.6, 4)  
     elif failure_type == "ranking_error":
-        confidence_v1 = round(confidence_v1 * 0.7, 4)   # mild — answer from wrong chunk
+        confidence_v1 = round(confidence_v1 * 0.7, 4)   
     elif failure_type == "generation_fail":
         confidence_v1 = round(confidence_v1 * 0.5, 4)
 
     if raw_confidence != confidence_v1:
         print(
-            f"  [CONFIDENCE] Calibrated: {raw_confidence} → {confidence_v1} "
+            f"  [CONFIDENCE] Calibrated: {raw_confidence} â†’ {confidence_v1} "
             f"(penalty for {failure_type})"
         )
 
@@ -825,47 +812,39 @@ def run_single_query(
         timings.get("generation_ms", 0),
         2,
     )
-
-    # ---------------------------------------------------------------------------
-    # TASK 1: debug_full_chunks — full score transparency
-    # ---------------------------------------------------------------------------
+    # debug_full_chunks ” full score transparency
     debug_source      = final_chunks_full
     debug_full_chunks = [
         {
             "chunk_id": _get_attr(r, "chunk_id", ""),
             "doc_id":   _get_attr(r, "doc_id", ""),
             "section":  _get_section(r),
-            "score":    round(_get_attr(r, "score", 0) or 0, 4),
+            "score":    round(
+                        _get_attr(r, "rerank_score", None) or
+                        _get_attr(r, "retrieval_score", None) or
+                        _get_attr(r, "score", 0) or 0,
+                        4
+                        ),
             "length":   len(_get_attr(r, "text", "") or ""),
             "text":     (_get_attr(r, "text", "") or "")[:300],
         }
         for r in debug_source
     ]
 
-    # ---------------------------------------------------------------------------
-    # TASK 3 (NEW): Log Ref Ratio — metric utama untuk monitor reference leakage
-    # Target: ref_ratio < 0.2 untuk non-citation queries
-    # Kalau masih tinggi → naikkan section penalty ke -3.0
-    # ---------------------------------------------------------------------------
+    # Log Ref Ratio ” metric utama untuk monitor reference leakage
     ref_count   = sum(1 for d in debug_full_chunks if d["section"] in BLOCKED_SECTIONS)
     total_count = len(debug_full_chunks)
     ref_ratio   = round(ref_count / total_count, 3) if total_count > 0 else 0.0
-
     print(f"\n  REF RATIO        : {ref_ratio} ({ref_count}/{total_count})")
     if ref_ratio >= 0.2 and not allow_ref:
-        print(f"  [REF_WARN] ref_ratio={ref_ratio} melebihi target 0.2 — pertimbangkan penalty -3.0")
+        print(f"  [REF_WARN] ref_ratio={ref_ratio} melebihi target 0.2 ” pertimbangkan penalty -3.0")
 
-    # ---------------------------------------------------------------------------
-    # TASK 4 (NEW): Exact Match Metric
-    # confidence bisa 1.0 tapi jawaban tetap salah → exact_match adalah ground truth check nyata
-    # ---------------------------------------------------------------------------
+    # Exact Match Metric
     exact_match = None
     if ground_truth:
         exact_match = response.answer.strip().lower() == ground_truth.strip().lower()
 
-    # ---------------------------------------------------------------------------
     # Assemble output
-    # ---------------------------------------------------------------------------
     output = {
         "query":                query,
         "query_id":             str(uuid.uuid4()),
@@ -888,9 +867,7 @@ def run_single_query(
         "error_decomposition":  error_info,
         "failure_type":         error_info.get("failure_type", "none") if isinstance(error_info, dict) else "none",
         "retry_triggered":      retry_count > 0,
-        # TASK 4: exact_match di output dict — metric real vs confidence ilusi
         "exact_match":          exact_match,
-        # TASK 3: ref_ratio di output dict — monitor reference leakage per query
         "ref_ratio":            ref_ratio,
         "retrieval_method":     (
             "dense_only" if mode == "baseline"
@@ -911,12 +888,10 @@ def run_single_query(
             "chunking":         "semantic",
             "rrf_k":            60,
             "retries_used":     retry_count,
-            # TASK 2+3+4 markers for auditability
-            "candidate_k":      min(top_k * 3, 15),
+            "candidate_k":      settings.candidate_k,
             "max_tokens":       gen_max_tokens,
             "temperature":      gen_temperature,
             "domain_filter":    True,
-            # TASK 1+2+6: audit section penalty, filter policy, dan budget yang aktif
             "ref_penalty":      SECTION_SCORE_DELTA.get("references", -2.0),
             "ref_filter_mode":  "citation_aware" if allow_ref else "strict",
             "max_ref_ratio":    MAX_REF_RATIO,
@@ -931,17 +906,18 @@ def run_single_query(
     print(f"  ANSWER        : {response.answer[:300]}")
     print(f"\n  STATUS (final): {final_status}")
     print(f"  CONFIDENCE (LLM) : {response.confidence_score:.2f}")
-    print(f"  CONFIDENCE V1    : {confidence_v1}")
+    print(f"  CONFIDENCE OVERLAP    : {confidence_v1}")
     print(f"  ERROR TYPE       : {error_info['failure_type']}")
     print(f"  REASON           : {error_info['reason']}")
     print(f"  RETRIES          : {retry_count}")
-    # TASK 4: Print exact match — real metric
+
+    # Print exact match real metric
     if exact_match is not None:
         print(f"  EXACT MATCH      : {exact_match}")
     print(f"\n  DEBUG CHUNKS (section | score | length):")
     for d in debug_full_chunks:
-        flag = " ← BLOCKED" if d["section"] in BLOCKED_SECTIONS else ""
-        short_flag = " ← SHORT"  if d["length"] < MIN_CHUNK_LENGTH else ""
+        flag = " BLOCKED" if d["section"] in BLOCKED_SECTIONS else ""
+        short_flag = " SHORT "  if d["length"] < MIN_CHUNK_LENGTH else ""
         print(
             f"    [{d['chunk_id']}] "
             f"section={d['section']:<15} "
@@ -949,12 +925,12 @@ def run_single_query(
             f"len={d['length']}"
             f"{flag}{short_flag}"
         )
+
     print(f"\n  LATENCY BREAKDOWN:")
     for k, v in timings.items():
-        bar = "█" * int(v / 100)
+        bar = "|" * int(v / 100)
         print(f"    {k:<25} {v:>8.1f}ms  {bar}")
-    print(f"{'='*60}\n")
-
+        
     def to_serializable(obj):
         import numpy as np
         if isinstance(obj, (np.bool_,)):
@@ -963,7 +939,8 @@ def run_single_query(
             return int(obj)
         if isinstance(obj, (np.floating,)):
             return float(obj)
-        return str(obj)  # fallback
+        return str(obj)
+
     if save_output:
         out_path = Path(f"results/logs/single_query_{mode}.json")
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -977,9 +954,9 @@ def run_single_query(
         existing.append(output)
         with open(out_path, "w") as f:
             json.dump(existing, f, indent=2, ensure_ascii=False, default=to_serializable)
-        print(f"[Saved] → {out_path}")
+        print(f"[Saved]  {out_path}")
 
-    # TASK 4: dump trace for query-level debugging and audit
+    # dump trace for query-level debugging and audit
     trace_path = Path("results/debug/trace.json")
     trace_path.parent.mkdir(parents=True, exist_ok=True)
     trace_entry = {
@@ -1007,13 +984,10 @@ def run_single_query(
     existing_trace.append(trace_entry)
     with open(trace_path, "w") as f:
         json.dump(existing_trace, f, indent=2, ensure_ascii=False)
-    print(f"[Trace] → {trace_path}")
-
+    print(f"[Trace] {trace_path}")
     return output
 
-# ---------------------------------------------------------------------------
 # CLI
-# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Adaptive RAG Proto-Agent Debugger")
     parser.add_argument("--query",       type=str,  default=None)
@@ -1064,9 +1038,7 @@ if __name__ == "__main__":
             mode=args.mode,
         )
 
-# ---------------------------------------------------------------------------
 # Singleton cache
-# ---------------------------------------------------------------------------
 _STORE:      QdrantVectorStore | None      = None
 _RETRIEVER:  MasterHybridRetriever | None = None
 _GENERATOR:  GroqGenerator | None          = None
@@ -1077,5 +1049,5 @@ def get_components():
         _STORE      = QdrantVectorStore()
         _RETRIEVER  = MasterHybridRetriever(vector_store=_STORE)
         _GENERATOR  = GroqGenerator(model="llama-3.3-70b-versatile")
-        print("[Cache] Components loaded — reuse for subsequent queries")
+        print("[Cache] Components loaded reuse for subsequent queries")
     return _STORE, _RETRIEVER, _GENERATOR

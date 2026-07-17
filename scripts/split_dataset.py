@@ -12,7 +12,7 @@ from collections import defaultdict
 by_chunk = defaultdict(list)
 for s in data:
     by_chunk[s['gold_chunk_id']].append(s)
-
+    
 from collections import defaultdict as dd
 
 # Group chunk_ids by tier

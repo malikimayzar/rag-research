@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Optional
 
 from src.controller.agent_state import AgentState, AgentStatus
@@ -18,6 +18,8 @@ class AgentResponse:
     status: AgentStatus
     state: AgentState
     response: Any = None
+    retrieved_ids: list = field(default_factory=list)
+    latency_ms: dict = field(default_factory=dict)
 
 class Agent:
     def __init__(self, max_steps: int = 8):
@@ -36,11 +38,8 @@ class Agent:
 
     def _default_model(self) -> str:
         return "llama-3.3-70b-versatile"
-
-    # =========================
+    
     # EXECUTION
-    # =========================
-
     async def _execute_retrieval(self, state: AgentState, params: dict):
         result = await self.tools.call_tool("search_hybrid", params)
         state.add_observation("search_hybrid", result)
@@ -68,7 +67,7 @@ class Agent:
             "max_tokens": plan.generation_hint["max_tokens"],
             "temperature": plan.generation_hint["temperature"],
             "source_chunk_id": state.source_chunk_id,
-            "min_top1_score": -3.0,
+            "min_top1_score": -999.0,
         })
 
         state.add_observation("generate_answer", result)
@@ -80,16 +79,26 @@ class Agent:
                 answer=response.answer,
                 status=state.status,
                 state=state,
-                response=response
-            )
-        return None
+                response=response,
+                retrieved_ids=[
+                    c.get("chunk_id") if isinstance(c, dict) else getattr(c, "chunk_id", "")
+                    for c in state.retrieved_chunks
+                ],
+                latency_ms={}
+                )
+        return AgentResponse(
+            answer=response.answer,
+            status=state.status,
+            state=state,
+            response=response,
+            retrieved_ids=[
+                c.get("chunk_id") if isinstance(c, dict) else getattr(c, "chunk_id", "")
+                for c in state.retrieved_chunks
+            ],
+        )
 
-    # =========================
-    # STRATEGY (clean)
-    # =========================
-
+    # STRATEGY
     def _build_retrieval_params(self, state: AgentState, plan: PlanHints) -> dict:
-        # baseline dari policy
         params = {
             "query": state.query,
             "k": plan.top_k_hint,
@@ -97,10 +106,10 @@ class Agent:
             "use_hyde": plan.allow_hyde,
         }
 
-        # retry override (lebih agresif)
-        if state.step_count > 0 and state.confidence_score < 0.4:
+        if getattr(state, 'force_expand', False) or (state.step_count > 0 and state.confidence_score < 0.4):
             params["k"] = min(plan.top_k_hint * 2, 50)
-
+            params["use_multi_query"] = True
+            state.force_expand = False
         return params
     
     def _decide_next_action(self, signals: dict, score: float) ->  str:
@@ -112,29 +121,32 @@ class Agent:
             return "REJECT"
         if score < self.confidence_engine.partial_threshold:
             return "PARTIAL_TRUST"
-        
         return "GENERATE"
-    # =========================
+    
     # MAIN LOOP
-    # =========================
-
     async def run(self, query: str, source_chunk_id: str | None = None) -> AgentResponse:
         state = AgentState(query=query, source_chunk_id=source_chunk_id)
         plan = self.policy_engine.initial_plan(query)
-
+        MAX_ITERATIONS = 2
+        iteration_count = 0
+        response = None
+        import time
+        t_start = time.time()
         while state.status == AgentStatus.RUNNING and not state.is_budget_exhausted():
-
-            # 1. Build retrieval strategy (NO llm_decide)
+            if iteration_count >= MAX_ITERATIONS:
+                state.status = AgentStatus.ABSTAINED
+                break
+            iteration_count += 1
             params = self._build_retrieval_params(state, plan)
 
-            # 2. Retrieval
+            # Retrieval
             await self._execute_retrieval(state, params)
             print(f"[DEBUG] chunks going to confidence: {len(state.retrieved_chunks)}")
             for c in state.retrieved_chunks[:3]:
                 print(f"  chunk_id={c.get('chunk_id')} retrieval_score={c.get('retrieval_score')}")
 
 
-            # 3. Confidence
+            # Confidence
             quality = await self.tools.assess_retrieval_quality(
                 state.retrieved_chunks, state.query
             )
@@ -150,14 +162,16 @@ class Agent:
                 state.stagnation_count = 0
             state.prev_top_score  = current_top_score
 
+            if state.stagnation_count >= 2:
+                state.status = AgentStatus.ABSTAINED
+                break
+
             action = self._decide_next_action(signals, state.confidence_score)
             if action == "REJECT":
-                if state.stagnation_count >= 2:
-                    response = await self._execute_generation(state, plan)
-                    if response:
-                        return response
-                continue
+                state.status = AgentStatus.ABSTAINED
+                break
             if action == "RETRIEVE_AGAIN":
+                state.force_expand = True
                 params = self._build_retrieval_params(state, plan)
                 await self._execute_retrieval(state, params)
                 continue
@@ -165,11 +179,18 @@ class Agent:
             if action in ("PARTIAL_TRUST", "GENERATE"):
                 response = await self._execute_generation(state, plan)
                 if response:
+                    response.latency_ms = {"total": round((time.time() - t_start) * 1000, 1)}
                     return response
-                continue
+                
         # fallback
-        if state.status == AgentStatus.RUNNING:
-            state.status = AgentStatus.ABSTAINED
-
-        return AgentResponse(answer=None, status=state.status, state=state)
-    
+        return AgentResponse(
+            answer=response.answer if response else None,
+            status=state.status,
+            state=state,
+            response=None,
+            retrieved_ids=[
+                c.get("chunk_id") if isinstance(c, dict) else getattr(c, "chunk_id", "")
+                for c in state.retrieved_chunks
+            ],
+            latency_ms={"total": round((time.time() - t_start) * 1000, 1)},
+        )

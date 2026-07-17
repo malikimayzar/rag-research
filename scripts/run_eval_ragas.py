@@ -3,21 +3,17 @@ import sys
 import requests
 from dotenv import load_dotenv
 
+from src.evaluation.ragas_evaluator import RAGASEvaluator, RAGSample
+
 load_dotenv()
 sys.path.insert(0, ".")
-
-from src.evaluation.ragas_evaluator import RAGASEvaluator, RAGSample
 
 # Load ground truth
 with open("data/processed/ground_truth_qa.json") as f:
     gt_data = json.load(f)
 
 print(f"Total QA pairs: {len(gt_data)}")
-
-# Ambil 15 sample dulu — cukup untuk signal, hemat token
 samples_gt = gt_data[:30]
-
-# Hit API untuk dapat answer + contexts
 print("Retrieving answers from API...")
 ragas_samples = []
 rejected = 0
@@ -25,7 +21,6 @@ rejected = 0
 for i, item in enumerate(samples_gt):
     question = item.get("question", item.get("query", ""))
     ground_truth = item.get("answer", item.get("ground_truth", ""))
-    
     try:
         resp = requests.post(
             "http://localhost:8003/generate",

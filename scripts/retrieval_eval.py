@@ -71,7 +71,7 @@ def evaluate_retrieval(
         recall10_scores.append(r10)
         mrr_scores.append(mrr_score)
 
-        retrieved_ids = [get_chunk_id(c) for c in chunks]  # keep for backward compat
+        retrieved_ids = [get_chunk_id(c) for c in chunks]  
         retrieved_chunks = [
             {
                 "chunk_id": get_chunk_id(c),

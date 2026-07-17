@@ -1,10 +1,3 @@
-"""
-End-to-end retrieval regression tests based on recorded single-query logs.
-
-Tests in this file do not depend on Qdrant or Groq being live.
-They validate real pipeline behavior from `results/logs/single_query_full.json`.
-"""
-
 import json
 import os
 import sys
@@ -15,7 +8,6 @@ sys.path.insert(0, str(ROOT))
 
 LOG_PATH = ROOT / "results" / "logs" / "single_query_full.json"
 SCORE_DISTRIBUTION_PATH = ROOT / "data" / "debug" / "score_distribution.json"
-
 
 def load_log_entries() -> list[dict]:
     if not LOG_PATH.exists():
@@ -29,7 +21,6 @@ def load_score_distribution() -> dict:
         raise FileNotFoundError(f"Required score distribution file not found: {SCORE_DISTRIBUTION_PATH}")
     with open(SCORE_DISTRIBUTION_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
-
 
 def test_author_query_answered_from_log():
     entries = load_log_entries()
@@ -47,7 +38,6 @@ def test_author_query_answered_from_log():
         "This catches regressions in factual retrieval and reference handling."
     )
 
-
 def test_no_low_confidence_answer_in_logs():
     entries = load_log_entries()
     low_confidence_answers = [
@@ -59,7 +49,6 @@ def test_no_low_confidence_answer_in_logs():
         "Found ANSWERED results with low retrieval confidence. "
         "The system should abstain rather than answer when retrieval signal is weak."
     )
-
 
 def test_insufficient_context_factual_queries_do_not_answer():
     entries = load_log_entries()
@@ -74,7 +63,6 @@ def test_insufficient_context_factual_queries_do_not_answer():
         "when retrieval signal was insufficient."
     )
 
-
 def test_score_distribution_threshold_is_valid():
     distribution = load_score_distribution()
     mean = float(distribution.get("top1_mean", 0.0))
@@ -83,7 +71,6 @@ def test_score_distribution_threshold_is_valid():
 
     assert threshold > 0.0, "Score calibration threshold should be positive."
     assert threshold < mean, "Calibration threshold must be lower than the mean top1 score."
-
 
 if __name__ == "__main__":
     print("Running retrieval e2e regression tests...")

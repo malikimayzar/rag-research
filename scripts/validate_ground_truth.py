@@ -1,6 +1,5 @@
 import json
 from collections import defaultdict
-from pathlib import Path
 
 GT_PATH      = "data/processed/ground_truth_qa.json"
 CHUNKS_PATH  = "data/processed/chunks_semantic.json"
@@ -8,13 +7,11 @@ TRAIN_PATH   = "data/processed/train_eval.json"
 HOLDOUT_PATH = "data/processed/holdout_eval.json"
 
 # ── Loader ───────────────────────────────────────────────────────────────────
-
 def load_json(path: str) -> list | dict:
     with open(path) as f:
         return json.load(f)
 
 # ── Checks ───────────────────────────────────────────────────────────────────
-
 def check_required_fields(samples: list) -> list[str]:
     required = {"question", "gold_answer", "question_type",
                 "answer_span", "gold_chunk_id", "doc_id", "tier", "section"}
@@ -40,7 +37,6 @@ def check_answer_span_in_chunk(samples: list, chunk_map: dict) -> list[str]:
             errors.append(f"  [#{i}] answer_span tidak ada di chunk text | chunk={cid} | span='{span[:60]}'")
     return errors
 
-
 def check_empty_fields(samples: list) -> list[str]:
     errors = []
     for i, s in enumerate(samples):
@@ -48,7 +44,6 @@ def check_empty_fields(samples: list) -> list[str]:
             if not s.get(field, "").strip():
                 errors.append(f"  [#{i}] Field '{field}' kosong")
     return errors
-
 
 def check_question_types(samples: list) -> list[str]:
     valid_types = {"factual", "paraphrase", "multihop", "adversarial"}
@@ -58,7 +53,6 @@ def check_question_types(samples: list) -> list[str]:
         if qt not in valid_types:
             errors.append(f"  [#{i}] question_type invalid: '{qt}'")
     return errors
-
 
 def check_no_overlap(train: list, holdout: list) -> list[str]:
     train_ids   = {s["gold_chunk_id"] + s["question"] for s in train}
@@ -76,16 +70,13 @@ def check_split_ratio(train: list, holdout: list) -> list[str]:
         errors.append(f"  Split ratio off: train={ratio:.2%} (expected ~80%)")
     return []
 
-
 def check_tier_distribution(samples: list, label: str) -> None:
     dist = defaultdict(int)
     for s in samples:
         dist[s.get("tier", "?")] += 1
     print(f"  Tier distribution ({label}): { {k: dist[k] for k in sorted(dist)} }")
 
-
 # ── Report ────────────────────────────────────────────────────────────────────
-
 def run_validation():
     print("=" * 60)
     print("VALIDATE GROUND TRUTH — VALIDITY REPORT")
@@ -125,7 +116,7 @@ def run_validation():
     for name, errors in checks:
         status = "[OK] PASS" if not errors else f" FAIL ({len(errors)} issues)"
         print(f"\n[{status}] {name}")
-        for e in errors[:5]:  # max 5 per check
+        for e in errors[:5]: 
             print(e)
         if len(errors) > 5:
             print(f"  ... dan {len(errors)-5} lainnya")
@@ -151,7 +142,6 @@ def run_validation():
     else:
         print(f"[WARNING]  {total_errors} issues ditemukan — review sebelum eval")
     print(f"{'='*60}\n")
-
 
 if __name__ == "__main__":
     run_validation()

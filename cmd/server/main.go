@@ -20,10 +20,8 @@ type RagasResult struct {
 }
 
 func main() {
-	// 1. Inisialisasi template engine
 	engine := html.New("./web/templates", ".html")
 
-	// 2. FIX: Tambahkan fungsi "mul" supaya bisa perkalian di HTML
 	engine.AddFunc("mul", func(a, b float64) float64 {
 		return a * b
 	})
@@ -32,8 +30,6 @@ func main() {
 		Views: engine,
 	})
 
-	// Serve folder results/metrics sebagai /static
-	// Supaya gambar radar_chart.png bisa dipanggil di HTML
 	app.Static("/static", "./results/metrics")
 
 	app.Get("/", func(c *fiber.Ctx) error {

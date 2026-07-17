@@ -8,7 +8,6 @@ from src.retrieval.hybrid_retriever import MasterHybridRetriever
 from src.controller.confidence_engine import ConfidenceEngine
 from src.generation.generator import GroqGenerator
 
-
 class RetrievalTools:
     def __init__(
         self,

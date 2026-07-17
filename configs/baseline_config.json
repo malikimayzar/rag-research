@@ -3,8 +3,11 @@
   "dense_weight": 0.7,
   "bm25_weight": 0.3,
   "top_k": 10,
-  "candidate_k": 50,
+  "candidate_k": 30,
+  "rerank_input_cap": 20,
+  "candidate_k_note": "CPU-constrained (WSL2). Production target: 50. Revisit Phase 5.",
   "status": "working_baseline",
+  "latency_note": "Warm P95 ~2850ms (CPU/WSL2). Cold start ~6s (first query after model load). Production target ≤3.5s warm. Phase 5 concern.",
   "validated_on": "paraphrase_10samples + lexical_20samples",
   "next": "expand_dataset_structured_distribution"
 }

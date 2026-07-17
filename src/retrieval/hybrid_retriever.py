@@ -1,5 +1,4 @@
 from __future__ import annotations
-from src.api.config import settings
 
 import logging
 import json
@@ -55,12 +54,10 @@ def rrf_fuse(
         elif hasattr(item, "score"):
             item.score = rrf_score
         result.append(item)
-
     return result
 
 
 MULTI_QUERY_PROMPT = """Generate 2 alternative search queries for the following question.
-
 STRICT RULES:
 - Stay in the SAME technical domain as the original query
 - Do NOT switch fields (e.g., from machine learning to neuroscience)
@@ -128,18 +125,14 @@ class MasterHybridRetriever:
 
         section = str(meta.get("section", "")).lower()
 
-        # Layer 1: section name check
         if any(ref in section for ref in ["reference", "bibliography"]):
             return True
 
-        # Layer 2: citation bracket pattern [1], [23]
         if re.search(r"\[\d+\]", text):
             return True
 
-        # Layer 3: comma density (citation lists)
         if text.count(",") > 10:
             return True
-
         return False
     
     @staticmethod
@@ -149,19 +142,19 @@ class MasterHybridRetriever:
         if any(kw in section for kw in ("method", "architect", "approach", "model")):
             return 1.4   
         elif any(kw in section for kw in ("experiment", "result", "evaluat", "finding")):
-            return 1.3   # high: results are the evidence
+            return 1.3  
         elif "abstract" in section:
-            return 1.1   # medium: abstract is dense but broad
+            return 1.1   
         elif "introduction" in section:
-            return 1.05  # slight: intro has context
+            return 1.05 
         elif "conclusion" in section:
-            return 1.0   # neutral
+            return 1.0   
         elif any(ref in section for ref in ("reference", "bibliography")):
-            return 0.3   # soft penalty — survives if no better match exists
+            return 0.3  
         else:
-            return 1.0   # body/default
+            return 1.0  
 
-    # ── Query Expansion ────────────────────────────────────────────────────────
+    # Query Expansion 
     def _call_groq(self, prompt: str, temperature: float, max_tokens: int) -> str:
         resp = self.groq.chat.completions.create(
             model="llama-3.1-8b-instant",
@@ -206,7 +199,6 @@ class MasterHybridRetriever:
                 logger.info(f"[HyDE] Generated: {hyde_text[:80]}...")
             except Exception as e:
                 logger.info(f"[HyDE] Failed: {e}")
-
         return queries, hyde_text
 
     def _expand_queries(self, query: str) -> List[str]:
@@ -230,7 +222,7 @@ class MasterHybridRetriever:
         return top_k
 
     def _choose_candidate_k(self, top_k: int) -> int:
-        return min(top_k * 3, 30)
+        return min(max(top_k * 4, 30), 50)
 
     def _rerank(self, query: str, candidates: list) -> list:
         if not self.reranker or not candidates:
@@ -242,16 +234,14 @@ class MasterHybridRetriever:
             pairs.append([query, text])
 
         try:
-            scores = self.reranker.predict(pairs)
-            # STEP 2: Attach rerank_score to each chunk
+            scores = self.reranker.predict(pairs, batch_size=32, max_length=64)
             for chunk, score in zip(candidates, scores):
                 rerank_score = float(score)
                 if isinstance(chunk, dict):
                     chunk["rerank_score"] = rerank_score
                 else:
                     chunk.rerank_score = rerank_score
-            
-            # STEP 3: Sort by rerank_score
+
             ranked = sorted(
                 candidates,
                 key=lambda x: (x["rerank_score"] if isinstance(x, dict) else getattr(x, "rerank_score", 0)),
@@ -263,7 +253,7 @@ class MasterHybridRetriever:
             logger.info(f"[Rerank] failed: {exc}")
             return candidates
 
-    # ── Core Retrieval ─────────────────────────────────────────────────────────
+    # Core Retrieval 
     def _dense_search(self, query: str, k: int) -> List[RetrievalResult]:
         return self.vector_store.search(query, k=k)
 
@@ -290,7 +280,6 @@ class MasterHybridRetriever:
         dense_weight: float = 0.7,
         bm25_weight: float = 0.3,
     ) -> List:
-        """Thin wrapper around standalone rrf_fuse."""
         all_hits = all_dense_hits + all_bm25_hits
         weights  = [dense_weight] * len(all_dense_hits) + [bm25_weight] * len(all_bm25_hits)
 
@@ -317,7 +306,7 @@ class MasterHybridRetriever:
     def search(
         self,
         query: str,
-        top_k: int = 5,
+        top_k: int = 10,
         dense_weight: float = 0.5,
         bm25_weight: float = 0.5,
     ) -> List[Dict[str, Any]]:
@@ -330,7 +319,7 @@ class MasterHybridRetriever:
             f"[POLICY] query_type={plan.query_type} | "
             f"multi_query={self.use_multi_query} | hyde={self.use_hyde}"
         )
-        candidate_k = max(top_k, settings.candidate_k)  # 40–50 candidates for reranker
+        candidate_k = self._choose_candidate_k(top_k)
 
         all_dense_hits = []
         all_bm25_hits = []
@@ -346,52 +335,61 @@ class MasterHybridRetriever:
         t_fuse_start = time.time()
         fused_results = self._rrf_fuse(all_dense_hits, all_bm25_hits, candidate_k, dense_weight, bm25_weight)
 
-        # STEP 3: Filter low-quality chunks
         def is_low_quality(chunk):
             text = chunk["text"].strip() if isinstance(chunk, dict) else getattr(chunk, "text", "").strip()
-            if len(text) < 20:
+            if len(text.split()) < 10:
                 return True
+
+            if text.strip().endswith(":"):
+                return True
+
             if text.count(",") > 10 and len(text.split()) < 15:
                 return True
             return False
+        
+        fused_results = [
+            c for c in fused_results
+            if (c.get("retrieval_score", 0.0) if isinstance(c, dict) else getattr(c, "score", 0.0)) >= 0.0
+        ]
+
         candidates = [c for c in fused_results if not is_low_quality(c)]
-        # STEP 1: Always rerank
-        reranked = self._rerank(query, candidates)
+        rerank_candidates = sorted(
+            candidates,
+            key=lambda x: x.get("retrieval_score", 0.0) if isinstance(x, dict) else getattr(x, "retrieval_score", 0.0),
+            reverse=True
+        )[:20]
+        reranked = self._rerank(query, rerank_candidates)
 
-        # STEP 2: Logging AFTER rerank
-
-        # STEP 5: QUALITY-BASED SELECTION (relevance + informativeness)
-        # Filter 1: rerank_score threshold
         if reranked:
             scores = [
-                c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", 0)
+                c.get("rerank_score") if isinstance(c, dict)
+                else getattr(c, "rerank_score", None)
                 for c in reranked
-            ]
-            scores_sorted = sorted(scores, reverse=True)
-            dynamic_threshold = scores_sorted[min(top_k, len(scores_sorted) - 1)]
-        else:
-            dynamic_threshold = 0.0
-    
-        # Filter 2: text informativeness (must be substantial)
+            ]  
+            scores = [s for s in scores if s is not None]
+
+        # Filter 2: text informativeness 
         def is_informative(chunk):
             text = chunk.get("text") if isinstance(chunk, dict) else getattr(chunk, "text", "")
             word_count = len(text.strip().split())
-            return word_count > 20  # Substantial content (not just titles/headers)
+            return word_count > 20 
     
-        def safe_score(c):
-            score = c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)
-            return score if score is not None else float('-inf')
-
+        if not scores:
+            return self._format_output(reranked[:top_k], "hybrid_rrf_rerank", False)
+        
         filtered_chunks = [
             c for c in reranked
-            if safe_score(c) > dynamic_threshold
-            and is_informative(c)
+            if is_informative(c) and not self._is_reference_chunk(c)
         ]
 
+        if not filtered_chunks:
+            filtered_chunks = reranked[:top_k] 
         if filtered_chunks:
-            final_chunks = filtered_chunks[:top_k]  
+            final_chunks = filtered_chunks[:top_k]
+            should_abstain = False
         else:
             final_chunks = []
+            should_abstain = True
 
         for c in final_chunks:
             cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)
@@ -402,7 +400,7 @@ class MasterHybridRetriever:
             ends_ok = text.strip().endswith((".", ":", ";", "?", ")"))
             print(f"  {cid}: score={rerank_score:.2f}, words={text_len}, complete=({starts_ok}&{ends_ok})")
 
-        formatted = self._format_output(final_chunks, "hybrid_rrf_rerank")
+        formatted = self._format_output(final_chunks, "hybrid_rrf_rerank", should_abstain)
 
         t_fuse = time.time() - t_fuse_start
         t_search_total = time.time() - t_search_start
@@ -418,7 +416,7 @@ class MasterHybridRetriever:
         )
         return formatted
 
-    def _format_output(self, results: list, method: str) -> List[Dict[str, Any]]:
+    def _format_output(self, results: list, method: str, should_abstain: bool):
         formatted = []
         for i, r in enumerate(results):
             if isinstance(r, dict):
@@ -426,14 +424,14 @@ class MasterHybridRetriever:
                 txt  = r.get("text")
                 did  = r.get("doc_id")
                 rerank_score = r.get("rerank_score") if isinstance(r, dict) else getattr(r, "rerank_score", None)
-                rrf_score    = r.get("score", 0) if isinstance(r, dict) else getattr(r, "score", 0)
+                rrf_score = r.get("rrf_score") or r.get("retrieval_score", 0) if isinstance(r, dict) else getattr(r, "rrf_score", None) or getattr(r, "retrieval_score", 0)
                 meta = r.get("metadata", {})
             else:
                 cid  = getattr(r, "chunk_id", "unknown")
                 txt  = getattr(r, "text", "")
                 did  = getattr(r, "doc_id", "unknown")
                 rerank_score = getattr(r, "rerank_score", None)
-                rrf_score    = getattr(r, "score", 0)
+                rrf_score = getattr(r, "retrieval_score", None) or getattr(r, "score", 0)
                 meta = getattr(r, "metadata", {})
 
             formatted.append({
@@ -445,9 +443,9 @@ class MasterHybridRetriever:
                 "retrieval_rank":   i + 1,
                 "retrieval_method": method,
                 "metadata":         meta,
+                "should_abstain":   should_abstain,
             })
         return formatted
-
 
 # --- CLI TEST ---
 if __name__ == "__main__":

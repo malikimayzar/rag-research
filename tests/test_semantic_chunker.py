@@ -6,7 +6,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 import numpy as np
 
-# Create lightweight dummy modules before importing SemanticChunker
 class DummySentenceTransformer:
     def __init__(self, *args, **kwargs):
         pass
@@ -17,7 +16,6 @@ class DummySentenceTransformer:
 class DummyRustChunker:
     @staticmethod
     def split_sentences_rs(text):
-        # Split into sentences for tests
         return [s.strip() for s in text.split('.') if s.strip()]
 
     @staticmethod
@@ -61,7 +59,6 @@ def test_semantic_chunker_creates_chunks():
     assert len(chunks) >= 1
     assert all(hasattr(chunk, 'chunk_id') for chunk in chunks)
     assert all(chunk.metadata.get('section') in {'ABSTRACT', 'REFERENCES', 'Abstract', 'References'} or chunk.metadata.get('section') for chunk in chunks)
-
 
 if __name__ == '__main__':
     test_semantic_chunker_creates_chunks()

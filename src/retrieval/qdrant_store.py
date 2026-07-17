@@ -16,7 +16,7 @@ CHUNK_ID_NAMESPACE = uuid.UUID('12345678-1234-5678-1234-567812345678')
 
 COLLECTION_NAME = "rag_research"
 QDRANT_PATH     = "./data/qdrant_storage"
-VECTOR_DIM      = 384
+VECTOR_DIM      = 768
 BATCH_SIZE      = 128
 
 
@@ -27,7 +27,6 @@ class RetrievalResult:
     text:     str
     score:    float
     metadata: dict
-
 
 class QdrantVectorStore:
     def __init__(
@@ -112,7 +111,7 @@ class QdrantVectorStore:
         k: int = 5,
         filter_doc_id: Optional[str] = None
     ) -> List[RetrievalResult]:
-        query_emb = self.embedder.encode([query], show_progress_bar=False)[0]
+        query_emb = self.embedder.encode([f"Represent this sentence: {query}"], show_progress_bar=False)[0]
         query_emb = query_emb.tolist() if hasattr(query_emb, "tolist") else list(query_emb)
         qdrant_filter = (
             Filter(must=[FieldCondition(key="doc_id", match=MatchValue(value=filter_doc_id))])

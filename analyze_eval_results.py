@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Analyze evaluation results dan identify patterns
-"""
-
 import json
 from pathlib import Path
 from typing import Dict, List
@@ -12,8 +7,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("eval_analysis")
 
 def analyze_results(results_file: str = "results/eval_phase2_results.json"):
-    """Analyze evaluation results"""
-    
     if not Path(results_file).exists():
         logger.error(f"Results file not found: {results_file}")
         return
@@ -24,8 +17,6 @@ def analyze_results(results_file: str = "results/eval_phase2_results.json"):
     logger.info("\n" + "="*80)
     logger.info("[PHASE 2 EVALUATION ANALYSIS]")
     logger.info("="*80)
-    
-    # Filter out unevaluated ones (value = -1)
     evaluated = [r for r in results if r.get("is_answer_correct", -1) != -1]
     
     if not evaluated:
@@ -95,13 +86,13 @@ def analyze_results(results_file: str = "results/eval_phase2_results.json"):
     if accuracy >= 0.9:
         logger.info("✓ System is production-ready! Excellent retrieval + generation quality.")
     elif accuracy >= 0.75:
-        logger.info("⚠ System is mostly good. Some edge cases need attention.")
+        logger.info("[WARN] System is mostly good. Some edge cases need attention.")
         if retrieval_issues > 0:
             logger.info("  → Consider: Better chunking strategy or hybrid search tuning")
         if hallucination_rate > 0.1:
             logger.info("  → Consider: Stricter confidence thresholds or prompt refinement")
     else:
-        logger.info("✗ Quality issues detected. Need significant improvements.")
+        logger.info("[Fail] Quality issues detected. Need significant improvements.")
         logger.info("  → Investigate retrieval failures first (before generation)")
     
     logger.info("\n" + "="*80 + "\n")

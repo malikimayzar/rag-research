@@ -38,7 +38,6 @@ SYSTEM_PROMPT = (
     "}"
 )
 
-
 @dataclass
 class RAGResponse:
     query:                    str
@@ -51,7 +50,6 @@ class RAGResponse:
     model:                    str
     num_chunks_retrieved:     int
     num_chunks_used:          int
-    # FIX P2: Expose parsed LLM metadata so callers can use them
     status:                   str   = "UNKNOWN"
     confidence_score:         float = 0.0
     supporting_sources:       list  = None
@@ -60,43 +58,32 @@ class RAGResponse:
         if self.supporting_sources is None:
             self.supporting_sources = []
 
-
-# ---------------------------------------------------------------------------
 # Helper: safe attribute access for RetrievalResult OR dict
-# ---------------------------------------------------------------------------
-
 def _get_attr(chunk, key: str, default=None):
-    """
-    FIX P1 (CRITICAL): Unified accessor that works for both
-    RetrievalResult objects and plain dicts.
-    Never call .get() or ['key'] directly on chunks.
-    """
     if isinstance(chunk, dict):
         return chunk.get(key, default)
     return getattr(chunk, key, default)
 
-
 def _get_score(chunk) -> float:
-    """Single authoritative accessor. retrieval_score is canonical."""
     if isinstance(chunk, dict):
-        return float(chunk.get("retrieval_score", chunk.get("score", 0.0)))
+        return float(
+            chunk.get("rerank_score")
+            or chunk.get("retrieval_score")
+            or chunk.get("score", 0.0)
+        )
     return float(
-        getattr(chunk, "retrieval_score", None)
+        getattr(chunk, "rerank_score", None)
+        or getattr(chunk, "retrieval_score", None)
         or getattr(chunk, "score", 0.0)
         or 0.0
     )
 
-
-# ---------------------------------------------------------------------------
 # Context helpers
-# ---------------------------------------------------------------------------
-
 def filter_chunks_by_diversity(chunks: list, max_per_doc: int = 2) -> list:
     if not chunks:
         return chunks
 
-    # Guard: don't apply diversity to small result sets
-    if len(chunks) <= 5:
+    if len(chunks) <= 2:
         logger.info(
             f"[DIVERSITY_FILTER] Skipped (only {len(chunks)} chunks — below guard threshold)"
         )
@@ -132,38 +119,28 @@ def build_context(chunks: list, max_chars: int = DEFAULT_MAX_CHARS) -> str:
             doc_id   = "manual"
             section  = "General"
         else:
-            # FIX P1: use _get_attr, never dict access
             text     = (_get_attr(chunk, "text", "") or "").strip()
             chunk_id = _get_attr(chunk, "chunk_id", f"c_{i}")
             doc_id   = _get_attr(chunk, "doc_id", "unknown")
-            # FIX P4: restore metadata for traceability
             metadata = _get_attr(chunk, "metadata", {}) or {}
             section  = metadata.get("section", "General")
 
-        # FIX P4: full header — doc_id + chunk_id + section all present
         header = f"[Source {i+1} | {doc_id} | {chunk_id} | Section: {section}]"
         block  = f"{header}\n{text}"
 
         if total_chars + len(block) > max_chars:
             logger.info(f"[CONTEXT_LIMIT] Reached max_chars={max_chars} at chunk {i+1}")
             break
-
         context_parts.append(block)
         total_chars += len(block)
-
     return "\n\n".join(context_parts)
 
-
 def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
-    """FIX P5: Uses _get_score() — single consistent score source."""
     if not chunks:
         return chunks
-
     scores = [_get_score(c) for c in chunks]
-
     if scores[0] <= -3.0:
         return []
-
     GAP_THRESHOLD = settings.score_gap_threshold
     selected = [chunks[0]]
     for i in range(1, len(chunks)):
@@ -171,13 +148,9 @@ def filter_chunks_by_score(chunks: list, min_score: float = 0.0) -> list:
         if scores[i] < -3.0 or gap > GAP_THRESHOLD:
             break
         selected.append(chunks[i])
-
     return selected
 
-
-# ---------------------------------------------------------------------------
 # LLM output parser
-# ---------------------------------------------------------------------------
 def _parse_llm_output(raw: str) -> tuple[str, str, float, list]:
     try:
         parsed = json.loads(raw)
@@ -188,14 +161,43 @@ def _parse_llm_output(raw: str) -> tuple[str, str, float, list]:
         if not answer:
             raise ValueError("Empty answer field in LLM JSON")
         return answer, status, conf, sources
+    
     except Exception as e:
         logger.warning(f"[PARSE_ERROR] LLM output is not valid JSON: {e} | raw='{raw[:200]}'")
-        return raw, "PARSE_ERROR", 0.0, []
+        return raw, "INSUFFICIENT_CONTEXT", 0.0, []
+
+def should_abort_before_generation(confidence_score: float, decision: str, has_chunks: bool, min_confidence: float = 0.05) -> bool:
+    if not has_chunks:
+        return True
+    if decision == "REJECT" and confidence_score <= min_confidence:
+        return True
+    return False
 
 
-# ---------------------------------------------------------------------------
-# TASK 2: Retrieval Hit Guard
-# ---------------------------------------------------------------------------
+def sanity_check_answer(answer: str, chunks: list, verbatim_threshold: float = 0.95) -> tuple[bool, str]:
+    if not answer or not chunks:
+        return True, "ok"
+    answer_clean = answer.strip().lower()
+    answer_words = set(answer_clean.split())
+
+    if len(answer_words) < 20:
+        return True, "ok"
+
+    for i, chunk in enumerate(chunks):
+        chunk_text = (_get_attr(chunk, "text", "") or "").strip().lower()
+        if not chunk_text:
+            continue
+        if len(answer_clean) > 200 and answer_clean in chunk_text:
+            return False, f"reference_dump: verbatim substring match di chunk {i+1}"
+        overlap = len(answer_words & set(chunk_text.split())) / len(answer_words)
+        is_verbatim_copy = answer_clean in chunk_text
+        chunk_coverage = len(answer_words & set(chunk_text.split())) / max(len(set(chunk_text.split())), 1)
+        is_near_copy = overlap >= verbatim_threshold and chunk_coverage > 0.5
+        if is_verbatim_copy or is_near_copy:
+            return False, f"reference_dump: word_overlap={overlap:.2f} di chunk {i+1}"
+    return True, "ok"
+
+# Retrieval Hit Guard
 def _make_abstain_response(
     query: str,
     chunks: list,
@@ -219,7 +221,6 @@ def _make_abstain_response(
         supporting_sources=[],
     )
 
-
 def check_retrieval_confidence(
     chunks: list,
     source_chunk_id: Optional[str],
@@ -241,20 +242,14 @@ def check_retrieval_confidence(
                 f"generation akan hallucinate, pipeline abstain"
             )
 
-    # Kondisi 3: Top-1 score terlalu rendah → retriever tidak percaya diri
     if top_k_scores and top_k_scores[0] <= min_top1_score:
         return False, (
             f"top1_score={top_k_scores[0]:.4f} ≤ threshold={min_top1_score} — "
             f"retrieval tidak yakin, pipeline abstain"
         )
-
     return True, "ok"
 
-
-# ---------------------------------------------------------------------------
 # Generator
-# ---------------------------------------------------------------------------
-
 class GroqGenerator:
     def __init__(self, api_key: Optional[str] = None, model: str = DEFAULT_MODEL):
         key = api_key or os.getenv("GROQ_API_KEY")
@@ -271,7 +266,6 @@ class GroqGenerator:
         chunks:          list,
         max_tokens:      Optional[int] = None,
         temperature:     float = 0.0,
-        # TASK 2: parameter baru — opsional, tidak breaking existing callers
         source_chunk_id: Optional[str] = None,
         min_top1_score:  float         = -3.0,
     ) -> RAGResponse:
@@ -294,36 +288,26 @@ class GroqGenerator:
                 reason=reason,
             )
 
-        # ------------------------------------------------------------------
-        # Ab sini normal path — retrieval dianggaif filtered_chunks:p cukup terpercaya
-        # ------------------------------------------------------------------
         if not chunks:
             return _make_abstain_response(
                 query=query, chunks=[], model=self.model,
                 reason="chunks kosong setelah guard (defensive)",
             )
-
-        # FIX P3: Guarded diversity filter
         score_filtered = filter_chunks_by_score(chunks)
         filtered_chunks = filter_chunks_by_diversity(score_filtered, max_per_doc=2)
         num_chunks_used = len(filtered_chunks)
-
-        # FIX P5: Use _get_score() — no ambiguous field names
         logger.info(
             f"[RETRIEVAL_QUALITY] query='{query[:50]}...' | "
             f"num_retrieved={num_chunks_retrieved} | num_after_diversity={num_chunks_used} | "
             f"top_5_scores={[round(s, 4) for s in top_k_scores]}"
         )
 
-        # FIX P1 + P4: Object-safe context building via build_context()
         context = build_context(filtered_chunks, max_chars=DEFAULT_MAX_CHARS)
         t1 = time.time()
-
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user",   "content": f"CONTEXT:\n{context}\n\nQUESTION:\n{query}"}
         ]
-
         effective_max_tokens = max_tokens if max_tokens is not None else settings.generation_max_tokens
 
         try:
@@ -347,10 +331,12 @@ class GroqGenerator:
         raw_answer = response.choices[0].message.content.strip()
         t2 = time.time()
 
-        # FIX P2: Parse JSON output — enforce the schema we promised the LLM
-        answer, status, confidence, sources = _parse_llm_output(raw_answer)
 
-        # FIX P6: Use parsed status instead of fragile string matching
+        answer, status, confidence, sources = _parse_llm_output(raw_answer)
+        is_ok, sanity_reason = sanity_check_answer(answer, filtered_chunks)
+        if not is_ok:
+            logger.warning(f"[SANITY_CHECK] REJECTED | reason={sanity_reason}")
+            return _make_abstain_response(query=query, chunks=chunks, model=self.model, reason=sanity_reason)
         if status == "INSUFFICIENT_CONTEXT":
             answer = "I'm sorry, I couldn't find the answer in the provided context."
 
@@ -367,12 +353,16 @@ class GroqGenerator:
         )
 
         retrieval_method = _get_attr(chunks[0], "retrieval_method", "hybrid_rrf_baseline")
-
-        # CONFIDENCE: Compute based on actual retrieval strength
         confidence_result = self._confidence.calculate_confidence(filtered_chunks)
-        final_confidence = confidence_result["confidence_score"]
+        final_confidence = float(confidence_result.get("confidence_score", 0.0))
+        final_confidence = max(0.0, min(1.0, final_confidence))
+        confidence_result["confidence_score"] = final_confidence
 
-        if confidence_result["decision"] == "REJECT":
+        if should_abort_before_generation(
+            confidence_score=final_confidence,
+            decision=confidence_result.get("decision", "GENERATE"),
+            has_chunks=bool(filtered_chunks),
+        ):
             return _make_abstain_response(
                 query=query,
                 chunks=chunks,
@@ -397,15 +387,12 @@ class GroqGenerator:
             num_chunks_retrieved=num_chunks_retrieved,
             num_chunks_used=num_chunks_used,
             status=status,
-            confidence_score=final_confidence,  # Use realistic confidence
+            confidence_score=final_confidence,  
             supporting_sources=sources,
         )
 
 
-# ---------------------------------------------------------------------------
 # Module-level convenience
-# ---------------------------------------------------------------------------
-
 def generate(query: str, chunks: list, **kwargs) -> RAGResponse:
     gen = GroqGenerator(model=kwargs.get("model_name", DEFAULT_MODEL))
     return gen.generate(query, chunks)
@@ -419,11 +406,52 @@ def save_response(response: RAGResponse, output_path: str) -> None:
     logger.info(f"[Saved] -> {output_path}")
 
 
-# ---------------------------------------------------------------------------
-# Smoke test
-# ---------------------------------------------------------------------------
+# Self-contained sanity-check tests
+def _run_sanity_check_answer_tests() -> bool:
+    long_chunk = (
+        "Attention mechanisms let a model compare query representations with key representations, "
+        "produce normalized weights, and use those weights to combine value representations into a "
+        "context vector. This helps the model focus on relevant tokens when generating each output "
+        "rather than compressing an entire sequence into one fixed representation. The mechanism is "
+        "especially useful in encoder decoder and transformer architectures because it creates a "
+        "direct path between distant positions in the input sequence."
+    )
+    high_overlap_answer = (
+        "model Attention mechanisms let a model compare query representations with key representations, "
+        "produce normalized weights, and use those weights to combine value representations into a "
+        "context vector. This helps the model focus on relevant tokens when generating each output"
+    )
+    normal_answer = (
+        "An attention mechanism scores which input tokens matter for the current output step and "
+        "uses those scores to build a context representation from the source sequence."
+    )
+    cases = [
+        ("short answer <20 words", "Attention weights identify relevant input tokens.", [{"text": long_chunk}], True),
+        ("verbatim chunk copy >200 chars", long_chunk, [{"text": long_chunk}], False),
+        ("word overlap >=0.95", high_overlap_answer, [{"text": long_chunk}], False),
+        ("normal grounded answer", normal_answer, [{"text": long_chunk}], True),
+        ("empty answer", "", [{"text": long_chunk}], True),
+    ]
+
+    print("\n" + "=" * 80)
+    print("[SANITY_CHECK_ANSWER TESTS]")
+    print("=" * 80)
+    all_passed = True
+    for name, answer, chunks, expected in cases:
+        actual, reason = sanity_check_answer(answer, chunks)
+        passed = actual is expected
+        all_passed = all_passed and passed
+        status = "PASS" if passed else "FAIL"
+        print(f"{status} | {name} | expected={expected} actual={actual} | reason={reason}")
+    return all_passed
+
+# Optional smoke test
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+    sanity_ok = _run_sanity_check_answer_tests()
+
+    if os.getenv("RUN_GENERATOR_SMOKE") != "1":
+        raise SystemExit(0 if sanity_ok else 1)
 
     from src.retrieval.qdrant_store import QdrantVectorStore
     from src.retrieval.hybrid_retriever import MasterHybridRetriever

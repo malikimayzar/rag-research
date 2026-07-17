@@ -8,9 +8,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from src.api.config import settings
 
 load_dotenv()
-from src.api.config import settings
 
 # Setup logging
 logging.basicConfig(
@@ -215,17 +215,12 @@ async def generate_answer(req: GenerateRequest):
         t_gen_start = time.time()
         response = await run_in_threadpool(generator.generate, req.query, chunks)
         latency_generation_ms = round((time.time() - t_gen_start) * 1000, 2)
-
         latency_total_ms = round((time.time() - t_api_start) * 1000, 2)
-
         logger.info(
-            f"[{rid}] COMPLETE | "
-            f"retrieval_ms={latency_retrieval_ms} | "
-            f"generation_ms={latency_generation_ms} | "
-            f"total_ms={latency_total_ms} | "
-            f"decision={decision} | confidence={confidence}"
+            f"[{rid} COMPLETE]"
+            f"retrieval_ms={latency_retrieval_ms}|"
+            f"generation_ms={latency_generation_ms}|"
         )
-
         return GenerateResponse(
             query=req.query,
             answer=response.answer,
@@ -238,7 +233,7 @@ async def generate_answer(req: GenerateRequest):
             confidence=confidence,
             decision=decision,
         )
-
+    
     except Exception as e:
         logger.error(f"[{rid}] CRITICAL ERROR | {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal processing error")

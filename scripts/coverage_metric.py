@@ -1,33 +1,3 @@
-"""
-scripts/coverage_metric.py  ·  rag-research v0.2.0
-─────────────────────────────────────────────────────────────────────────────
-Coverage Metric v2
-
-Core metric:
-  coverage           = answered / answerable
-  effective_coverage = (answered AND faithful) / answerable   ← lebih jujur
-
-Classification (3-tier, bukan binary):
-  hard_gap        → top_score <= 0          kemungkinan corpus gap
-  retrieval_fail  → 0 < top_score < 0.2     ada di corpus, retrieval miss
-  abstained       → top_score >= 0.2, LLM menolak jawab
-  answered        → top_score >= 0.2, LLM jawab
-
-Faithfulness modes:
-  offline  (default) → load dari results/metrics/ragas_*.json
-  inline             → Groq LLM judge, sampling only (--sample N)
-  hybrid             → offline dulu, fallback inline untuk yang tidak ada
-
-Run:
-  python scripts/coverage_metric.py
-  python scripts/coverage_metric.py --verbose
-  python scripts/coverage_metric.py --faithfulness-mode inline --sample 10
-  python scripts/coverage_metric.py --faithfulness-mode hybrid --sample 10
-  python scripts/coverage_metric.py --live --api-url http://localhost:8003
-  python scripts/coverage_metric.py --live --max-workers 3 --verbose
-─────────────────────────────────────────────────────────────────────────────
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -64,9 +34,9 @@ OUTPUT_JSON  = OUTPUT_DIR / "coverage_report.json"
 OUTPUT_MD    = OUTPUT_DIR / "coverage_report.md"
 
 # ── Thresholds ────────────────────────────────────────────────────────────────
-HARD_GAP_THRESHOLD       = 0.0   # <= ini → hard_gap
-RETRIEVAL_FAIL_THRESHOLD = 0.2   # <= ini → retrieval_fail
-FAITHFULNESS_THRESHOLD   = 0.5   # >= ini → faithful
+HARD_GAP_THRESHOLD       = 0.0   
+RETRIEVAL_FAIL_THRESHOLD = 0.2  
+FAITHFULNESS_THRESHOLD   = 0.5   
 DEFAULT_API_URL          = "http://localhost:8003"
 DEFAULT_MAX_WORKERS      = 3
 
@@ -102,9 +72,7 @@ Respond with ONLY a JSON object, nothing else:
 {{"faithful": true/false, "score": 0.0-1.0, "reason": "one sentence"}}"""
 
 
-# ═════════════════════════════════════════════════════════════════════════════
 # 1. CLASSIFIERS
-# ═════════════════════════════════════════════════════════════════════════════
 
 def get_top_score(record: dict) -> float:
     chunks = record.get("retrieved_chunks", [])
@@ -117,11 +85,6 @@ def get_top_score(record: dict) -> float:
 
 
 def is_abstention(answer: str) -> bool:
-    """
-    Robust abstention detection:
-    phrase matching + length heuristic + empty check.
-    Lebih reliable dari pure string matching.
-    """
     if not answer or len(answer.strip()) < 10:
         return True
     a = answer.lower().strip()
@@ -133,12 +96,6 @@ def is_abstention(answer: str) -> bool:
 
 
 def classify_retrieval(top_score: float) -> str:
-    """
-    3-tier classification — pisahkan corpus gap dari retrieval failure.
-    hard_gap      = data problem   → exclude dari denominator coverage
-    retrieval_fail = pipeline problem → masuk denominator, harus difix
-    retrieved      = ok
-    """
     if top_score <= HARD_GAP_THRESHOLD:
         return "hard_gap"
     elif top_score < RETRIEVAL_FAIL_THRESHOLD:
@@ -159,18 +116,8 @@ def classify_record(record: dict) -> str:
     return "answered"
 
 
-# ═════════════════════════════════════════════════════════════════════════════
 # 2. FAITHFULNESS EVALUATOR
-# ═════════════════════════════════════════════════════════════════════════════
-
 class FaithfulnessEvaluator:
-    """
-    3 mode:
-      offline → load dari ragas_*.json (reproducible, gratis)
-      inline  → Groq LLM judge dengan sampling (real-time, ada cost)
-      hybrid  → offline dulu, fallback inline untuk query yang tidak ada di cache
-    """
-
     def __init__(self, mode: str = "offline", sample_size: int = 20):
         self.mode         = mode
         self.sample_size  = sample_size
@@ -196,9 +143,6 @@ class FaithfulnessEvaluator:
                 with open(rf) as f:
                     data = json.load(f)
 
-                # Handle dua format RAGAS output:
-                # Format A: list of {question/query, faithfulness, ...}
-                # Format B: {results: [...]} atau {scores: {...}}
                 items = []
                 if isinstance(data, list):
                     items = data
@@ -221,7 +165,6 @@ class FaithfulnessEvaluator:
 
             except Exception as e:
                 logger.warning("Failed loading %s: %s", rf.name, e)
-
         logger.info("Faithfulness cache: %d entries from %d files", loaded, len(ragas_files))
 
     def _init_groq(self):
@@ -294,7 +237,6 @@ class FaithfulnessEvaluator:
             if self._judge_calls < self.sample_size:
                 return self._judge_inline(query, answer, contexts)
             return None
-
         return None
 
     def score_batch(self, records: list[dict]) -> dict[str, Optional[float]]:
@@ -312,10 +254,7 @@ class FaithfulnessEvaluator:
         return results
 
 
-# ═════════════════════════════════════════════════════════════════════════════
 # 3. LOADERS
-# ═════════════════════════════════════════════════════════════════════════════
-
 def load_primary(path: Path) -> list[dict]:
     if not path.exists():
         logger.warning("Primary not found: %s", path)
@@ -374,11 +313,7 @@ def load_queries_for_live(gt_path: Path) -> list[str]:
     logger.info("Loaded %d queries ← %s", len(queries), gt_path.name)
     return queries
 
-
-# ═════════════════════════════════════════════════════════════════════════════
 # 4. LIVE API RUNNER  (concurrent + observability)
-# ═════════════════════════════════════════════════════════════════════════════
-
 def call_generate_api(query: str, api_url: str, timeout: int = 30) -> Optional[dict]:
     url     = f"{api_url.rstrip('/')}/generate"
     payload = json.dumps({"query": query, "top_k": 5, "use_reranker": True}).encode()
@@ -397,17 +332,7 @@ def call_generate_api(query: str, api_url: str, timeout: int = 30) -> Optional[d
         logger.warning("API error: %s", e)
         return None
 
-
 def _normalize_api_response(query: str, resp: dict, elapsed_ms: float) -> dict:
-    """
-    Convert /generate response → format classify_record() bisa baca.
-    Gunakan retrieval_method field sebagai signal untuk corpus gap
-    (rejected_low_score = early reject gate → hard_gap).
-
-    NOTE: /generate saat ini tidak expose per-chunk score.
-    Proxy 0.5 dipakai untuk "retrieved" (di atas RETRIEVAL_FAIL_THRESHOLD).
-    Fix proper: tambahkan chunk scores ke GenerateResponse (Task 4: API hardening).
-    """
     method   = resp.get("retrieval_method", "")
     contexts = resp.get("contexts", [])
 
@@ -427,7 +352,6 @@ def _normalize_api_response(query: str, resp: dict, elapsed_ms: float) -> dict:
         "latency_generation_ms": resp.get("latency_generation_ms", 0),
         "retrieved_chunks":      chunks,
     }
-
 
 def run_live(queries: list[str], api_url: str, max_workers: int = DEFAULT_MAX_WORKERS) -> list[dict]:
     if not queries:
@@ -490,11 +414,7 @@ def run_live(queries: list[str], api_url: str, max_workers: int = DEFAULT_MAX_WO
     )
     return records
 
-
-# ═════════════════════════════════════════════════════════════════════════════
 # 5. AGGREGATION
-# ═════════════════════════════════════════════════════════════════════════════
-
 def compute_coverage(
     records: list[dict],
     faith_scores: Optional[dict[str, Optional[float]]] = None,
@@ -542,7 +462,7 @@ def compute_coverage(
     ret_fail   = counts["retrieval_fail"]
     abstained  = counts["abstained"]
     answered   = counts["answered"]
-    answerable = total - hard_gap   # retrieval_fail masuk denominator (pipeline problem)
+    answerable = total - hard_gap  
 
     faith_available = sum(1 for q in per_query if q["faithfulness"] is not None)
 
@@ -566,7 +486,6 @@ def compute_coverage(
         "per_query":                per_query,
     }
 
-
 def _empty_coverage() -> dict:
     return {
         "total": 0, "answered": 0, "abstained": 0,
@@ -577,7 +496,6 @@ def _empty_coverage() -> dict:
         "avg_latency_retrieval_ms": None, "avg_latency_generation_ms": None,
         "per_query": [],
     }
-
 
 def split_by_source(records: list[dict]) -> dict[str, list[dict]]:
     groups: dict[str, list] = defaultdict(list)
@@ -590,20 +508,15 @@ def split_by_source(records: list[dict]) -> dict[str, list[dict]]:
     return dict(groups)
 
 
-# ═════════════════════════════════════════════════════════════════════════════
 # 6. RENDERERS
-# ═════════════════════════════════════════════════════════════════════════════
-
 def _bar(value: Optional[float], width: int = 20) -> str:
     if value is None:
         return "N/A"
     filled = int(value * width)
     return f"[{'█' * filled}{'░' * (width - filled)}] {value * 100:.1f}%"
 
-
 def _pct(value: Optional[float]) -> str:
     return f"{value * 100:.1f}%" if value is not None else "N/A"
-
 
 def render_json(overall: dict, by_source: dict, ts: str, faith_mode: str) -> dict:
     return {
@@ -630,7 +543,6 @@ def render_json(overall: dict, by_source: dict, ts: str, faith_mode: str) -> dic
         "per_query": overall.get("per_query", []),
     }
 
-
 def render_md(overall: dict, by_source: dict, ts: str, faith_mode: str) -> str:
     cov     = overall["coverage"]
     eff_cov = overall["effective_coverage"]
@@ -640,13 +552,13 @@ def render_md(overall: dict, by_source: dict, ts: str, faith_mode: str) -> str:
     faith_n = overall["faithfulness_available"]
 
     if cov is None:
-        health = "⚠️  No answerable data"
+        health = "[WARN]  No answerable data"
     elif cov >= 0.90 and (eff_cov is None or eff_cov >= 0.80):
-        health = "✅ Healthy"
+        health = "OK Healthy"
     elif cov >= 0.75:
-        health = "🟡 Needs attention"
+        health = "[OK] Needs attention"
     else:
-        health = "🔴 Critical"
+        health = "[OK] Critical"
 
     lines = [
         "# Coverage Metric Report  ·  v2",
@@ -764,10 +676,7 @@ def render_md(overall: dict, by_source: dict, ts: str, faith_mode: str) -> str:
     return "\n".join(lines)
 
 
-# ═════════════════════════════════════════════════════════════════════════════
 # 7. MAIN
-# ═════════════════════════════════════════════════════════════════════════════
-
 def main():
     parser = argparse.ArgumentParser(
         description="RAG Coverage Metric v2",

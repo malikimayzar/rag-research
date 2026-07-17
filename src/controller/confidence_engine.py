@@ -6,17 +6,21 @@ logger = logging.getLogger("rag.confidence_engine")
 
 class ConfidenceEngine:
     def __init__(self):
-        self.reject_threshold = 0.25
-        self.partial_threshold = 0.45
+        self.reject_threshold = 0.45
+        self.partial_threshold = 0.65
 
     def _normalize_scores(self, scores: List[float], score_type: str = "cosine") -> np.ndarray:
         arr = np.array(scores, dtype=float)
         if score_type == "cross_encoder":
             return 1 / (1 + np.exp(-arr))
         elif score_type == "rrf":
-            return np.clip(arr / (arr.max() + 1e-9), 0.0, 1.0)
+            if arr.max() > 0:
+                return np.clip(arr / (arr.max() + 1e-9), 0.0, 1.0)
+            return np.ones_like(arr) * 0.5
         else:  
-            return np.clip(arr, 0.0, 1.0)
+            if arr.max() == arr.min():
+                return np.ones_like(arr) * 0.5
+            return (arr - arr.min()) / (arr.max() - arr.min() + 1e-9)
     
     def _sigmoid(self, x: float) -> float:
         import math
@@ -33,17 +37,18 @@ class ConfidenceEngine:
     
     def _get_chunk_score(self, chunk: Any) -> float:
         if isinstance(chunk, dict):
-            score = chunk.get("rerank_score")
+            score = chunk.get("retrieval_score")
             if score is None:
-                score = chunk.get("retrieval_score")
+                score = chunk.get("rerank_score")
+
             if score is None:
                 score = chunk.get("score")
             if score is None:
                 return None
         else:
-            score = getattr(chunk, "rerank_score", None)
+            score = getattr(chunk, "retrieval_score", None)
             if score is None:
-                score = getattr(chunk, "retrieval_score", None)
+                score = getattr(chunk, "rerank_score", None)
             if score is None:
                 score = getattr(chunk, "score", None)
         return float(score) if score is not None else None
@@ -55,7 +60,7 @@ class ConfidenceEngine:
             if doc_id:
                 doc_ids.append(doc_id)
         if not doc_ids:
-            return 0.5
+            return 0.2
         return min(len(set(doc_ids)) / 3.0, 1.0)
     
     def _detect_patterns(self, top_norm: float, mean_top3_norm: float, gap: float) -> dict:
@@ -80,10 +85,24 @@ class ConfidenceEngine:
                     "unstable_retrieval": False,
                 }
             }
-        raw_scores = [
-            s for s in (self._get_chunk_score(c) for c in chunks)
-            if isinstance(s, (int, float))
-        ]
+        raw_scores = []
+        has_invalid_score = False
+        for chunk in chunks:
+            score = self._get_chunk_score(chunk)
+            if isinstance(score, (int, float)) and np.isfinite(score):
+                raw_scores.append(float(score))
+            else:
+                has_invalid_score = True
+
+        if has_invalid_score or not raw_scores:
+            return {
+                "confidence_score": 0.0,
+                "decision": "REJECT",
+                "signals": {"reason": "no_valid_scores" if not raw_scores else "invalid_scores"}
+            }
+        logger.info(
+            f"[RAW_SCORES] {raw_scores[:10]}"
+        )
 
         if not raw_scores:
             return {
@@ -92,7 +111,12 @@ class ConfidenceEngine:
                 "signals": {"reason": "no_valid_scores"}
             }
 
-        normalized_scores = list(self._normalize_scores(raw_scores, score_type="cross_encoder"))
+        has_rerank = any(
+            (c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)) is not None
+            for c in chunks
+        )
+        score_type = "cross_encoder" if has_rerank else "rrf"
+        normalized_scores = list(self._normalize_scores(raw_scores, score_type=score_type))
         top_score = raw_scores[0]
         mean_top3 = float(np.mean(raw_scores[:3])) if len(raw_scores) >= 3 else top_score
         top_score_norm = normalized_scores[0]
@@ -107,18 +131,23 @@ class ConfidenceEngine:
         agreement = self._source_agreement(chunks)
 
         base_confidence = (
-            0.40 * top_score_norm +
-            0.35 * mean_top3_norm +
+            0.45 * top_score_norm +
+            0.25 * mean_top3_norm +
             0.15 * agreement +
-            0.10 * score_level
+            0.15 * min(gap * 2, 1.0)
         )
 
-        if gap > 0.5:
-            gap_modifier = +0.10 if mean_top3_norm > 0.6 else -0.15
-        else:
-            gap_modifier = 0.0
-
-        confidence_score = max(0.0, min(1.0, base_confidence + gap_modifier))
+        penalty = 0.0
+        if mean_top3_norm < 0.4:
+            penalty += 0.4
+        if gap < 0.05:
+            penalty += 0.08
+        if entropy > 0.8:
+             penalty += 0.10
+        if agreement < 0.2:
+             penalty += 0.25
+        
+        confidence_score = max(0.0, base_confidence - penalty)
 
         logger.info(
             f"[CONFIDENCE_BREAKDOWN] top_score={top_score:.4f} | mean_top3={mean_top3:.4f} | "
@@ -133,18 +162,13 @@ class ConfidenceEngine:
         )
         patterns = self._detect_patterns(top_score_norm, mean_top3_norm, gap)
 
-        if patterns["spurious_match"] and patterns["unstable_retrieval"]:
+        if confidence_score < 0.25:
             decision = "REJECT"
-        elif patterns["spurious_match"]:
+        elif confidence_score < 0.55:
             decision = "PARTIAL_TRUST"
         else:
-            if confidence_score < self.reject_threshold:
-                decision = "REJECT"
-            elif confidence_score < self.partial_threshold:
-                decision = "PARTIAL_TRUST"
-            else:
-                decision = "GENERATE"
-
+            decision = "GENERATE"
+            
         logger.info(f"[CONFIDENCE_RESULT] confidence_score={confidence_score:.4f} | decision={decision}")
         assert 0.0 <= confidence_score <= 1.0, f"Confidence out of range: {confidence_score}"
         return {
