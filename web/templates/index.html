@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-10">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold mb-10 text-blue-400">RAG Research Leaderboard</h1>
+        
+        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+            <table class="w-full text-left">
+                <thead class="bg-gray-700 text-blue-300">
+                    <tr>
+                        <th class="p-4">Experiment ID</th>
+                        <th class="p-4">Faithfulness</th>
+                        <th class="p-4">Precision</th>
+                        <th class="p-4">Recall</th>
+                        <th class="p-4">Hallucination</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Results}}
+                    <tr class="border-b border-gray-700 hover:bg-gray-750 transition">
+                        <td class="p-4 font-mono">{{.ExpID}}</td>
+                        <td class="p-4">{{printf "%.4f" .AvgFaithfulness}}</td>
+                        <td class="p-4 text-green-400 font-bold">{{printf "%.4f" .AvgContextPrecision}}</td>
+                        <td class="p-4">{{printf "%.4f" .AvgContextRecall}}</td>
+                        <td class="p-4 text-red-400">{{printf "%.1f%%" (mul .HallucinationRate 100.0)}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-10">
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl mb-4">Latest Radar Chart</h2>
+                <img src="/static/radar_chart.png" class="w-full rounded-lg">
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl flex flex-col justify-center">
+                <h2 class="text-2xl font-bold text-blue-400 mb-2">Top 1% AI Strategy</h2>
+                <p class="text-gray-400">Sistem ini menggunakan <b>Rust Semantic Chunker</b> untuk pemrosesan data dan <b>Hybrid RRF Search</b> untuk akurasi retrieval maksimal.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

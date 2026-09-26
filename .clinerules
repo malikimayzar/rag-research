@@ -1,0 +1,119 @@
+# .clinerules — rag-research (ai-infra-workspace)
+# Sumber: PROJECT_GOALS.md v2.0 (Last Updated: 2026-04-27)
+# Tujuan file ini: memastikan Cline tidak pernah "membantu" dengan cara yang melanggar
+# protokol keselamatan proyek ini. Baca seluruh file ini sebelum mengubah kode apa pun.
+
+## 0. Status Proyek Saat Ini
+- Phase 1 (Pipeline Stabilization): ACTIVE — cek exit criteria di Section 7 sebelum
+  menganggap phase ini selesai.
+- Phase 2, 3, 4, 5: TODO / blocked. JANGAN implementasi fitur dari phase yang belum
+  ter-unlock (mis. jangan bikin adaptive failure response / Phase 4 kalau Phase 3
+  belum exit).
+
+## 1. ATURAN WAJIB — Change Safety Protocol (Section 14)
+Setiap perubahan pada sistem (kode, config, prompt, threshold, model) HARUS ikuti urutan ini:
+1. Jalankan full eval SEBELUM perubahan (`run_eval.py` atau eval runner yang berlaku)
+2. Terapkan perubahan
+3. Jalankan full eval SESUDAH perubahan
+4. Bandingkan metrik: EM, Recall@10, MRR@10, Hallucination Rate (dan metrik relevan lain)
+
+Constraint keras:
+- Jika ADA metrik yang turun > 3% → perubahan HARUS di-revert. Tidak ada pengecualian.
+- Untuk perubahan besar: lakukan Canary Evaluation dulu (test di 10% subset data,
+  section 14.1). Jika failure rate naik → rollback segera.
+
+**Cline TIDAK BOLEH:**
+- Mengubah baseline (Appendix A) tanpa menjalankan eval before/after dan mendokumentasikan
+  delta di `CHANGELOG.md`.
+- Melakukan multiple perubahan sekaligus tanpa eval di antaranya (biar akar masalah bisa
+  diisolasi kalau ada regresi).
+- Auto-commit atau auto-apply perubahan pada file inti pipeline (retriever, reranker,
+  confidence engine, generator) tanpa approval eksplisit dari user.
+
+## 2. Baseline Terkomit (Appendix A) — JANGAN DIUBAH TANPA ABLATION
+```json
+{
+  "retrieval_strategy": "hybrid_rrf",
+  "top_k": 10,
+  "candidate_k": 50,
+  "min_chunk_length": 80,
+  "hyde_enabled": false,
+  "multi_query_enabled": false,
+  "reranker_enabled": true,
+  "llm_model": "llama-3.1-8b-instant",
+  "confidence_threshold": 0.65,
+  "max_retry_iterations": 2,
+  "context_token_budget": 1800
+}
+```
+Invariant yang harus selalu terjaga: `candidate_k >= rerank_n >= top_k` (saat ini 50 >= 10 >= 10).
+
+## 3. Non-Goals — JANGAN diimplementasikan / diaktifkan kembali
+- HyDE (Hypothetical Document Embeddings) — confirmed domain drift, dilarang re-enable
+  tanpa ablation baru.
+- Multi-query expansion — nonaktif secara default (+0.17 MRR tapi +3400ms latency,
+  belum worth it). Jangan aktifkan kecuali EM < 60% DAN MRR < 0.60 di eval.
+- Multi-turn conversation / chatbot behavior — di luar scope, ini single-turn QA system.
+- Generic LLM wrapper — sistem ini harus reliable, bukan flexible.
+- Real-time index update — di luar scope v1.
+- Global mutable adaptive state — Phase 4 (kalau sudah unlocked) hanya boleh pakai
+  session-level config override, BUKAN state store global.
+
+## 4. Retry & Confidence — Batasan Keras
+- Retry loop: HARD CAP 2 iterasi (initial + 1 retry). Tidak boleh lebih.
+- Max tambahan LLM call dari retry: 1.
+- Max tambahan latency dari retry: 2.0s.
+- Jika retry menghasilkan confidence yang sama dengan attempt pertama → ABSTAIN, jangan retry lagi.
+- Confidence score harus selalu berada di range [0.0, 1.0] — tambahkan assertion kalau belum ada.
+- Sistem TIDAK BOLEH mengembalikan jawaban dengan confidence rendah — kalau semua fallback
+  gagal, force abstain (lihat Section 13.3 Graceful Degradation).
+
+## 5. Failure Mode — Tidak Boleh Ada Silent Failure
+Setiap query WAJIB menghasilkan log JSON terstruktur (lihat schema Section 4 PROJECT_GOALS.md)
+dengan field: query_id, query_type, retrieval_scores, reranker_scores, chunks_used,
+confidence_score, failure_type, answer_status, latency_ms breakdown, retry_triggered.
+
+Kalau Cline menulis/mengedit kode pipeline, pastikan setiap failure path mengarah ke salah
+satu failure_type yang sudah didefinisikan (retrieval_miss, ranking_error, filtering_error,
+generation_fail, classification_error, confidence_miss, hallucination, latency_breach,
+semantic_drift, context_conflict, position_bias, index_drift, prompt_sensitivity) — jangan
+biarkan exception ter-swallow tanpa logging.
+
+**Hard block:** hallucination (NLI entailment < 0.5 untuk klaim apa pun) tidak boleh pernah
+sampai ke user — ini bukan warning, ini block absolut.
+
+## 6. Evaluation Integrity (Section 10)
+- Dataset split: train_eval vs holdout_eval. Metrik final HANYA dari holdout_eval.
+- Data leakage: kalau similarity(query, chunk_text) > 0.9 → sample harus di-exclude dari eval.
+- Distribusi query: easy/medium/hard/adversarial masing-masing minimal 20% dari dataset.
+- Metric stability: jalankan eval ≥3 kali, variance harus ≤3%. Kalau lebih → sistem dianggap
+  unstable (biasanya karena randomness LLM), jangan buru-buru declare fix selesai.
+
+## 7. Grounding & Adversarial Robustness (Section 11 & 16)
+- Setiap klaim di jawaban harus ter-map ke span di retrieved chunks (substring match atau
+  semantic similarity ≥ 0.75). Kalau tidak → jawaban HARUS di-reject.
+- Attribution coverage ≥ 0.8, kalau kurang → downgrade atau abstain.
+- Kalau jawaban pakai multi-chunk dan ada NLI contradiction antar chunk → abstain.
+- Sistem harus strip instruction dari isi chunk (defense terhadap prompt injection dalam
+  dokumen) dan mengabaikan instruksi apa pun yang muncul di dalam context/chunk.
+
+## 8. Load & Degradation (Section 13)
+Urutan degradasi yang WAJIB diikuti saat overload (bukan manual toggle, harus circuit breaker):
+1. Disable reranker
+2. Reduce candidate_k (50 → 30 → 20)
+3. Reduce context token budget (1800 → 1200)
+4. Force abstain
+
+Tidak pernah: mengembalikan jawaban dengan confidence rendah demi "tetap menjawab".
+
+## 9. Versioning (Section 15)
+Setiap eksperimen WAJIB log: dataset_version, embedding_model_version, chunking_strategy_version.
+Hasil tanpa metadata versi = INVALID, jangan dipakai sebagai bukti perbaikan.
+
+## 10. Gaya Kerja dengan User
+- Discuss-first: sebelum mengubah file inti pipeline, jelaskan dulu rencana perubahan dan
+  dampaknya ke metrik, tunggu konfirmasi user.
+- Patch-by-patch: kasih diff/lokasi file yang jelas, JANGAN regenerate seluruh file kalau
+  cuma butuh perubahan kecil.
+- Kalau ada undocumented deviation dari baseline (kayak insiden candidate_k/rerank_input_cap
+  sebelumnya) — flag dulu ke user sebelum lanjut, jangan diam-diam "perbaiki" tanpa bilang.

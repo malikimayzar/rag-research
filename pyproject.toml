@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-research"
+version = "0.1.0"
+description = "Hybrid Python-Rust RAG Research System"
+dependencies = [
+    "langchain",
+    "qdrant-client",
+    "ragas",
+    "pymupdf",
+    "sentence-transformers",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

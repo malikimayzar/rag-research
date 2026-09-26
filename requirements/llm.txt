@@ -1,0 +1,13 @@
+ollama
+openai
+tiktoken
+
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+
+langgraph
+langsmith
+
+instructor

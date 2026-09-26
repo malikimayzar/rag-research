@@ -1,0 +1,23 @@
+[
+  {
+    "query": "Who are the authors of the paper?",
+    "status": "ANSWERED",
+    "answer": "The authors are Yuntian Deng, Anton Bakhtin, Myle Ott, Arthur Szlam, and Marc'Aurelio Ranzato.",
+    "confidence_v1": 0.72,
+    "error_decomposition": {"failure_type": "ok"}
+  },
+  {
+    "query": "Who are the authors of this research paper on transformers?",
+    "status": "INSUFFICIENT_CONTEXT",
+    "answer": "INSUFFICIENT_CONTEXT",
+    "confidence_v1": 0.08,
+    "error_decomposition": {"failure_type": "retrieval_miss"}
+  },
+  {
+    "query": "What is the main contribution of the paper?",
+    "status": "ANSWERED",
+    "answer": "The paper introduces a hybrid retrieval-augmented generation pipeline.",
+    "confidence_v1": 0.65,
+    "error_decomposition": {"failure_type": "ok"}
+  }
+]

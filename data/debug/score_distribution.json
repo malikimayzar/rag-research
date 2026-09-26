@@ -1,0 +1,9 @@
+{
+  "top1_mean": 5.9734,
+  "top1_std": 2.9325,
+  "top1_min": -1.7375,
+  "top1_max": 8.9886,
+  "avg_gap": 3.3776,
+  "positive_ratio": 0.63,
+  "global_mean_score": 1.2636
+}
