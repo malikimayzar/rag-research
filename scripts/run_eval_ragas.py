@@ -4,6 +4,7 @@ import requests
 from dotenv import load_dotenv
 
 from src.evaluation.ragas_evaluator import RAGASEvaluator, RAGSample
+from src.api.config import settings
 
 load_dotenv()
 sys.path.insert(0, ".")
@@ -50,9 +51,10 @@ print(f"\nReject rate: {rejected}/{len(ragas_samples)} ({rejected/len(ragas_samp
 print("\nRunning RAGAS eval...")
 
 evaluator = RAGASEvaluator(
-    llm_model="llama-3.3-70b-versatile",
+    llm_model=settings.groq_model_fast,
     include_answer_correctness=False,
 )
 
-result = evaluator.evaluate(ragas_samples, exp_id="phase2_30sample_70b")
-evaluator.save_result(result, "results/metrics/ragas_phase2_postfix_8b.json")
+model_tag = settings.groq_model_fast.replace("/", "_")
+result = evaluator.evaluate(ragas_samples, exp_id=f"phase2_30sample_{model_tag}")
+evaluator.save_result(result, f"results/metrics/ragas_phase2_{model_tag}.json")

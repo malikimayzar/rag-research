@@ -1,0 +1,17 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.env
+notebooks
+results
+reports
+archive
+experiments
+tmp
+kirocli
+src/ingestion/semantic_chunker_rust/target
+data/qdrant_storage
+data/raw
+data/debug

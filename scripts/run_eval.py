@@ -5,22 +5,23 @@ from src.evaluation.ragas_evaluator import RAGASEvaluator, RAGSample
 from src.retrieval.qdrant_store import QdrantVectorStore
 from src.retrieval.hybrid_retriever import MasterHybridRetriever
 from src.generation.generator import GroqGenerator
+from src.api.config import settings
 
 from dotenv import load_dotenv
 load_dotenv()
 
 def run_full_pipeline(limit=55):
     print(f"[Started] Full Pipeline Evaluation ({limit} samples)...")
-    print(f"  Generator : llama-3.3-70b-versatile")
-    print(f"  Judge     : llama-3.1-8b-instant + json_mode")
+    print(f"  Generator : {settings.groq_model}")
+    print(f"  Judge     : {settings.groq_model_fast} + json_mode")
     print(f"  Retrieval : Hybrid RRF + BGE Reranker")
     print(f"  Chunks    : Rust Semantic (982 chunks)")
 
     store = QdrantVectorStore()
     retriever = MasterHybridRetriever(vector_store=store)
-    generator = GroqGenerator(model="llama-3.3-70b-versatile")
+    generator = GroqGenerator(model=settings.groq_model)
     evaluator = RAGASEvaluator(
-        llm_model="llama-3.1-8b-instant",
+        llm_model=settings.groq_model_fast,
         include_answer_correctness=True
     )
 
@@ -58,8 +59,8 @@ def run_full_pipeline(limit=55):
             config={
                 "chunking": "rust_semantic",
                 "retrieval": "hybrid_rerank",
-                "generator": "llama-3.3-70b-versatile",
-                "judge": "llama-3.1-8b-instant+json_mode",
+                "generator": settings.groq_model,
+                "judge": f"{settings.groq_model_fast}+json_mode",
                 "dataset": "clean_55_pairs",
             }
         )

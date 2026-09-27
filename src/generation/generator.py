@@ -18,7 +18,7 @@ logging.getLogger("openai").setLevel(logging.WARNING)
 logger = logging.getLogger("rag.generator")
 load_dotenv()
 
-DEFAULT_MODEL     = "llama-3.3-70b-versatile"
+DEFAULT_MODEL     = "openai/gpt-oss-20b"
 DEFAULT_MAX_CHARS = 3000
 DEFAULT_TEMP      = 0.1
 DEFAULT_TOP_K     = 10
@@ -159,7 +159,7 @@ def _parse_llm_output(raw: str) -> tuple[str, str, float, list]:
         conf     = float(parsed.get("confidence_score", 0.0))
         sources  = parsed.get("supporting_sources", [])
         if not answer:
-            raise ValueError("Empty answer field in LLM JSON")
+            return "", "INSUFFICIENT_CONTEXT", conf, sources
         return answer, status, conf, sources
     
     except Exception as e:
@@ -316,6 +316,7 @@ class GroqGenerator:
                 messages=messages,
                 temperature=temperature,
                 max_tokens=effective_max_tokens,
+                response_format={"type": "json_object"},
             )
         except AuthenticationError as exc:
             raise ValueError(
@@ -328,7 +329,20 @@ class GroqGenerator:
                 "Periksa koneksi API dan kunci Anda."
             ) from exc
 
-        raw_answer = response.choices[0].message.content.strip()
+        raw_content = response.choices[0].message.content or ""
+        if not raw_content.strip():
+            logger.warning(
+                "[GENERATION_EMPTY] model returned empty output | model=%s",
+                self.model,
+            )
+            return _make_abstain_response(
+                query=query,
+                chunks=chunks,
+                model=self.model,
+                reason="model returned empty output",
+            )
+
+        raw_answer = raw_content.strip()
         t2 = time.time()
 
 

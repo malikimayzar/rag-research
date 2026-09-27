@@ -1,4 +1,3 @@
-# Dockerfile
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -9,25 +8,28 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
+# Install only the runtime package needed by the healthcheck.
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements files
-COPY requirements/base.txt requirements/llm.txt requirements/api.txt /app/requirements/
+# Copy only dependencies required by the API runtime.
+COPY requirements/runtime.txt /app/requirements/
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements/base.txt \
-    && pip install --no-cache-dir -r requirements/llm.txt \
-    && pip install --no-cache-dir -r requirements/api.txt
+# Install the CPU-only PyTorch wheel once. The base requirements must not list torch again.
+RUN pip install --no-cache-dir \
+    --index-url https://download.pytorch.org/whl/cpu \
+    --timeout 120 \
+    --retries 2 \
+    torch
+
+# Keep dependency installation separate so application code changes do not
+# invalidate the dependency layer.
+RUN pip install --no-cache-dir -r requirements/runtime.txt
 
 # Copy application code
 COPY src/ /app/src/
 COPY data/processed/ /app/data/processed/
-COPY .env /app/.env
 
 # Create directory for runtime data
 RUN mkdir -p /app/data/cache

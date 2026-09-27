@@ -2288,5 +2288,1365 @@
     "avg_latency_ms": 96542.45182384145,
     "hallucination_rate": 0.18421052631578946,
     "total_samples": 55
+  },
+  {
+    "exp_id": "final_v1_70b_gen_8b_judge",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank",
+      "generator": "openai/gpt-oss-20b",
+      "judge": "llama-3.1-8b-instant+json_mode",
+      "dataset": "clean_55_pairs"
+    },
+    "samples": [
+      {
+        "question": "What metrics are required for evaluating RAG systems beyond simple accuracy?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does faithfulness measure the generated answer in RAG systems?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the core idea behind Retrieval-Augmented Generation (RAG) systems?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the technique that combines information retrieval with language model generation?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of metrics are mentioned in the text as being derived from related work?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the automated tool that employs LLMs to adjudicate quality scores?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What can be a drawback of coarse-grained retrieval units?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the RAG research paradigm's primary function?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the three stages of the RAG research paradigm?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are important aspects for evaluating the quality of retrieval?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are important aspects for evaluating the quality of generation?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the main components of RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does a large language model approach answering a query?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What can be integrated into the prompt in cases of ongoing dialogues?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the proposed method of building an index between multiple documents?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the proposed KG address knowledge retrieval and reasoning problems?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is a problem that can occur when using long contexts in the RAG system?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the LLM tend to focus on long texts?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is another approach to generate reward signals across multiple downstream tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the strategy employed by RAGFusion to address traditional search limitations?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the Memory module in RAGFusion leverage the LLM's memory?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What metrics are commonly utilized for evaluating the performance of the RAG retrieval module?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the assessment of generation quality centered on?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are some challenges faced by Large Language Models?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Retrieval-Augmented Generation enhance the accuracy and credibility of the generation?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the specific needs that RAG and FT depend on?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is initially the mainstream source of text for RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are common methods used in query optimization?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is a key strategy in post-retrieval process?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is one of the greatest advantages of using on-premise LLMs?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How can fine-tuning enable LLMs to adapt to specific data formats?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the first step in extracting keywords from a query?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a dense retriever architecture used in RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Recursive Retrieval aim to enhance the search experience?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the common methods for chunking documents?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How can larger chunks affect the retrieval phase?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What approach does RECOMP adopt for training an information condenser?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does instructing LLMs to rearrange challenging samples identified by SLMs affect Information Extraction tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a proposed method for using LLMs?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is Reverse HyDE?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of data is mainly gathered from corpus?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the primary retrieval source for open-domain question-answering tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a specific functionality introduced into RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is one of the key factors in RAG models?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What triggers the retrieval system in Flare?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the Task Adapter module's function in RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Modular RAG expand on the flexibility of Naive and Advanced RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What has rapidly developed in recent years?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "Where can resources related to RAG-Survey be found?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the benefit of recursive retrieval in search scenarios?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does recursive retrieval process and retrieve data?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the stages of involving RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of review does this survey present?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does this survey present the evolution of RAG methods?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a retrieval method that refines the RAG framework?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 565.9971497275612,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      }
+    ],
+    "avg_faithfulness": 0.0,
+    "avg_answer_relevancy": 0.0,
+    "avg_context_precision": 0.0,
+    "avg_context_recall": 0.0,
+    "avg_answer_correctness": 0.0,
+    "avg_latency_ms": 565.9971497275612,
+    "hallucination_rate": 0.0,
+    "total_samples": 55
+  },
+  {
+    "exp_id": "final_v1_70b_gen_8b_judge",
+    "config": {
+      "chunking": "rust_semantic",
+      "retrieval": "hybrid_rerank",
+      "generator": "openai/gpt-oss-20b",
+      "judge": "openai/gpt-oss-20b+json_mode",
+      "dataset": "clean_55_pairs"
+    },
+    "samples": [
+      {
+        "question": "What metrics are required for evaluating RAG systems beyond simple accuracy?",
+        "faithfulness": 1.0,
+        "answer_relevancy": NaN,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "answer_correctness": 0.4072343036064475,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does faithfulness measure the generated answer in RAG systems?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7555437336931857,
+        "context_precision": 0.699999999965,
+        "context_recall": 1.0,
+        "answer_correctness": 0.1883320370305352,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the core idea behind Retrieval-Augmented Generation (RAG) systems?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9597154086611752,
+        "context_precision": 0.9166666666361111,
+        "context_recall": 1.0,
+        "answer_correctness": 0.7044036584410107,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the technique that combines information retrieval with language model generation?",
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4624861997800789,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "answer_correctness": 1.0,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of metrics are mentioned in the text as being derived from related work?",
+        "faithfulness": NaN,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.49999999995,
+        "context_recall": 0.0,
+        "answer_correctness": 0.01797209543996388,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the name of the automated tool that employs LLMs to adjudicate quality scores?",
+        "faithfulness": NaN,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What can be a drawback of coarse-grained retrieval units?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the RAG research paradigm's primary function?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the three stages of the RAG research paradigm?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are important aspects for evaluating the quality of retrieval?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are important aspects for evaluating the quality of generation?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the main components of RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does a large language model approach answering a query?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What can be integrated into the prompt in cases of ongoing dialogues?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the proposed method of building an index between multiple documents?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the proposed KG address knowledge retrieval and reasoning problems?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is a problem that can occur when using long contexts in the RAG system?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the LLM tend to focus on long texts?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is another approach to generate reward signals across multiple downstream tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the strategy employed by RAGFusion to address traditional search limitations?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does the Memory module in RAGFusion leverage the LLM's memory?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What metrics are commonly utilized for evaluating the performance of the RAG retrieval module?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the assessment of generation quality centered on?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are some challenges faced by Large Language Models?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Retrieval-Augmented Generation enhance the accuracy and credibility of the generation?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the specific needs that RAG and FT depend on?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is initially the mainstream source of text for RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are common methods used in query optimization?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is a key strategy in post-retrieval process?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is one of the greatest advantages of using on-premise LLMs?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How can fine-tuning enable LLMs to adapt to specific data formats?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the first step in extracting keywords from a query?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a dense retriever architecture used in RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Recursive Retrieval aim to enhance the search experience?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the common methods for chunking documents?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How can larger chunks affect the retrieval phase?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What approach does RECOMP adopt for training an information condenser?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does instructing LLMs to rearrange challenging samples identified by SLMs affect Information Extraction tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a proposed method for using LLMs?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is Reverse HyDE?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of data is mainly gathered from corpus?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the primary retrieval source for open-domain question-answering tasks?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a specific functionality introduced into RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is one of the key factors in RAG models?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What triggers the retrieval system in Flare?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the Task Adapter module's function in RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does Modular RAG expand on the flexibility of Naive and Advanced RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What has rapidly developed in recent years?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "Where can resources related to RAG-Survey be found?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is the benefit of recursive retrieval in search scenarios?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does recursive retrieval process and retrieve data?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What are the stages of involving RAG?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What type of review does this survey present?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "How does this survey present the evolution of RAG methods?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      },
+      {
+        "question": "What is an example of a retrieval method that refines the RAG framework?",
+        "faithfulness": NaN,
+        "answer_relevancy": NaN,
+        "context_precision": NaN,
+        "context_recall": NaN,
+        "answer_correctness": NaN,
+        "latency_ms": 17096.93105871027,
+        "metadata": {
+          "exp_id": "final_v1_70b_gen_8b_judge"
+        }
+      }
+    ],
+    "avg_faithfulness": 1.0,
+    "avg_answer_relevancy": 0.43554906842688795,
+    "avg_context_precision": 0.6861111110710185,
+    "avg_context_recall": 0.8,
+    "avg_answer_correctness": 0.4635884189035915,
+    "avg_latency_ms": 17096.93105871027,
+    "hallucination_rate": 0.0,
+    "total_samples": 55
   }
 ]

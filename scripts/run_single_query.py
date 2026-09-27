@@ -2,6 +2,7 @@
 import argparse
 import asyncio
 import json
+import math
 import os
 import time
 import re
@@ -60,7 +61,6 @@ def load_retrieval_confidence_threshold(path: str = SCORE_DISTRIBUTION_PATH) -> 
 
 RETRIEVAL_MIN_TOP1_SCORE = 0.0 
 MIN_CHUNK_LENGTH = 80
-MAX_RETRIES = 2
 RETRIEVAL_CONF_THRESHOLD = 0.3
 MAX_RETRY_ATTEMPTS = 2
 MAX_GENERATION_MS = 15000
@@ -303,7 +303,7 @@ def decide_action(query: str, groq_client: Groq) -> str:
     """
     try:
         resp = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model=settings.groq_model_fast,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.0,
             max_tokens=10,
@@ -333,7 +333,7 @@ def run_single_query(
 
     store      = QdrantVectorStore()
     retriever  = MasterHybridRetriever(vector_store=store)
-    generator  = GroqGenerator(model="llama-3.3-70b-versatile")
+    generator  = GroqGenerator(model=settings.groq_model)
     groq       = Groq(api_key=os.getenv("GROQ_API_KEY"))
     confidence_engine = ConfidenceEngine()
 
@@ -359,6 +359,16 @@ def run_single_query(
     print(f"  Strategy: multi_query={use_multi_query} | hyde={use_hyde}")
     print(f"  Gen policy: max_tokens={gen_max_tokens} | temperature={gen_temperature}")
 
+    candidate_k = settings.candidate_k
+    retrieval_scores_by_chunk_id: dict[str, float | None] = {}
+    reranker_scores_by_chunk_id: dict[str, float] = {}
+
+    def _retrieval_score(chunk) -> float | None:
+        score = _get_attr(chunk, "retrieval_score", None)
+        if score is None:
+            score = _get_attr(chunk, "score", None)
+        return round(float(score), 4) if score is not None else None
+
     # BASELINE MODE    
     if mode == "baseline":
         print("[Baseline] Dense-only retrieval...")
@@ -375,6 +385,10 @@ def run_single_query(
         timings["rerank_ms"]           = 0.0
 
         rerank_candidates = fused_results[:top_k]
+        retrieval_scores_by_chunk_id = {
+            _get_attr(chunk, "chunk_id", ""): _retrieval_score(chunk)
+            for chunk in rerank_candidates
+        }
         retrieval_confidence = confidence_engine.calculate_confidence(rerank_candidates)
         print(f"  Dense hits: {len(fused_results)} | Embedding: {timings['embedding_ms']}ms")
         print(f"  [CONF_ENGINE] baseline confidence={retrieval_confidence['confidence_score']:.4f} decision={retrieval_confidence['decision']}")
@@ -391,7 +405,7 @@ def run_single_query(
         hyde_doc = None
         def call_groq(prompt, temperature, max_tokens):
             resp = groq.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model=settings.groq_model_fast,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=temperature,
                 max_tokens=max_tokens,
@@ -504,6 +518,11 @@ def run_single_query(
                 if _get_section(c) not in BLOCKED_SECTIONS
             ]
 
+        retrieval_scores_by_chunk_id = {
+            _get_attr(chunk, "chunk_id", ""): _retrieval_score(chunk)
+            for chunk in rerank_candidates
+        }
+
         rrf_lists_count = len(all_dense_hits) + len(all_bm25_hits)
         rrf_threshold, rrf_min, rrf_max = rrf_circuit_breaker_threshold(
             num_lists=rrf_lists_count,
@@ -561,6 +580,11 @@ def run_single_query(
             else:
                 rerank_scores = list(retriever.reranker.predict(pairs))
 
+            reranker_scores_by_chunk_id = {
+                _get_attr(chunk, "chunk_id", ""): round(float(score), 4)
+                for chunk, score in zip(rerank_candidates, rerank_scores)
+            }
+
             for i, hit in enumerate(rerank_candidates):
                 base_score  = float(rerank_scores[i])
                 section     = _get_section(hit)
@@ -588,7 +612,7 @@ def run_single_query(
         timings["rerank_ms"] = round((time.time() - t0) * 1000, 2)
         print(f"  Reranked top-{top_k}: {timings['rerank_ms']}ms\n")
 
-    # SELF-REFLECTION RETRY LOOP â†’ generate
+    # SELF-REFLECTION RETRY LOOP generate
     pre_rerank_chunks  = [_chunk_to_summary(c, i + 1) for i, c in enumerate(fused_results[:top_k * 2])]
     post_rerank_chunks = [_chunk_to_summary(c, i + 1) for i, c in enumerate(rerank_candidates[:top_k])]
     if allow_ref:
@@ -659,7 +683,7 @@ def run_single_query(
             response = _make_abstain_response(
                 query=query,
                 chunks=final_chunks_full,
-                model="llama-3.3-70b-versatile",
+                model=settings.groq_model,
                 reason="pre_gen confidence REJECT", 
             )
             break 
@@ -679,7 +703,7 @@ def run_single_query(
             response = _make_abstain_response(
                 query=query,
                 chunks=final_chunks_full,
-                model="llama-3.3-70b-versatile",
+                model=settings.groq_model,
                 reason=f"generation_exception: {type(e).__name__}: {e}",
             )
             break
@@ -699,19 +723,15 @@ def run_single_query(
             print("[RETRY] Factual insufficient context immediate reference escalation")
             allow_all_refs_on_retry = True
 
-        print(f"[RETRY] Low context overlap ({confidence_v1}) â†’ retrying retrieval...")
+        print(f"[RETRY] Low context overlap ({confidence_v1}) retrying retrieval...")
 
-        candidate_k_retry = top_k * (2 ** retry_count)
+        candidate_k_retry = min(math.ceil(candidate_k * 1.5), settings.candidate_k)
         _use_reranker_retry = retry_count < 1          
-        _bm25_weight_retry  = 0.3 + (0.2 * retry_count) 
-        _bm25_weight_retry  = min(_bm25_weight_retry, 0.7)
-        _dense_weight_retry = 1.0 - _bm25_weight_retry
+        _bm25_weight_retry = 0.7
+        _dense_weight_retry = 0.3
 
         if allow_all_refs_on_retry:
-            candidate_k_retry = min(top_k * 4, 30)
             _use_reranker_retry = False
-            _bm25_weight_retry = 0.6
-            _dense_weight_retry = 0.4
             print("  [RETRY] Factual escalation: allow references, stronger BM25 signal")
 
         print(
@@ -737,17 +757,13 @@ def run_single_query(
                 response = _make_abstain_response(
                     query=query,
                     chunks=final_chunks_full,
-                    model="llama-3.3-70b-versatile",
+                    model=settings.groq_model,
                     reason=f"retrieval_exception: {type(e2).__name__}: {e2}",
                 )
                 break
 
         # allow all references (don't limit ” last resort for factual QA)
         if allow_all_refs_on_retry:
-            final_chunks_full = [c for c in fused_results[:top_k] if is_quality_chunk(c)]
-            retry_count = MAX_RETRIES
-        elif retry_count >= 2:
-            print("  [RETRY] Escalation: references unrestricted (last resort)")
             final_chunks_full = [c for c in fused_results[:top_k] if is_quality_chunk(c)]
         else:
             retry_filtered, _ = limit_reference_chunks(fused_results[:top_k], max_ref=MAX_REF_IN_CONTEXT)
@@ -780,11 +796,11 @@ def run_single_query(
 
     # Adapt based on failure type
     if error_info["failure_type"] == "retrieval_miss":
-        print("[ADAPT] Retrieval miss â†’ future runs shift to BM25-heavy")
+        print("[ADAPT] Retrieval miss future runs shift to BM25-heavy")
     elif error_info["failure_type"] == "filtering_error":
-        print("[ADAPT] Filtering error detected â†’ consider increasing MAX_REF_IN_CONTEXT")
+        print("[ADAPT] Filtering error detected consider increasing MAX_REF_IN_CONTEXT")
     elif error_info["failure_type"] == "ranking_error":
-        print("[ADAPT] Ranking error â†’ reranker mis-ordered, consider section boost tuning")
+        print("[ADAPT] Ranking error reranker mis-ordered, consider section boost tuning")
 
     # Confidence calibration ” penalize when pipeline has known failures
     raw_confidence = confidence_v1
@@ -800,7 +816,7 @@ def run_single_query(
 
     if raw_confidence != confidence_v1:
         print(
-            f"  [CONFIDENCE] Calibrated: {raw_confidence} â†’ {confidence_v1} "
+            f"  [CONFIDENCE] Calibrated: {raw_confidence} {confidence_v1} "
             f"(penalty for {failure_type})"
         )
 
@@ -844,6 +860,32 @@ def run_single_query(
     if ground_truth:
         exact_match = response.answer.strip().lower() == ground_truth.strip().lower()
 
+    answer_status = {
+        "ANSWERED": "answered",
+        "INSUFFICIENT_CONTEXT": "abstained",
+    }.get(final_status, "failed")
+    latency_ms = {
+        "retrieval": round(
+            timings.get("query_expansion_ms", 0.0)
+            + timings.get("embedding_ms", 0.0)
+            + timings.get("bm25_ms", 0.0)
+            + timings.get("rrf_ms", 0.0),
+            2,
+        ),
+        "reranker": timings.get("rerank_ms", 0.0),
+        "generation": timings.get("generation_ms", 0.0),
+        "total": timings.get("total_ms", 0.0),
+    }
+    chunks_used = [_get_attr(chunk, "chunk_id", "") for chunk in final_chunks_full]
+    retrieval_scores = [
+        retrieval_scores_by_chunk_id.get(_get_attr(chunk, "chunk_id", ""))
+        for chunk in rerank_candidates[:top_k]
+    ]
+    reranker_scores = [
+        reranker_scores_by_chunk_id.get(_get_attr(chunk, "chunk_id", ""))
+        for chunk in rerank_candidates[:top_k]
+    ]
+
     # Assemble output
     output = {
         "query":                query,
@@ -854,15 +896,19 @@ def run_single_query(
         "hyde_doc":             hyde_doc,
         "pre_rerank_chunks":    pre_rerank_chunks,
         "reranked_chunks":      post_rerank_chunks,
-        "retrieval_scores":     [c.get("score") if isinstance(c, dict) else getattr(c, "score", None) for c in (post_rerank_chunks or [])],
+        "retrieval_scores":     retrieval_scores,
+        "reranker_scores":     reranker_scores,
+        "chunks_used":          chunks_used,
         "final_context":        final_context[:500] + "..." if len(final_context) > 500 else final_context,
         "answer":               response.answer,
         "status":               final_status,
+        "answer_status":        answer_status,
         "confidence_score":     response.confidence_score,
         "retrieval_confidence": retrieval_confidence,
         "supporting_sources":   response.supporting_sources,
         "ground_truth":         ground_truth,
         "latency_breakdown":    timings,
+        "latency_ms":           latency_ms,
         "confidence_v1":        confidence_v1,
         "error_decomposition":  error_info,
         "failure_type":         error_info.get("failure_type", "none") if isinstance(error_info, dict) else "none",
@@ -883,7 +929,7 @@ def run_single_query(
             "use_hyde":         use_hyde,
             "min_chunk_length": MIN_CHUNK_LENGTH,
             "reranker":         "cross-encoder/ms-marco-MiniLM-L-6-v2",
-            "generator":        "llama-3.3-70b-versatile",
+            "generator":        settings.groq_model,
             "embedding":        "all-MiniLM-L6-v2",
             "chunking":         "semantic",
             "rrf_k":            60,
@@ -1048,6 +1094,6 @@ def get_components():
     if _STORE is None:
         _STORE      = QdrantVectorStore()
         _RETRIEVER  = MasterHybridRetriever(vector_store=_STORE)
-        _GENERATOR  = GroqGenerator(model="llama-3.3-70b-versatile")
+        _GENERATOR  = GroqGenerator(model=settings.groq_model)
         print("[Cache] Components loaded reuse for subsequent queries")
     return _STORE, _RETRIEVER, _GENERATOR

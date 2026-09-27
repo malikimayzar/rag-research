@@ -30,9 +30,10 @@ try:
 except ImportError:
     GEMINI_AVAILABLE = False
 from langchain_huggingface import HuggingFaceEmbeddings
+from src.api.config import settings
 
 # Config 
-DEFAULT_LLM_MODEL   = "llama-3.1-8b-instant"   
+DEFAULT_LLM_MODEL   = settings.groq_model_fast
 DEFAULT_EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 @dataclass
@@ -72,7 +73,7 @@ class RAGASEvaluator:
     def __init__(
         self,
         groq_api_key=None,
-        llm_model="llama-3.3-70b-versatile",
+        llm_model=DEFAULT_LLM_MODEL,
         embed_model=DEFAULT_EMBED_MODEL,
         include_answer_correctness=False,
         llm_provider="groq",

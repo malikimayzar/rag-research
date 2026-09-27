@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from src.api.config import settings
 
 QueryType = str   
 
@@ -92,24 +93,25 @@ class PolicyEngine:
 
     # 4. Generation Policy
     def generation_policy(self, query_type: QueryType) -> dict:
+        configured_max_tokens = settings.generation_max_tokens
         _POLICIES: dict[QueryType, dict] = {
             "factual": {
-                "max_tokens":  100,
+                "max_tokens":  min(256, configured_max_tokens),
                 "temperature": 0.0,
             },
             "general": {
-                "max_tokens":  200,
+                "max_tokens":  min(512, configured_max_tokens),
                 "temperature": 0.2,
             },
             "reasoning": {
-                "max_tokens":  300,
+                "max_tokens":  configured_max_tokens,
                 "temperature": 0.3,
             },
         }
 
         policy = _POLICIES.get(query_type)
         if policy is None:
-            return {"max_tokens": 200, "temperature": 0.2}
+            return {"max_tokens": min(512, configured_max_tokens), "temperature": 0.2}
         return policy
 
     # Convenience: get all policies in one call

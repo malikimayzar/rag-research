@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
@@ -37,7 +36,7 @@ class Agent:
         self.max_steps = max_steps
 
     def _default_model(self) -> str:
-        return "llama-3.3-70b-versatile"
+        return "openai/gpt-oss-20b"
     
     # EXECUTION
     async def _execute_retrieval(self, state: AgentState, params: dict):

@@ -52,6 +52,7 @@ class ConfidenceEngine:
             if score is None:
                 score = getattr(chunk, "score", None)
         return float(score) if score is not None else None
+    
     def _source_agreement(self, chunks) -> float:
         doc_ids = []
         for c in chunks[:5]:
@@ -68,6 +69,13 @@ class ConfidenceEngine:
             "spurious_match": bool(top_norm > 0.85 and mean_top3_norm < 0.45),
             "unstable_retrieval": bool(gap < 0.05 and mean_top3_norm < 0.4),
         }
+
+    def _decision_for_score(self, confidence_score: float) -> str:
+        if confidence_score < self.reject_threshold:
+            return "REJECT"
+        if confidence_score < self.partial_threshold:
+            return "PARTIAL_TRUST"
+        return "GENERATE"
     
     def calculate_confidence(self, chunks: list[Any]) -> Dict[str, Any]:
         if not chunks:
@@ -85,6 +93,7 @@ class ConfidenceEngine:
                     "unstable_retrieval": False,
                 }
             }
+
         raw_scores = []
         has_invalid_score = False
         for chunk in chunks:
@@ -115,6 +124,7 @@ class ConfidenceEngine:
             (c.get("rerank_score") if isinstance(c, dict) else getattr(c, "rerank_score", None)) is not None
             for c in chunks
         )
+
         score_type = "cross_encoder" if has_rerank else "rrf"
         normalized_scores = list(self._normalize_scores(raw_scores, score_type=score_type))
         top_score = raw_scores[0]
@@ -162,15 +172,11 @@ class ConfidenceEngine:
         )
         patterns = self._detect_patterns(top_score_norm, mean_top3_norm, gap)
 
-        if confidence_score < 0.25:
-            decision = "REJECT"
-        elif confidence_score < 0.55:
-            decision = "PARTIAL_TRUST"
-        else:
-            decision = "GENERATE"
+        decision = self._decision_for_score(confidence_score)
             
         logger.info(f"[CONFIDENCE_RESULT] confidence_score={confidence_score:.4f} | decision={decision}")
         assert 0.0 <= confidence_score <= 1.0, f"Confidence out of range: {confidence_score}"
+        
         return {
             "confidence_score": round(float(confidence_score), 4),
             "decision": decision,

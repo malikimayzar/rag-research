@@ -1,6 +1,7 @@
 fastapi
 uvicorn[standard]
 pydantic
+pydantic-settings
 python-multipart
 sentence-transformers
 groq>=0.9.0  

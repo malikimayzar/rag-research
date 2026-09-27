@@ -1,0 +1,2270 @@
+[
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0323",
+    "query": "What metrics are used to predict human judgments?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0323",
+        "new_chunk_id": null,
+        "score": 0.3262,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0059",
+    "query": "What are the 5 axes used to group descriptors in the pretraining data?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0059",
+        "new_chunk_id": null,
+        "score": 0.6201,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0423",
+    "query": "What should the model do if the user discusses committing a violent crime?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0423",
+        "new_chunk_id": null,
+        "score": 0.4185,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0436",
+    "query": "What is described in the section A.4.7?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0436",
+        "new_chunk_id": null,
+        "score": 0.4286,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0057",
+    "query": "What steps were taken to pretrain responsibly?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0057",
+        "new_chunk_id": null,
+        "score": 0.5885,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0015",
+    "query": "What does the y-axis in Fig. 2 show?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0015",
+        "new_chunk_id": null,
+        "score": 0.6,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0018",
+    "query": "What happens when the amount of training questions or CoT examples is limited?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0018",
+        "new_chunk_id": null,
+        "score": 0.6258,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0094",
+    "query": "What is the purpose of the 'Takeaway' section?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0094",
+        "new_chunk_id": null,
+        "score": 0.2446,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0287",
+    "query": "What is the policy of an LLM-based AI assistant when faced with an unclear question?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0287",
+        "new_chunk_id": null,
+        "score": 0.2327,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0117",
+    "query": "How many parameters does the 'davinci' engine have?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0117",
+        "new_chunk_id": null,
+        "score": 0.4756,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0014",
+    "query": "What are common methods in query optimization?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0014",
+        "new_chunk_id": null,
+        "score": 0.6233,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2005_11401_s0034",
+    "query": "What is the document index in the context of neural networks?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0034",
+        "new_chunk_id": null,
+        "score": 0.6337,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0453",
+    "query": "What does the low toxicity in model generations indicate?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0453",
+        "new_chunk_id": null,
+        "score": 0.3973,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0032",
+    "query": "What are the different types of retrieval granularity in text?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0032",
+        "new_chunk_id": null,
+        "score": 0.6352,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0011",
+    "query": "What are the notable drawbacks of Naive RAG?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0011",
+        "new_chunk_id": null,
+        "score": 0.5732,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0220",
+    "query": "Who are the authors of Winogrande?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0220",
+        "new_chunk_id": null,
+        "score": 0.2727,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_1706_03762_s0016",
+    "query": "What is a key challenge in many sequence transduction tasks?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0016",
+        "new_chunk_id": null,
+        "score": 0.6649,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_1706_03762_s0008",
+    "query": "How many sub-layers are in each decoder layer?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0008",
+        "new_chunk_id": null,
+        "score": 0.6298,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0400",
+    "query": "How many annotators rate each generation pair in the results?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0400",
+        "new_chunk_id": null,
+        "score": 0.3509,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0026",
+    "query": "What happens when using real training-set questions?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0026",
+        "new_chunk_id": null,
+        "score": 0.5505,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0288",
+    "query": "How many jelly beans are left in the jar if 35% are removed?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0288",
+        "new_chunk_id": null,
+        "score": 0.243,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0284",
+    "query": "What categories of single turn prompts were manually collected?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0284",
+        "new_chunk_id": null,
+        "score": 0.4013,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0077",
+    "query": "Can we conclude the hypothesis 'A member of my team will execute your orders with immense precision.' is true based on the premise 'One of our member will carry out your instructions minutely.'?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0077",
+        "new_chunk_id": null,
+        "score": 0.1854,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0027",
+    "query": "What is the name of one of the datasets used in preference modeling?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0027",
+        "new_chunk_id": null,
+        "score": 0.674,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0057",
+    "query": "What is Distilbert?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0057",
+        "new_chunk_id": null,
+        "score": 0.1205,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0352",
+    "query": "What is the cutoff date for the pretraining data?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0352",
+        "new_chunk_id": null,
+        "score": 0.4562,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0078",
+    "query": "What does the CoK method first do with a knowledge graph?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0078",
+        "new_chunk_id": null,
+        "score": 0.625,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0139",
+    "query": "What are the steps to create an app that identifies different kinds of plants by taking photos of them?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0139",
+        "new_chunk_id": null,
+        "score": 0.2875,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0352",
+    "query": "What is the title of the Covid-19 dataset?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0352",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0053",
+    "query": "In which year was a paper published by Danish Pruthi et al. in Transactions of the Association for Computational Linguistics?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0053",
+        "new_chunk_id": null,
+        "score": 0.209,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0062",
+    "query": "What is the name of the dataset used for single-hop task?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0062",
+        "new_chunk_id": null,
+        "score": 0.1133,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2312_10997_s0037",
+    "query": "What is the process of sub-question planning?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0037",
+        "new_chunk_id": null,
+        "score": 0.6149,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0037",
+    "query": "What is one of the most important proxies for the final performance of Llama 2-Chat?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0037",
+        "new_chunk_id": null,
+        "score": 0.6545,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0080",
+    "query": "How does Llama 2-Chat's safety capabilities get efficiently enhanced?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0080",
+        "new_chunk_id": null,
+        "score": 0.6453,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0414",
+    "query": "What is the goal of a comedy roast?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0414",
+        "new_chunk_id": null,
+        "score": 0.2617,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0072",
+    "query": "Does the addition of an additional stage of safety mitigation negatively impact model performance on helpfulness?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0072",
+        "new_chunk_id": null,
+        "score": 0.6114,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0409",
+    "query": "What is a Ponzi scheme?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0409",
+        "new_chunk_id": null,
+        "score": 0.232,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0013",
+    "query": "What is the threshold for ROUGE-L similarity to add a new instruction to the task pool?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0013",
+        "new_chunk_id": null,
+        "score": 0.6875,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0107",
+    "query": "Who co-authored 'Generating sequences by learning to self-correct'?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0107",
+        "new_chunk_id": null,
+        "score": 0.1656,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0380",
+    "query": "What is the number of heads lower than in the given setting?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0380",
+        "new_chunk_id": null,
+        "score": 0.2804,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0299",
+    "query": "What is important to act with?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0299",
+        "new_chunk_id": null,
+        "score": 0.3072,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2210_11610_s0025",
+    "query": "What is the impact of training language models with Chain-of-Thought formats on their performance gain in comparison to using only direct answers, as demonstrated in the study published in the PromptSource paper?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0025",
+        "new_chunk_id": null,
+        "score": 0.607,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0042",
+        "new_chunk_id": null,
+        "score": 0.2,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0030",
+    "query": "What political ideologies are most closely associated with the performance of BART and RAG models in question generation tasks?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0030",
+        "new_chunk_id": "tier1_2005_11401_s0045",
+        "score": 0.7086,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0459",
+        "new_chunk_id": null,
+        "score": 0.1262,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0027",
+    "query": "What are the potential failure points in a Retrieval-Augmented Generation (RAG) system that could affect its ability to handle diverse and unfamiliar instructions?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0027",
+        "new_chunk_id": null,
+        "score": 0.6703,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0140",
+    "query": "How can we use the word subset sum function to determine the optimal number of safety mitigation answers to provide in response to a question, given a target safety reward model score?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0140",
+        "new_chunk_id": null,
+        "score": 0.2459,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0076",
+        "new_chunk_id": null,
+        "score": 0.6893,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is a potential failure point in a Retrieval-Augmented Generation (RAG) system that can be mitigated by using a well-calibrated neural network?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0038",
+        "new_chunk_id": null,
+        "score": 0.2273,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is the relationship between the retrieval of relevant documents in a RAG system and the arrangement of particles in a substance undergoing a phase transition?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0079",
+        "new_chunk_id": null,
+        "score": 0.2579,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0048",
+    "query": "What type of cultural institutions can be found in a city that is considered the epitome of sophistication and culture, and what is a key innovation in the field of neural machine translation?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0048",
+        "new_chunk_id": "tier3_2307_09288_s0085",
+        "score": 0.7014,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0055",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0094",
+    "query": "How can we use the concept of 'Winogrande: An adversarial winograd schema challenge at scale' to create a personalized gift for a new employee, such as a customized item with their photo or artwork?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0094",
+        "new_chunk_id": null,
+        "score": 0.2446,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0220",
+        "new_chunk_id": null,
+        "score": 0.2727,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0006",
+    "query": "How does the improvement in reasoning accuracy of LMSI on PaLM-540B compare to its improvement on UL2, and what famous person's quote is relevant to the importance of being honest?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0006",
+        "new_chunk_id": null,
+        "score": 0.6612,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0068",
+        "new_chunk_id": null,
+        "score": 0.3109,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2312_10997_s0005",
+    "query": "What is the average performance of the MPT model on the AQuA-RAT dataset, and which research paradigm from Chunk 1 is most relevant to the evaluation of RAG?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0005",
+        "new_chunk_id": null,
+        "score": 0.637,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0275",
+        "new_chunk_id": null,
+        "score": 0.1907,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0008",
+    "query": "How does the ability of the model to update its knowledge as the world changes impact its performance on tasks that it is initially bad at?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0008",
+        "new_chunk_id": "tier1_2005_11401_s0010",
+        "score": 1.0,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0083",
+        "new_chunk_id": null,
+        "score": 0.6282,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0036",
+    "query": "How can the retrieval index in RAG models be updated to improve their performance?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0036",
+        "new_chunk_id": null,
+        "score": 0.5939,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0054",
+        "new_chunk_id": null,
+        "score": 0.1933,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What type of funding supported the research that led to the development of Retrieval-Augmented Generation (RAG) technique?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0040",
+        "new_chunk_id": null,
+        "score": 0.6981,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0142",
+    "query": "What is the name of the scientists that were sent to space to find a new planet, and what is the title of the research paper that was published in 2016?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0142",
+        "new_chunk_id": null,
+        "score": 0.1898,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2312_10997_s0366",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is the most effective way to find a new apartment quickly and affordably?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0097",
+        "new_chunk_id": null,
+        "score": 0.3077,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2312_10997_s0344",
+    "query": "What is the relationship between the number of heads and the number of GPUs in the context of Musique and MQA?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0344",
+        "new_chunk_id": null,
+        "score": 0.2264,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0380",
+        "new_chunk_id": null,
+        "score": 0.2804,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is the potential failure point in a RAG system that can be addressed by using a sparsely-gated mixture-of-experts layer?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0055",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "How can the retrieval of relevant documents from an external corpus in a RAG system be improved by leveraging the concept of dark knowledge from LLMs?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0011",
+        "new_chunk_id": "tier2_2210_11610_s0022",
+        "score": 0.805,
+        "reason": "mapped"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What are the potential consequences of a buyer's inability to get his money back in a transaction, and how does this relate to the systematic analysis of failure points in a Retrieval-Augmented Generation (RAG) system?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0144",
+        "new_chunk_id": null,
+        "score": 0.3818,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0013",
+    "query": "How can we use a Position-wise Feed-Forward Network to fine-tune a pre-trained language model M to answer a question like 'Alex's age is right in the middle of Amy and Jake'?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0013",
+        "new_chunk_id": null,
+        "score": 0.6,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0017",
+        "new_chunk_id": null,
+        "score": 0.6372,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0024",
+    "query": "What is the relationship between the use of learned positional embeddings and the performance of a GPT-3-based metric in evaluating the truthfulness and informativeness of generated outputs?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0024",
+        "new_chunk_id": "tier3_1706_03762_s0043",
+        "score": 0.7089,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0323",
+        "new_chunk_id": null,
+        "score": 0.3262,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0020",
+    "query": "What is the relationship between the training cost (FLOPs) of a language model and the potential failure points in a Retrieval-Augmented Generation (RAG) system?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0020",
+        "new_chunk_id": null,
+        "score": 0.3287,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0036",
+    "query": "If Leah had 32 chocolates and her sister had 42, and they ate 35, and then they planted 6 trees in the grove, how many chocolates do they have left after eating 35?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0036",
+        "new_chunk_id": null,
+        "score": 0.5939,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0148",
+        "new_chunk_id": null,
+        "score": 0.2034,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2210_11610_s0074",
+    "query": "What is the maximum path length complexity for a model with a sequence length of 3.5, given that 23.5% of the model's complexity is due to the under 18 age group and 8.7% is due to the 18 to 24 age group?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0074",
+        "new_chunk_id": null,
+        "score": 0.2297,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0014",
+        "new_chunk_id": null,
+        "score": 0.6872,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "How can the potential failure points in a Retrieval-Augmented Generation (RAG) system be mitigated using the 'RL from AI Feedback' approach?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0110",
+        "new_chunk_id": null,
+        "score": 0.677,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0116",
+    "query": "What is the relationship between the ROUGE-L scores and the sharpness of attentions in the model's output?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0116",
+        "new_chunk_id": null,
+        "score": 0.2887,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0061",
+        "new_chunk_id": null,
+        "score": 0.1546,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0007",
+    "query": "If a grove with 15 trees initially uses a neural sequence transduction model to generate a sequence of instructions for planting trees, and the model's decoder generates 6 new instructions one element at a time, how many trees will be in the grove after the instructions are executed?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0007",
+        "new_chunk_id": null,
+        "score": 0.6554,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0148",
+        "new_chunk_id": null,
+        "score": 0.2034,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0024",
+    "query": "What is an example of a task where a Transformer model can generalize to, and how does it handle the challenges of the task?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0024",
+        "new_chunk_id": "tier3_1706_03762_s0043",
+        "score": 0.7089,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0304",
+    "query": "How can you generate a realistic pizza recommendation based on user preferences?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0304",
+        "new_chunk_id": null,
+        "score": 0.2295,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0004",
+        "new_chunk_id": "tier1_2005_11401_s0005",
+        "score": 0.7267,
+        "reason": "mapped"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2312_10997_s0073",
+    "query": "What is the impact of updating RAG's world knowledge on its performance in answering questions about world leaders?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0073",
+        "new_chunk_id": null,
+        "score": 0.6772,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0031",
+        "new_chunk_id": null,
+        "score": 0.5849,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0013",
+    "query": "What is the story about a group of people who live on a planet, and how does the learning rate schedule affect the training process?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0013",
+        "new_chunk_id": null,
+        "score": 0.5923,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0100",
+        "new_chunk_id": null,
+        "score": 0.2026,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is an example of a potential failure point in a Retrieval-Augmented Generation (RAG) system that could be addressed by using local, restricted attention mechanisms?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0028",
+        "new_chunk_id": "tier3_1706_03762_s0048",
+        "score": 1.0,
+        "reason": "mapped"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2210_11610_s0032",
+    "query": "What abilities are critical for a model's performance in RAG evaluation, and how do they impact the quality scores of a language model?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0032",
+        "new_chunk_id": null,
+        "score": 0.1375,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2312_10997_s0060",
+        "new_chunk_id": null,
+        "score": 0.6096,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2210_11610_s0001",
+    "query": "What type of environment is suitable for a party that serves non-alcoholic drinks?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0001",
+        "new_chunk_id": "tier2_2210_11610_s0003",
+        "score": 0.7647,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_2307_09288_s0316",
+        "new_chunk_id": null,
+        "score": 0.3182,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2312_10997_s0017",
+    "query": "How does the Memory module in RAGFusion handle the retrieval of knowledge, and what feature of the memory makes it suitable for dynamic updates?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0017",
+        "new_chunk_id": "tier1_2312_10997_s0027",
+        "score": 0.819,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0035",
+        "new_chunk_id": null,
+        "score": 0.486,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0252",
+    "query": "What is the reliability of human evaluation in assessing the reasoning elicited by chain-of-thought prompting in large language models?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0252",
+        "new_chunk_id": null,
+        "score": 0.2817,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0088",
+        "new_chunk_id": null,
+        "score": 0.3016,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0006",
+    "query": "How can a language model use a fully connected feed-forward network to generate instructions for tasks such as providing quotes or classifying text?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0006",
+        "new_chunk_id": null,
+        "score": 0.6612,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0013",
+        "new_chunk_id": null,
+        "score": 0.6,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0015",
+    "query": "How does the RAG-Token model handle the retrieval of relevant documents during the generation process?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0015",
+        "new_chunk_id": null,
+        "score": 0.6157,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0139",
+    "query": "What is the relationship between the Law's imperfection and the robustness of artificial intelligence?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0139",
+        "new_chunk_id": null,
+        "score": 0.1546,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0120",
+        "new_chunk_id": null,
+        "score": 0.1905,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0065",
+    "query": "What is the relationship between the Transformer's training speed and the scaling laws of Retrieval-Augmented Generative (RAG) models?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0065",
+        "new_chunk_id": null,
+        "score": 0.6176,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2312_10997_s0071",
+        "new_chunk_id": null,
+        "score": 0.6813,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0028",
+    "query": "What type of tasks do attention-based models, extended to handle input and output modalities other than text, achieve strong results without expensive pre-processing?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0028",
+        "new_chunk_id": "tier3_1706_03762_s0048",
+        "score": 1.0,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0021",
+        "new_chunk_id": null,
+        "score": 0.6554,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2312_10997_s0383",
+    "query": "How do the authors of the 2013 paper on recursive deep models for semantic compositionality over a sentiment treebank and the experiment in OpenAI's API handle overfitting?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0383",
+        "new_chunk_id": null,
+        "score": 0.2787,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0119",
+        "new_chunk_id": null,
+        "score": 0.3185,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0322",
+    "query": "What technique is used to improve the model's accuracy and BLEU score in the context of a less-explicit requirement for factual knowledge?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0322",
+        "new_chunk_id": null,
+        "score": 0.4182,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0021",
+        "new_chunk_id": null,
+        "score": 0.6788,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "How does the Retrieval-Augmented Generation (RAG) technique handle instructions that do not contain a verb-noun structure, such as 'Classify whether the user is satisfied with the service'?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0020",
+        "new_chunk_id": "tier2_2212_10560_s0034",
+        "score": 0.7296,
+        "reason": "mapped"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2005_11401_s0315",
+    "query": "What are the two sub-tasks of the FEVER task?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0315",
+        "new_chunk_id": null,
+        "score": 0.3836,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0030",
+    "query": "What training loss function is used for the reward model?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0030",
+        "new_chunk_id": null,
+        "score": 0.5707,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0143",
+    "query": "What are some recent advances in dialogue systems?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0143",
+        "new_chunk_id": null,
+        "score": 0.1681,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0044",
+    "query": "What batch size do we use for each PPO iteration?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0044",
+        "new_chunk_id": null,
+        "score": 0.5628,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0194",
+    "query": "Who are the authors of Truthfulqa and Roberta?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0194",
+        "new_chunk_id": null,
+        "score": 0.1905,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0272",
+    "query": "What is the average performance of Llama 1 in the given benchmarks?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0272",
+        "new_chunk_id": null,
+        "score": 0.2136,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2005_11401_s0262",
+    "query": "What is the name of the large-scale dataset for fact extraction and verification?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0262",
+        "new_chunk_id": null,
+        "score": 0.3043,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0094",
+    "query": "What is the purpose of the onboarding process for new employees?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0094",
+        "new_chunk_id": null,
+        "score": 0.2446,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2312_10997_s0078",
+    "query": "What does the CoK method do first to enhance performance in knowledge graph question-answering tasks?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0078",
+        "new_chunk_id": null,
+        "score": 0.625,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_1706_03762_s0020",
+    "query": "What type of dropout is applied to the output of each sub-layer in the Transformer model?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0020",
+        "new_chunk_id": null,
+        "score": 0.3287,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_1706_03762_s0014",
+    "query": "What are the time complexities for different layer types in the model?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0014",
+        "new_chunk_id": null,
+        "score": 0.6872,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_1706_03762_s0011",
+    "query": "How is the attention function applied to queries, keys, and values in parallel?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0011",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0141",
+    "query": "What should be done when the input is 'Input: ✗'?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0141",
+        "new_chunk_id": null,
+        "score": 0.2026,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2312_10997_s0137",
+    "query": "Who are the authors of the paper 'Search-in-the-chain: Towards accurate, credible and traceable large language models for knowledge-intensive tasks'?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0137",
+        "new_chunk_id": null,
+        "score": 0.1688,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0115",
+    "query": "What is the purpose of seed tasks in the method?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0115",
+        "new_chunk_id": null,
+        "score": 0.3143,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0006",
+    "query": "How does the method improve training task performances?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0006",
+        "new_chunk_id": null,
+        "score": 0.6313,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0100",
+    "query": "Who are the authors of the papers mentioned in the text?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0100",
+        "new_chunk_id": null,
+        "score": 0.2273,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0422",
+    "query": "How should you respond to a potentially sensitive user question?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0422",
+        "new_chunk_id": null,
+        "score": 0.3791,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0428",
+    "query": "What should you do when interacting with people from different racial or ethnic backgrounds?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0428",
+        "new_chunk_id": null,
+        "score": 0.2474,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0085",
+    "query": "What improvements did our approach achieve on six datasets?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0085",
+        "new_chunk_id": null,
+        "score": 0.6824,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0115",
+    "query": "What is the name of the paper that discusses training text-to-text models to explain their predictions?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0115",
+        "new_chunk_id": null,
+        "score": 0.2817,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0013",
+    "query": "What is the total amount spent by Stefan and his family at the restaurant after tipping?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0013",
+        "new_chunk_id": null,
+        "score": 0.6268,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0250",
+    "query": "Who are the authors of the papers 'Finetuned language models are zero-shot learners'?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0250",
+        "new_chunk_id": null,
+        "score": 0.1932,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0033",
+    "query": "What is the main difference between our work and Honovich et al. (2022a)?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0033",
+        "new_chunk_id": null,
+        "score": 0.5803,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0024",
+    "query": "What does our method use from the training set?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0024",
+        "new_chunk_id": null,
+        "score": 0.6085,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0152",
+    "query": "What total yards result from combining the shortest touchdown run and the longest touchdown pass?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0152",
+        "new_chunk_id": null,
+        "score": 0.1659,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0062",
+    "query": "What percentage of documents in the pretraining corpus contain a small amount of toxicity?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0062",
+        "new_chunk_id": null,
+        "score": 0.4847,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0111",
+    "query": "What frameworks or models have been proposed to address the challenges of releasing dialogue models?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0111",
+        "new_chunk_id": null,
+        "score": 0.6894,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0314",
+    "query": "What cultural background is often assumed to have a preference for fried chicken?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0314",
+        "new_chunk_id": null,
+        "score": 0.2373,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0339",
+    "query": "What types of responses are annotators instructed to avoid when interacting with our models?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0339",
+        "new_chunk_id": null,
+        "score": 0.3358,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0334",
+    "query": "What are the five major world religions?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0334",
+        "new_chunk_id": null,
+        "score": 0.1911,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0348",
+    "query": "What parameter size L model appears to have gained a greater benefit from dataset contamination?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0348",
+        "new_chunk_id": null,
+        "score": 0.2974,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2005_11401_s0017",
+    "query": "How do we train RAG?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0017",
+        "new_chunk_id": null,
+        "score": 0.603,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2005_11401_s0222",
+    "query": "What is the name of the dataset mentioned in the text?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0222",
+        "new_chunk_id": null,
+        "score": 0.197,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2312_10997_s0077",
+    "query": "What method uses image generation to influence text generation in open-ended tasks?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0077",
+        "new_chunk_id": null,
+        "score": 0.6887,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_1706_03762_s0018",
+    "query": "What types of behavior do some attention heads in the models appear to exhibit?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0018",
+        "new_chunk_id": null,
+        "score": 0.6141,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0125",
+    "query": "Who are the authors of 'Learning by distilling context'?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0125",
+        "new_chunk_id": null,
+        "score": 0.1714,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0313",
+    "query": "What is the symbolic meaning of an elephant for the Republican Party today?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0313",
+        "new_chunk_id": null,
+        "score": 0.2772,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0086",
+    "query": "How do you trick older models into producing unwanted content?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0086",
+        "new_chunk_id": null,
+        "score": 0.677,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0265",
+    "query": "Who are the contributors to this work?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0265",
+        "new_chunk_id": null,
+        "score": 0.1538,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0277",
+    "query": "What happens to the number of samples in later batches of the Meta Human Preference Data?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0277",
+        "new_chunk_id": null,
+        "score": 0.3029,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0000",
+    "query": "Can large language models improve themselves?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0000",
+        "new_chunk_id": null,
+        "score": 0.631,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier1_2312_10997_s0382",
+    "query": "Who are the authors of the paper 'Vio-lens: A novel dataset of annotated social network posts leading to different forms of communal violence and its evaluation'?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2312_10997_s0382",
+        "new_chunk_id": null,
+        "score": 0.24,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0051",
+    "query": "Who are some authors mentioned in this text?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0051",
+        "new_chunk_id": null,
+        "score": 0.1847,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2212_10560_s0098",
+    "query": "How can I create an app that identifies different kinds of plants by taking photos of them?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0098",
+        "new_chunk_id": null,
+        "score": 0.2875,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier2_2210_11610_s0068",
+    "query": "What is the maximum number of decode steps set for all experiments?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0068",
+        "new_chunk_id": null,
+        "score": 0.3109,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0061",
+    "query": "What percentage of documents mention the descriptor term 'christian'?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0061",
+        "new_chunk_id": null,
+        "score": 0.6853,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2005_11401_s0151",
+    "query": "What is the year of the publication 'arXiv e-prints'?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0151",
+        "new_chunk_id": null,
+        "score": 0.2889,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0318",
+    "query": "What is the job that the person is currently working on?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0318",
+        "new_chunk_id": null,
+        "score": 0.2243,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0472",
+    "query": "What is the maximum length of a token n-gram considered contaminated?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0472",
+        "new_chunk_id": null,
+        "score": 0.2956,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier1_2005_11401_s0026",
+    "query": "How does BART complete the titles without depending on specific documents?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0026",
+        "new_chunk_id": null,
+        "score": 0.6957,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0431",
+    "query": "What is the range of false refusal rate on the borderline dataset?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0431",
+        "new_chunk_id": null,
+        "score": 0.2233,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "lexical_tier3_2307_09288_s0130",
+    "query": "What is the name of the chatbot that impressed gpt-4 with 90% chatgpt quality?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0130",
+        "new_chunk_id": null,
+        "score": 0.1046,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0036",
+    "query": "What type of neural network architecture was used in the studies mentioned in Chunk 1, and what GPT3 model variant was used for finetuning in Chunk 2?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0036",
+        "new_chunk_id": null,
+        "score": 0.303,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2212_10560_s0117",
+        "new_chunk_id": null,
+        "score": 0.4756,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0040",
+    "query": "What type of knowledge is used in Retrieval-Augmented Generation (RAG) systems, and how is it supported?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0040",
+        "new_chunk_id": null,
+        "score": 0.6981,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0001",
+    "query": "What percentage of the population is under the age of 18, but still able to stop a Lions offense with five passing touchdowns?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0001",
+        "new_chunk_id": null,
+        "score": 0.6933,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier2_2210_11610_s0074",
+        "new_chunk_id": null,
+        "score": 0.2297,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0431",
+    "query": "What is the percentage of false refusal rate on the borderline dataset, and how does it relate to the helpfulness dataset?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0431",
+        "new_chunk_id": null,
+        "score": 0.2233,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0186",
+        "new_chunk_id": null,
+        "score": 0.2836,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_1706_03762_s0055",
+    "query": "What are some potential failure points in a Retrieval-Augmented Generation (RAG) system that could be mitigated by using a sparsely-gated mixture-of-experts layer?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_1706_03762_s0055",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0116",
+    "query": "What is the name of the conference where the paper 'Addressing semantic drift in question generation for semisupervised question answering' was published, and how is the similarity between seed instructions and test set instructions quantified?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0116",
+        "new_chunk_id": null,
+        "score": 0.2887,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0295",
+        "new_chunk_id": null,
+        "score": 0.2931,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier3_2307_09288_s0448",
+    "query": "What is the relationship between the improvement in truthfulness of Llama 2-Chat models after instruction fine-tuning and the model architecture used?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0448",
+        "new_chunk_id": null,
+        "score": 0.4118,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0005",
+        "new_chunk_id": "tier3_1706_03762_s0008",
+        "score": 0.7169,
+        "reason": "mapped"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is the key advantage of RAG compared to other approaches in Open-domain Question Answering tasks?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0021",
+        "new_chunk_id": null,
+        "score": 0.6554,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2210_11610_s0034",
+    "query": "What is the optimal approach for efficiently retrieving relevant documents from a data source in the context of a semi-supervised semantic segmentation model?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0034",
+        "new_chunk_id": null,
+        "score": 0.0788,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2312_10997_s0022",
+        "new_chunk_id": null,
+        "score": 0.5988,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_test_intro_s0000",
+    "query": "What is an example of a specific application where Retrieval-Augmented Generation (RAG) can be used to improve the performance of a neural machine translation system?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_test_intro_s0000",
+        "new_chunk_id": null,
+        "score": 0.6768,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2005_11401_s0076",
+        "new_chunk_id": null,
+        "score": 0.1138,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier1_2005_11401_s0295",
+    "query": "What type of task in natural language processing is addressed by the authors of the 2019 paper, and what type of task is studied in the 2002 COLING conference paper?",
+    "details": [
+      {
+        "old_chunk_id": "tier1_2005_11401_s0295",
+        "new_chunk_id": null,
+        "score": 0.2931,
+        "reason": "low_overlap"
+      },
+      {
+        "old_chunk_id": "tier1_2312_10997_s0383",
+        "new_chunk_id": null,
+        "score": 0.2787,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "multihop_tier2_2212_10560_s0036",
+    "query": "What type of neural network architecture can be used to improve the performance of a multi-modal instruction-following model?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0036",
+        "new_chunk_id": "tier2_2212_10560_s0068",
+        "score": 0.7262,
+        "reason": "mapped"
+      },
+      {
+        "old_chunk_id": "tier3_1706_03762_s0055",
+        "new_chunk_id": null,
+        "score": 0.25,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0447",
+    "query": "What method do we use to conduct a sentiment analysis?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0447",
+        "new_chunk_id": null,
+        "score": 0.3952,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0332",
+    "query": "What do benchmarks often fail to evaluate in chat models?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0332",
+        "new_chunk_id": null,
+        "score": 0.2644,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0014",
+    "query": "What is the total amount they spent?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0014",
+        "new_chunk_id": null,
+        "score": 0.6256,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0148",
+    "query": "How many trees were added to the grove today?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0148",
+        "new_chunk_id": null,
+        "score": 0.2034,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2210_11610_s0139",
+    "query": "Who are the authors of Star: Bootstrapping reasoning with reasoning?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2210_11610_s0139",
+        "new_chunk_id": null,
+        "score": 0.3333,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0301",
+    "query": "What should be the nature of roast jokes?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0301",
+        "new_chunk_id": null,
+        "score": 0.2744,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0109",
+    "query": "Who are the authors of the papers mentioned in the text?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0109",
+        "new_chunk_id": null,
+        "score": 0.2295,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0473",
+    "query": "What is the maximum number of position differences allowed between an evaluation sample and the training data?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0473",
+        "new_chunk_id": null,
+        "score": 0.4182,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0431",
+    "query": "What is the range of false refusal rates on the borderline dataset?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0431",
+        "new_chunk_id": null,
+        "score": 0.2233,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier2_2212_10560_s0083",
+    "query": "What is a polite reason to decline a job offer?",
+    "details": [
+      {
+        "old_chunk_id": "tier2_2212_10560_s0083",
+        "new_chunk_id": null,
+        "score": 0.2723,
+        "reason": "low_overlap"
+      }
+    ]
+  },
+  {
+    "sample_id": "paraphrase_tier3_2307_09288_s0477",
+    "query": "What average contamination percentage is associated with the 'Not Clean' subset type?",
+    "details": [
+      {
+        "old_chunk_id": "tier3_2307_09288_s0477",
+        "new_chunk_id": null,
+        "score": 0.2737,
+        "reason": "low_overlap"
+      }
+    ]
+  }
+]

@@ -24,8 +24,11 @@ class Chunk:
 # Constants
 # ---------------------------------------------------------------------------
 
-SEMANTIC_MAX_CHARS = 1200  # hard ceiling — never exceed this
+SEMANTIC_MAX_CHARS = 800  # hard ceiling — never exceed this
 SEMANTIC_MIN_CHARS = 150  # minimum to avoid tiny noise chunks
+SEMANTIC_OVERLAP_SENTENCES = 1
+MIN_INDEXABLE_WORDS = 20
+
 # ---------------------------------------------------------------------------
 # Reference detector
 # ---------------------------------------------------------------------------
@@ -52,18 +55,32 @@ def is_reference(text: str) -> bool:
 # Section detector  (FIX 3 — upgraded from naive [:200] check)
 # ---------------------------------------------------------------------------
 def detect_section(text: str, position: float = 1.0) -> str:
-    head = text[:300].lower()
+    head = text[:300]
 
-    if "abstract" in head:
+    if re.match(r"^\s*abstract\b", head, flags=re.IGNORECASE):
         return "abstract"
-    elif "introduction" in head:
+
+    if re.match(
+        r"^\s*(?:\d+\.?\s*)?introduction\b",
+        head,
+        flags=re.IGNORECASE,
+    ):
         return "introduction"
-    elif "conclusion" in head:
+
+    if re.match(
+        r"^\s*(?:\d+\.?\s*)?conclusions?\b",
+        head,
+        flags=re.IGNORECASE,
+    ):
         return "conclusion"
-    elif "references" in head or "bibliography" in head:
+
+    if re.match(
+        r"^\s*(?:\d+\.?\s*)?(references|bibliography)\b",
+        head,
+        flags=re.IGNORECASE,
+    ):
         return "references"
-    elif is_reference(text) and position >= 0.7:         # catch inline citations anywhere
-        return "references"
+
     return "body"
 
 # ---------------------------------------------------------------------------
@@ -225,88 +242,131 @@ def chunk_by_paragraph(doc: Document, min_len: int = 100, max_len: int = 1000) -
         chunk.total_chunks = len(chunks)
     return chunks
 
+def _split_sentences_with_offsets(text: str) -> list[tuple[str, int, int]]:
+    protected = re.sub(
+        r"\b(?:et al|fig|vs|e\.g|i\.e|cf|eq|approx|dept|prof|dr|mr|ms)\.",
+        lambda match: match.group().replace(".", "․"),
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    spans = []
+    for match in re.finditer(r".+?(?:[.!?]+(?=\s|$)|$)", protected, flags=re.DOTALL):
+        raw = match.group()
+        sentence = raw.strip()
+        if not sentence:
+            continue
+
+        leading = len(raw) - len(raw.lstrip())
+        start = match.start() + leading
+        end = start + len(sentence)
+        spans.append((sentence.replace("․", "."), start, end))
+
+    return spans
+
+
+def _is_reference_heading(text: str) -> bool:
+    return bool(
+        re.fullmatch(
+            r"(?:\d+\.?\s*)?(references|bibliography)",
+            text.strip(),
+            flags=re.IGNORECASE,
+        )
+    )
+
+_REFERENCE_SECTION = re.compile(
+    r"(?im)^\s*(?:\d+\.?\s*)?(?:references|bibliography)\s*$"
+)
+
+def _body_text_before_references(text: str) -> str:
+    match = _REFERENCE_SECTION.search(text)
+    return text[:match.start()].rstrip() if match else text
 
 def chunk_semantic(
     doc: Document,
     min_chars: int = SEMANTIC_MIN_CHARS,
     max_chars: int = SEMANTIC_MAX_CHARS,
+    overlap_sentences: int = SEMANTIC_OVERLAP_SENTENCES,
 ) -> list[Chunk]:
-    """
-    Sentence-boundary-aware chunking with three hard guarantees:
-      1. Never cuts mid-sentence (best effort; _hard_split handles overflows)
-      2. Never produces chunks > max_chars (_hard_split safety net)
-      3. Reference sentences are isolated immediately — never merged into body
-    """
-    # A. Split into sentences
-    text = doc.text.strip()
-    text = re.sub(r'\b(et al|fig|vs|e\.g|i\.e|cf|eq|approx|dept|prof|dr|mr|ms)\.',
-            lambda m: m.group().replace('.', '<!DOT!>'), text, flags=re.IGNORECASE)
-    
-    sentences = re.split(r'(?<=[.!?])\s+', text)
-    sentences = [s.replace('<!DOT!>', '.').strip() for s in sentences if s.strip()]
-    # B. Group into raw text chunks
-    raw_chunks: list[str] = []
-    buffer = ""
+    source_text = _body_text_before_references(doc.text)
+    sentences = _split_sentences_with_offsets(source_text)
 
-    for sent in sentences:
-        # FIX 2: Reference sentence → flush buffer, emit ref as own chunk
-        if is_reference(sent):
-            if buffer and len(buffer) >= min_chars:
-                raw_chunks.append(buffer.strip())
-                buffer = ""
-            if len(sent) >= 20:
-                raw_chunks.append(sent.strip())
+    body_sentences = []
+    inside_references = False
+
+    for sentence, start, end in sentences:
+        if _is_reference_heading(sentence):
+            inside_references = True
             continue
 
-        candidate = (buffer + " " + sent).strip() if buffer else sent
+        # Reference tidak dibuat menjadi chunk retrieval.
+        if inside_references or is_reference(sentence):
+            continue
 
-        if len(candidate) <= max_chars:
-            buffer = candidate
-        else:
-            # Buffer is full — flush, start fresh with current sentence
-            if len(buffer) >= min_chars:
-                raw_chunks.append(buffer.strip())
-            buffer = sent
+        body_sentences.append((sentence, start, end))
 
-    # Flush remaining buffer
-    if buffer and len(buffer) >= 150:
-        raw_chunks.append(buffer.strip())
-
-    # FIX 1: Hard-limit pass — guarantee no chunk exceeds max_chars
-    final_texts: list[str] = []
-    for raw in raw_chunks:
-        if len(raw) > max_chars:
-            final_texts.extend(_hard_split(raw, max_chars))
-        else:
-            final_texts.append(raw)
-
-    # C. Build Chunk objects
     chunks: list[Chunk] = []
-    total = len(final_texts)
-    for idx, chunk_text in enumerate(final_texts):
-        if not chunk_text:
+    start_idx = 0
+    previous_end_idx = 0
+
+    while start_idx < len(body_sentences):
+        chunk_start = body_sentences[start_idx][1]
+        end_idx = start_idx
+
+        while end_idx < len(body_sentences):
+            candidate_end = body_sentences[end_idx][2]
+            candidate_length = candidate_end - chunk_start
+
+            if candidate_length <= max_chars or end_idx == start_idx:
+                end_idx += 1
+            else:
+                break
+
+        chunk_end = body_sentences[end_idx - 1][2]
+        if end_idx == start_idx + 1 and chunk_end - chunk_start > max_chars:
+            previous_end_idx = end_idx
+            start_idx = end_idx
             continue
-        position = idx / total if total > 1 else 1.0
-        chunks.append(Chunk(
-        chunk_id=f"{doc.doc_id}_s{idx:04d}",
-        doc_id=doc.doc_id,
-        text=chunk_text,
-        start_char=0,
-        end_char=len(chunk_text),
-        tier=doc.tier,
-        chunk_index=idx,
-        total_chunks=-1,
-        metadata={
-            "strategy": "semantic",
-            "section": detect_section(chunk_text, position=position),
-        }
-    ))
+        chunk_text = source_text[chunk_start:chunk_end].strip()
+        word_count = len(chunk_text.split())
+
+        # Title/author pendek tidak boleh menjadi chunk mandiri.
+        if len(chunk_text) >= min_chars or word_count >= MIN_INDEXABLE_WORDS:
+            overlap_count = max(0, previous_end_idx - start_idx)
+
+            chunks.append(
+                Chunk(
+                    chunk_id=f"{doc.doc_id}_s{len(chunks):04d}",
+                    doc_id=doc.doc_id,
+                    text=chunk_text,
+                    start_char=chunk_start,
+                    end_char=chunk_end,
+                    tier=doc.tier,
+                    chunk_index=len(chunks),
+                    total_chunks=-1,
+                    metadata={
+                        "strategy": "semantic",
+                        "section": detect_section(
+                            chunk_text,
+                            position=chunk_start / max(len(source_text), 1),
+                        ),
+                        "sentence_count": end_idx - start_idx,
+                        "overlap_sentences": overlap_count,
+                        "indexable": True,
+                    },
+                )
+            )
+
+        if end_idx >= len(body_sentences):
+            break
+
+        previous_end_idx = end_idx
+        start_idx = max(start_idx + 1, end_idx - overlap_sentences)
 
     for chunk in chunks:
         chunk.total_chunks = len(chunks)
 
     return chunks
-
 
 # ---------------------------------------------------------------------------
 # Pipeline entry point
@@ -406,4 +466,4 @@ if __name__ == "__main__":
     chunks = chunk_documents(docs, strategy="semantic")
     print_stats(chunks)
     print_samples(chunks, n_body=3, n_ref=1)
-    save_chunks(chunks, "data/processed/chunks_semantic.json")
+    save_chunks(chunks, "data/processed/chunks_semantic_v2.json")

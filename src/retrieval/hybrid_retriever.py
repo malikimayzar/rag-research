@@ -7,7 +7,7 @@ import numpy as np
 import time
 import re
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 from src.retrieval.qdrant_store import QdrantVectorStore, RetrievalResult
 from src.controller.policy_engine import PolicyEngine
 from rank_bm25 import BM25Okapi
@@ -79,7 +79,7 @@ class MasterHybridRetriever:
     def __init__(
         self,
         vector_store: QdrantVectorStore,
-        bm25_chunks_path: str = "data/processed/chunks_semantic.json",
+        bm25_chunks_path: str = "data/processed/chunks_semantic_v2.json",
         reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
         rrf_k: int = 60,
         use_multi_query: bool = False,
@@ -157,7 +157,7 @@ class MasterHybridRetriever:
     # Query Expansion 
     def _call_groq(self, prompt: str, temperature: float, max_tokens: int) -> str:
         resp = self.groq.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
             max_tokens=max_tokens,
@@ -351,6 +351,11 @@ class MasterHybridRetriever:
             c for c in fused_results
             if (c.get("retrieval_score", 0.0) if isinstance(c, dict) else getattr(c, "score", 0.0)) >= 0.0
         ]
+        
+        logger.info(
+            "[RETRIEVAL_STAGE] after_score_filter=%d",
+            len(fused_results),
+        )
 
         candidates = [c for c in fused_results if not is_low_quality(c)]
         rerank_candidates = sorted(
@@ -373,12 +378,29 @@ class MasterHybridRetriever:
             if is_informative(c) and not self._is_reference_chunk(c)
         ]
 
+        logger.info(
+            "[RETRIEVAL_STAGE] fused=%d | candidates=%d | "
+            "rerank_candidates=%d | reranked=%d | filtered=%d",
+            len(fused_results),
+            len(candidates),
+            len(rerank_candidates),
+            len(reranked),
+            len(filtered_chunks),
+        )
+
         if filtered_chunks:
             final_chunks = filtered_chunks[:top_k]
             should_abstain = False
         else:
-            final_chunks = []
-            should_abstain = True
+            fallback_chunks = reranked[:top_k]
+            final_chunks = fallback_chunks
+            should_abstain = not bool(fallback_chunks)
+
+            logger.warning(
+                "[RETRIEVAL_FALLBACK] strict filter returned no chunks; "
+                "using %d reranked candidates",
+                len(final_chunks),
+            )
 
         for c in final_chunks:
             cid = c["chunk_id"] if isinstance(c, dict) else getattr(c, "chunk_id", None)

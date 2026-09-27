@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-multipart
+python-dotenv
+httpx
+groq
+numpy
+qdrant-client
+rank-bm25
+sentence-transformers
+transformers
+scikit-learn

@@ -21,4 +21,5 @@ async def main():
         print("\nTop chunk:")
         print(res.state.retrieved_chunks[0])
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
